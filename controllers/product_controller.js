@@ -10,8 +10,8 @@ const { ObjectId } = require('mongodb');
 const viewProduct = async (req, res) => {
   try {
 
-    const products = await Product.find({status:1})
-    const datas= await Product.find({status:1}).populate('category').exec()
+    const products = await Product.find({})
+    const datas= await Product.find({}).populate('category').exec()
     console.log("ccccccccccccccccccccc"+datas.name);
     res.render('product_list',{products:products,datas:datas})
   } catch (error) {
@@ -137,13 +137,16 @@ const listProduct=async(req,res)=>{
 const loadEditProduct=async(req,res)=>{
   try {
     const id= req.params.id
-    console.log("iiiiiiiiidddddddd"+id)
+    const details1=await Product.findOne({_id:id}).populate('category').exec()
+  
     const details=await Product.find({_id:id})
     const main=details.id;
-     
+    console.log('this is detailssssssss in edit producttt' , details);
+     console.log("ddddddddddddddddddd"+details1.category.categoryName);
+     const catData=await Category.find({categoryName:details1.category.categoryName})
     const categoryData=await Category.find({})
     // console.log("iiiiiiiiidddddddd"+details)
-    res.render('edit_products',{details:details,categoryData:categoryData,main:main})
+    res.render('edit_products',{details:details,categoryData:categoryData,main:main,catData:catData})
     
   } catch (error) {
     console.log(error.message);
