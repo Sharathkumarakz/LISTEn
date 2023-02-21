@@ -1,0 +1,184 @@
+<%- include("../layouts/user/header.ejs") %>
+  <!-- ***** Header Area End ***** -->
+  <div id="preloader">
+    <div class="jumper">
+      <div></div>
+      <div></div>
+      <div></div>
+    </div>
+  </div>
+  <!-- ***** Preloader End ***** -->
+
+
+  <!-- ***** Header Area Start ***** -->
+  <header class="header-area header-sticky">
+    <div class="container ">
+      <div class="row">
+        <div class="col-12">
+          <nav class="main-nav">
+            <!-- ***** Logo Start ***** -->
+            <a href="index.html" class="logo">
+              <img src="/user_assets/assets/images/bgs.jpg">
+            </a>
+            <!-- ***** Logo End ***** -->
+            <!-- ***** Menu Start ***** -->
+            <ul class="nav">
+              <li class="scroll-to-section"><a href="/">Home</a></li>
+              <li class="submenu">
+                <a href="javascript:;">Products</a>
+                <ul>
+                  <li><a href="/allproducts">All Products</a></li>
+                  <% categoryData.forEach((element)=> { %>
+                    <li><a href="/products/<%= element._id %>">
+                        <%= element.categoryName %>
+                      </a></li>
+                    <% }); %>
+                      <!-- <li><a href="single-product.html">Single Product</a></li>
+                                <li><a href="contact.html">Contact Us</a></li> -->
+                </ul>
+              </li>
+              <li class="scroll-to-section"><a href="/wishlist">Whishlist</a></li>
+              <li class="scroll-to-section"><a href="/cart">Cart</a></li>
+              <li class="submenu">
+                <% if(typeof userdetails!=='undefined' ){ %>
+
+                  <a href="javascript:;">
+                    <%= userdetails.username %>
+                  </a>
+
+                  <ul>
+                    <li><a href="/login">profile</a></li>
+                    <li><a href="/logout">Logout</a></li>
+
+                  </ul>
+                  <%}else{%>
+                    <a href="javascript:;">USER</a>
+                    <ul>
+                      <li><a href="/login">Login</a></li>
+                    </ul>
+                    <%} %>
+              </li>
+
+            </ul>
+            <a class='menu-trigger'>
+              <span>Menu</span>
+            </a>
+            <!-- ***** Menu End ***** -->
+          </nav>
+        </div>
+      </div>
+    </div>
+  </header>
+  <!-- ***** Product Area Starts ***** -->
+
+  <section class="section" id="product">
+    <%singleproduct.forEach((element)=> { %>
+
+      <div class="container">
+        <div class="row container-fluid">
+          <div class="col-lg-8">
+            <div class="left-images">
+
+              <!-- <img class="big_img" style="width: 450px; "  src="/product_images/<%=element.image[2] %>" alt=""> -->
+
+              <div class="img-zoom-container1 row pt-5">
+                <img id="myimage" style="width: 350px; height: 350px;" class="big_img"
+                  src="/product_images/<%=element.image[2] %>">
+                <div id="myresult" class="img-zoom-result"></div>
+              </div>
+
+            </div>
+            <div class="left-images">
+
+
+
+              <img  class="small_img"  style="width: 200px;" src="/product_images/<%=element.image[1] %>" alt="">
+              <img  class="small_img" style="width: 200px;" src="/product_images/<%=element.image[3] %>" alt="">
+              <img  class="small_img" style="width: 200px;" src="/product_images/<%=element.image[0] %>" alt="">
+
+            </div>
+          </div>
+          <div class="col-lg-4">
+            <div class="right-content">
+              <h4>
+                <%=element.name %>
+              </h4>
+              <span class="price">Rs.<%=element.price %></span>
+              <ul class="stars">
+                <li><i class="fa fa-star"></i></li>
+                <li><i class="fa fa-star"></i></li>
+                <li><i class="fa fa-star"></i></li>
+                <li><i class="fa fa-star"></i></li>
+                <li><i class="fa fa-star"></i></li>
+              </ul>
+              <span>
+                <%=element.description %>
+              </span>
+              <div class="quote">
+                <i class="fa fa-quote-left"></i>
+                <p>LISTEn to listen</p>
+              </div>
+              <div class="quantity-content">
+                <div class="left-content">
+                  <h6>No. of Orders</h6>
+                </div>
+                <div class="right-content">
+                  <!-- <div class="quantity buttons_added">
+                    <input type="button" value="-" class="minus"><input type="number" step="1" min="1" max=""
+                      name="quantity" value="1" title="Qty" class="input-text qty text" size="4" pattern=""
+                      inputmode=""><input type="button" value="+" class="plus">
+                  </div> -->
+                 
+                </div>
+              </div>
+              <div class="total">
+             
+            <% if(typeof cartcheck !=='undefined' ){ %>   
+                <div class="main-border-button pb-2"><a href="/cart">view Cart</a></div>
+               <% }else{ %>
+                <div class="main-border-button pb-2"><a href="/addcart/<%= element._id %>">Add to Cart</a></div>
+        
+             <%  }   %>            
+                <h4>Total:<%=element.price %>
+                </h4>
+                <div class="main-border-button" ><a href="#">Buy Now </a></div>
+      
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <% }) %>
+
+  </section>
+  <!-- ***** Product Area Ends ***** -->
+
+  <!-- ***** Footer Start ***** -->
+
+
+  <script type="text/javascript">
+    $(document).ready(function () {
+      $(".small_img").click(function () {
+        $(".big_img").attr("src", $(this).attr('src'))
+      })
+    })
+
+  </script>
+
+  <!-- <script src="/zoomsingle/zoomsl.js" type="text/javascript"></script>
+  <script src="/zoomsingle/zoomsl.min.js" type="text/javascript"></script> -->
+
+  
+  <script type="text/javascript">
+    $(document).ready(function () {
+      $(".big_img").imagezoomsl({
+          zoomrange:[4,4]
+      })
+       
+      })
+ 
+
+  </script>
+
+
+  <%- include("../layouts/user/footer.ejs") %>

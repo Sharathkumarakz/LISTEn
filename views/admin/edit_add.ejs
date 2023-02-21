@@ -1,0 +1,108 @@
+
+<%- include("../layouts/admin/header.ejs") %>
+<%- include("../layouts/admin/navbar.ejs") %>
+
+  <div class="page-wrapper">
+
+    <div class="container-fluid">
+
+      <div class="row page-titles">
+        <div class="col-md-5 align-self-center">
+          <h3 class="text-themecolor">Edit Banner</h3>
+
+        </div>
+
+      </div>
+
+
+      <!--djlkjlkajlkjkldajkkjslj-->
+      <% details.forEach(element=> { %>
+      <div class="col-lg-12 col-xlg-12 col-md-12">
+        <div class="card">
+          <!-- Tab panes -->
+          <div class="card-body">
+          
+            <form action="/admin/editAdd/<%= element._id%>" class="form-horizontal form-material" method="post"
+              enctype="multipart/form-data">
+              <div class="form-group">
+                
+                <label class="col-md-12">Name</label>
+                <div class="col-md-12">
+                  <input type="text" name="name" class="form-control form-control-line" value=" <%= element.name %>">
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-md-12">Description</label>
+                <div class="col-md-12">
+                  <input type="text" name="description" class="form-control form-control-line" value="<%= element.description %>">
+                </div>
+              </div>
+            
+
+              </div>
+              <div class="form-group">
+                <label class="col-md-12">url</label>
+                <div class="col-md-12">
+                  <input type="text" name="url" class="form-control form-control-line" value="<%= element.url %>">
+                </div>
+              </div>
+            
+              <div class="form-group">
+                <label class="col-md-12">Image</label>
+                <div class="col-md-12">
+                  <input type="file" multiple name="image" class="form-control form-control-line"  onchange="viewImage(event)">
+                  <div class="row">
+                  <div><img id="imgView" style="width:100px;" src="/product_images/<%=element.image[0] %>" alt=""></div>
+                      </div>
+                </div>
+              </div>
+           
+             
+              <div class="form-group">
+                <div class="col-sm-12">
+                  <button type='submit'  class="btn btn-success">Submit</button>
+                </div>
+              </div>
+              <% }); %>
+            </form>
+            <% if(typeof message !=='undefined' ){ %>
+              <h5 style="color: rgb(224, 86, 86);">
+                <%= message %>
+              </h5>
+              <% } %>
+          </div>
+        </div>
+      </div>
+      <!-- Column -->
+    </div>
+    <!-- Row -->
+    <!-- ============================================================== -->
+    <!-- End PAge Content -->
+    <!-- ============================================================== -->
+  </div>
+
+  <script>
+    function viewImage(event) {
+        document.getElementById('imgView').src = URL.createObjectURL(event.target.files[0]  )
+        document.getElementById('imgView1').src = URL.createObjectURL(event.target.files[1]  )
+        document.getElementById('imgView2').src = URL.createObjectURL(event.target.files[2]  )
+        document.getElementById('imgView3').src = URL.createObjectURL(event.target.files[3]  )
+    }
+
+</script>
+
+
+
+
+
+
+
+
+
+
+
+  <!-- End Feeds -->
+
+
+
+  <%- include("../layouts/admin/footer.ejs") %>

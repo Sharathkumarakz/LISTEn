@@ -1,0 +1,86 @@
+   <!-- ***** Header Area End ***** -->
+   <div id="preloader">
+    <div class="jumper">
+        <div></div>
+        <div></div>
+        <div></div>
+    </div>
+</div>  
+<!-- ***** Preloader End ***** -->
+
+
+<!-- ***** Header Area Start ***** -->
+<header class="header-area header-sticky">
+    <div class="container ">
+        <div class="row">
+            <div class="col-12">
+                <nav class="main-nav">
+                    <!-- ***** Logo Start ***** -->
+                    <a href="index.html" class="logo">
+                        <img src="/user_assets/assets/images/bgs.jpg">
+                    </a>
+                    <!-- ***** Logo End ***** -->
+                    <!-- ***** Menu Start ***** -->
+                    <ul class="nav">
+                        <li class="scroll-to-section"><a href="/" >Home</a></li>
+                        <li class="submenu">
+                            <a href="javascript:;">Products</a>
+                            <ul>
+                                <li><a href="/allproducts">All Products</a></li> 
+                                <% categorydata.forEach((element)=> { %>
+                                <li><a href="/products/<%= element._id %>"><%= element.categoryName %></a></li>
+                                <% }); %>
+                                <!-- <li><a href="single-product.html">Single Product</a></li>
+                                <li><a href="contact.html">Contact Us</a></li> -->
+                            </ul>
+                        </li>
+                        <li class="scroll-to-section"><a href="/wishlist">Whishlist</a></li>
+                        <% if(typeof userdetails!=='undefined'){ %>
+                        <li class="scroll-to-section"><a href="/cart">Cart</a></li>
+                        <%}else{%>
+                            <li class="scroll-to-section"><a href="/login">Cart</a></li>
+                      <% } %>
+                         <li class="submenu">
+                            <% if(typeof userdetails!=='undefined'){ %>
+                                   
+                                <a href="javascript:;"><%= userdetails.username %></a>
+                      
+                                <ul>
+                                    <li><a href="/login">profile</a></li>
+                                    <li><a href="/logout">Logout</a></li>
+                                    <!-- <li><a href="about.html">Profile</a></li>
+                                    <li><a href="products.html">Logout</a></li> -->
+                                    <!-- <li><a href="single-product.html">Single Product</a></li>
+                                    <li><a href="contact.html">Contact Us</a></li> -->
+                                </ul>
+                                <%}else{%>
+                                    <a href="javascript:;">USER</a>
+                                    <ul>
+                                        <li><a href="/">login</a></li>
+                                        <!-- <li><a href="about.html">Profile</a></li>
+                                        <li><a href="products.html">Logout</a></li> -->
+                                        <!-- <li><a href="single-product.html">Single Product</a></li>
+                                        <li><a href="contact.html">Contact Us</a></li> -->
+                                    </ul>
+                                    <%} %>
+                            </li>
+                        <!-- <li class="submenu">
+                            <a href="javascript:;">Features</a>
+                            <ul>
+                                <li><a href="#">Features Page 1</a></li>
+                                <li><a href="#">Features Page 2</a></li>
+                                <li><a href="#">Features Page 3</a></li>
+                                <li><a rel="nofollow" href="https://templatemo.com/page/4" target="_blank">Template Page 4</a></li>
+                            </ul>
+                        </li>
+                        <li class="scroll-to-section"><a href="#explore">Explore</a></li> -->
+                    </ul>        
+                    <a class='menu-trigger'>
+                        <span>Menu</span>
+                    </a>
+                    <!-- ***** Menu End ***** -->
+                </nav>
+            </div>
+        </div>
+    </div>
+</header>

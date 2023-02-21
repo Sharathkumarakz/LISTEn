@@ -1,0 +1,42 @@
+<%- include("../layouts/header.ejs") %>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-6">
+        <div class="card">
+
+          <form action="" class="box" method="post">
+            <h1>LISTEn signup</h1>
+            <% if(typeof message !=='undefined' ){ %>
+              <h5 style="color: rgb(224, 86, 86);">
+                <%= message %>
+              </h5>
+              <% } %>
+           
+                <input type="text" name="firstname" placeholder="First Name">
+                <input type="text" name="lastname" placeholder="Last Name">
+                <input type="email" name="email" placeholder="Email" >
+                <input type="text" name="username" placeholder="Username" >
+                <input type="password" name="password" placeholder="Password">
+                <input type="text" name="mobilenumber" placeholder="Phone">
+               
+                
+               
+                <input type="submit"  value="signup">
+                <div class="col-md-12">
+                  <ul class="social-network social-circle">
+                    <!-- <li><a href="#" class="icoFacebook" title="Facebook"><i class="fab fa-facebook-f"></i></a></li>
+                    <li><a href="#" class="icoTwitter" title="Twitter"><i class="fab fa-twitter"></i></a></li>
+                    <li><a href="#" class="icoGoogle" title="Google +"> -->
+                        <i class="fab fa-google-plus"></i></a></li>
+                        
+                      </ul>
+                </div>
+                
+          <li><a href="/login" class="icoTwitter" title="Twitter" >Already have an account? login!</a></li>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <%- include("../layouts/footer.ejs") %>

@@ -1,0 +1,193 @@
+<%- include("../layouts/admin/header.ejs") %>
+<%- include("../layouts/admin/navbar.ejs") %>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.1/dist/sweetalert2.all.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.3.js" integrity="sha256-nQLuAZGRRcILA+6dMBOvcRh5Pe310sBpanc6+QBmyVM="
+    crossorigin="anonymous"></script>
+  <div class="page-wrapper">
+
+    <div class="container-fluid">
+
+      <div class="row page-titles">
+        <div class="col-md-5 align-self-center">
+          <h3 class="text-themecolor">Product list</h3>
+
+        </div>
+
+      </div>
+
+      <!--djlkjlkajlkjkldajkkjslj-->
+      <div class="row">
+        <!-- column -->
+        <div class="col-12">
+          <div class="card">
+            <div class="card-body">
+              <h4 class="card-title">All Products</h4>
+              <h6 class="card-subtitle">Products <code>Table</code></h6>
+              <div class="table-responsive">
+                <table class="table">
+                  <thead>
+                    <tr>
+                      <th>No.</th>
+                      <th>Image</th>      
+                      <th>Name</th>                        
+                      <th>Category</th>
+                      <th>Stock</th>
+                      <th>Price</th>
+                      <th>Actions</th>
+                      <th>Modify</th>
+                      <th>status</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <% datas.forEach((element,index)=> { %>
+                     
+                    <tr>
+                      <td> <%=index+1 %></td>
+                      <td> <img src="/product_images/<%=element.image[0] %>" style="width:60px" alt=""> </td>
+                      <td><%=element.name %></td>
+                      <td><%=element.category.categoryName %></td>
+                      <td><%=element.stock %></td>
+                      <td><%=element.price %></td>
+                      <td>
+                        <button type="button" class="btn btn-danger" onclick="validate('<%= element._id %>')">
+                          delete
+                        </button>
+                        <td>
+                          <a class="waves-effect waves-dark" href="/admin/editProduct/<%= element._id %>"   aria-expanded="false"><i
+                            class="fa fa-edit" style="color: rgb(0, 102, 255); font-size:26px;"></i><span class="hide-menu"></span></a>
+                          </td>
+                          <td>
+                            <% if(element.status!== 0){ %>
+                              <button type="button" class="btn btn-success" onclick="validate1('<%= element._id %>')">
+                                unlist
+                              </button>
+                                 <%} else { %>
+                                  <button type="button" class="btn btn-success" onclick="validate2('<%= element._id %>')">
+                                    list
+                                  </button>
+                                  <% } %>
+                                      </td>
+                    </tr>
+                    <%}) %>
+                 
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+   
+
+<script>
+  function validate(deleteId) {
+      Swal.fire({
+          title: 'Are you sure?',
+          text: "You wan't to delete!",
+          icon: 'warning',
+          showCancelButton: true,
+          confirmButtonColor: '#3085d6',
+          cancelButtonColor: '#d33',
+          confirmButtonText: 'yes, delete!'
+      }).then((result) => {
+             if (result.isConfirmed) {
+                          $.ajax({
+                              url: '/admin/deleteProduct/' + deleteId,
+                              method: 'get',
+                              success: (response) => {
+                                  Swal.fire({
+                                      title: 'deleted!',
+                                      text: 'Your deleted',
+                                      icon: 'success',
+                                      showConfirmButton: false
+                                  })
+                                  setTimeout(() => {
+                                      location.reload()
+                                  }, 1000);
+                              }
+                          })
+                      }
+      })
+  }
+</script>
+
+
+
+<script>
+  function validate1(deleteId) {
+      Swal.fire({
+          title: 'Are you sure?',
+          text: "You wan't to unlist this product!",
+          icon: 'warning',
+          showCancelButton: true,
+          confirmButtonColor: '#3085d6',
+          cancelButtonColor: '#d33',
+          confirmButtonText: 'yes, unlist!'
+      }).then((result) => {
+             if (result.isConfirmed) {
+                          $.ajax({
+                              url: '/admin/unlistProduct/' + deleteId,
+                              method: 'get',
+                              success: (response) => {
+                                  Swal.fire({
+                                      title: 'unlisted!',
+                                      text: 'Your are unlisted this product',
+                                      icon: 'success',
+                                      showConfirmButton: false
+                                  })
+                                  setTimeout(() => {
+                                      location.reload()
+                                  }, 1000);
+                              }
+                          })
+                      }
+      })
+  }
+</script>
+
+
+
+<script>
+  function validate2(deleteId) {
+      Swal.fire({
+          title: 'Are you sure?',
+          text: "You wan't to list this product!",
+          icon: 'warning',
+          showCancelButton: true,
+          confirmButtonColor: '#3085d6',
+          cancelButtonColor: '#d33',
+          confirmButtonText: 'yes,list!'
+      }).then((result) => {
+             if (result.isConfirmed) {
+                          $.ajax({
+                              url: '/admin/listProduct/' + deleteId,
+                              method: 'get',
+                              success: (response) => {
+                                  Swal.fire({
+                                      title: 'listed!',
+                                      text: 'Your listed this product',
+                                      icon: 'success',
+                                      showConfirmButton: false
+                                  });
+                                  setTimeout(() => {
+                                      location.reload()
+                                  }, 1000);
+                              }
+                          })
+                      }
+      })
+  }
+</script>
+
+
+
+
+
+
+
+
+      <!-- End Feeds -->
+    </div>
+
+  </div>
+  <%- include("../layouts/admin/footer.ejs") %>
