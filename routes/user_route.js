@@ -71,6 +71,29 @@ user_route.get('/removeWishlist/:id',wishlistController.removeWishlist)
 user_route.get('/logout',auth.islogout,userController.userLogout);
 
 
+//user profile
+user_route.get('/user',userController.userProfile);
+
+
+//user address view
+user_route.get('/address',userController.addressView);
+
+
+//user add address
+user_route.get('/addAddress',userController.addAddress);
+user_route.post('/addAddress',userController.insertAddress);
+
+//edit profile details
+user_route.get('/editProfile',userController.editProfile);
+user_route.post('/editedProfile/:id',userController.editedProfile);
+
+
+//remove address
+user_route.get('/removeAddress/:id',userController.removeAddress)
+
+//edit address
+user_route.get('/editAddress/:id',userController.editAddress)
+user_route.post('/editAddress/:id',userController.editedAddress)
 
 user_route.use(function(req, res) {
   res.render('error').end('error');

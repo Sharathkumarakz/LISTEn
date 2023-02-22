@@ -1,0 +1,101 @@
+
+<%- include("../layouts/user/header.ejs") %>
+
+  <%- include("../layouts/user/headers.ejs") %>
+  <section style="background-color: #ffffff;">
+    <div class="container py-5">
+      <div class="row">
+        <div class="col">
+          <nav aria-label="breadcrumb" class="bg-light rounded-3 p-3 mb-4">
+            <ol class="breadcrumb mb-0">
+           
+            </ol>
+          </nav>
+        </div>
+      </div>
+    
+          <!-- <div class="card mb-4 mb-lg-0">
+            <div class="card-body p-0">
+              <ul class="list-group list-group-flush rounded-3">
+                <li class="list-group-item d-flex justify-content-between align-items-center p-3">
+                  <i class="fas fa-globe fa-lg text-warning"></i>
+                  <p class="mb-0">https://mdbootstrap.com</p>
+                </li>
+                <li class="list-group-item d-flex justify-content-between align-items-center p-3">
+                  <i class="fab fa-github fa-lg" style="color: #333333;"></i>
+                  <p class="mb-0">mdbootstrap</p>
+                </li>
+                <li class="list-group-item d-flex justify-content-between align-items-center p-3">
+                  <i class="fab fa-twitter fa-lg" style="color: #55acee;"></i>
+                  <p class="mb-0">@mdbootstrap</p>
+                </li>
+                <li class="list-group-item d-flex justify-content-between align-items-center p-3">
+                  <i class="fab fa-instagram fa-lg" style="color: #ac2bac;"></i>
+                  <p class="mb-0">mdbootstrap</p>
+                </li>
+                <li class="list-group-item d-flex justify-content-between align-items-center p-3">
+                  <i class="fab fa-facebook-f fa-lg" style="color: #3b5998;"></i>
+                  <p class="mb-0">mdbootstrap</p>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div> -->
+        </div>
+      
+     
+       
+       
+        <div class="col-lg-8 container-fluid">
+          <button type="button" class="btn btn-outline-primary ms-1"><a href="/addAddress">Add Address</a></button>
+ 
+          <div class="card mb-4 pt-5">
+            <div class="card-body">
+             
+
+             
+                
+            
+            <% datas.address.forEach((element,index)=>{ %>
+             
+             
+              <div class="row">
+                <div class="col-sm-2">
+                  <p class="mb-0"> Address <%=index+1 %></p>
+                </div>
+                <div class="col-sm-7">
+                  <p class="text-muted mb-0">
+                    <%=element.houseName %>,
+                    <%=element.street %>,
+                    <%=element.disrtrict %>,
+                    <%=element.state %>,
+                    <%=element.country %>,
+                    <%=element.pincode %>,
+                    <%=element.phone %>,
+                  </p>
+                </div>
+                <div class="col-sm-2">
+                  <a style="color: rgb(222, 22, 22);" a  href="/removeAddress/<%=element._id %>">remove</a>
+                </div>
+                <div class="col-sm-1">
+                  <a style="color: blue;" href="/editAddress/<%=element._id %>">Edit</a>
+                </div>
+              </div>
+              <hr>
+          <%}) %>
+             </div>
+              </div>
+            </div>
+          </div>
+        
+          </div>
+        </div>
+       
+      </div>
+    </div>
+
+    
+  </section>
+ 
+
+      <%- include("../layouts/user/footer.ejs") %>
