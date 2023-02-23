@@ -20,6 +20,8 @@ const userLoad = async (req, res) => {
       const userdetails = req.session.user;
       const categoryData = await Category.find({})
       const banners = await ads.find({})
+      
+      //  const cart=userdetails.cart.length
       const productData = await Product.find({ status: 1 }).populate('category').exec()
 
       res.render('home', {
@@ -27,17 +29,18 @@ const userLoad = async (req, res) => {
         banners: banners,
         categoryData: categoryData,
         productData: productData,
+        // cart:cart
       });
     } else {
-  
+
       const categoryData = await Category.find({})
-  
+
       const banners = await ads.find({})
 
       const tws = await Product.find({ category: "63ef09c21eff86b6deb89ed7", status: 1 })
       const productData = await Product.find({ status: 1 }).populate('category').exec()
       res.render('home', {
-    
+
         banners: banners,
         categoryData: categoryData,
         productData: productData,
@@ -143,7 +146,11 @@ const loadSignup = async (req, res) => {
 const verifySignup = async (req, res) => {
 
   req.session.user = req.body
-  if (req.body.firstname == '' || req.body.lastname == '' || req.body.email == '' || req.body.password == '' || req.body.password == '') {
+  const found = await User.findOne({ username: req.body.username })
+  if (found) {
+    res.render('signup', { message: "username already exist ,try another" });
+  }
+  else if (req.body.firstname == '' || req.body.lastname == '' || req.body.email == '' || req.body.password == '' || req.body.password == '') {
     res.render('signup', { message: "All fields are required" });
   } else {
     // console.log('body'+req.body)
@@ -218,13 +225,18 @@ const loadProducts = async (req, res) => {
       const userdetails = req.session.user;
       const products = await Product.find({ category: name, status: 1 });
       const categorydata = await Category.find({})
-      res.render('productslist', { products: products, categorydata: categorydata, categoryData: categoryData, userdetails: userdetails })
+      res.render('productslist', { products: products,
+         categorydata: categorydata,
+          categoryData: categoryData,
+           userdetails: userdetails })
     } else {
       const name = req.params.id;
       const categoryData = await Category.find({ _id: name })
       const products = await Product.find({ category: name, status: 1 });
       const categorydata = await Category.find({})
-      res.render('productslist', { products: products, categorydata: categorydata, categoryData: categoryData })
+      res.render('productslist', { products: products,
+         categorydata: categorydata, 
+         categoryData: categoryData })
     }
   } catch (error) {
     console.log(error.message);
@@ -266,35 +278,38 @@ const userLogout = async (req, res) => {
 
 
 //user profile
-const userProfile=async(req,res)=>{
+const userProfile = async (req, res) => {
   try {
-    if(req.session.user){
-    const id=req.session.user._id;
-    const userdetails=await User.findOne({_id:id})
-       
-    const categorydata = await Category.find({})
-    res.render('profile',{userdetails:userdetails,categorydata:categorydata})
-  }else{
-    res.redirect('/login')
-  }} catch (error) {
+    if (req.session.user) {
+      const name = req.session.user.username;
+      const ids = await User.findOne({ username: name })
+      const userdetails = await User.findOne({ _id: ids._id })
+
+      const categorydata = await Category.find({})
+      res.render('profile', { userdetails: userdetails, categorydata: categorydata })
+    } else {
+      res.redirect('/login')
+    }
+  } catch (error) {
     console.log(error.message)
   }
 }
 
 //address view
-const addressView=async(req,res)=>{
+const addressView = async (req, res) => {
   try {
-    if(req.session.user){
-      const userdetails=req.session.user;
-
-      const datas=await User.findOne({_id:userdetails._id})
+    if (req.session.user) {
+      const name = req.session.user.username;
+      const userdetails = await User.findOne({ username: name })
+      const datas = await User.findOne({ _id: userdetails._id })
       const pincode = datas.address[0].pincode;
-console.log(pincode); 
-    const categorydata = await Category.find({})
-    res.render('address',{userdetails:userdetails,categorydata:categorydata,datas:datas})
- }else{
-  res.redirect('/login')
- } } catch (error) {
+      console.log(pincode);
+      const categorydata = await Category.find({})
+      res.render('address', { userdetails: userdetails, categorydata: categorydata, datas: datas })
+    } else {
+      res.redirect('/login')
+    }
+  } catch (error) {
     console.log(error.message)
   }
 }
@@ -302,15 +317,15 @@ console.log(pincode);
 
 //add address
 
-const addAddress=async(req,res)=>{
+const addAddress = async (req, res) => {
   try {
-    if(req.session.user){
-      const userdetails=req.session.user;
+    if (req.session.user) {
+      const userdetails = req.session.user;
 
-       
-    const categorydata = await Category.find({})
-    res.render('addAddress',{userdetails:userdetails,categorydata:categorydata})
-    }else{
+
+      const categorydata = await Category.find({})
+      res.render('addAddress', { userdetails: userdetails, categorydata: categorydata })
+    } else {
       res.redirect('/login')
     }
   } catch (error) {
@@ -320,24 +335,28 @@ const addAddress=async(req,res)=>{
 
 
 //insert address
-const insertAddress=async(req,res)=>{
+const insertAddress = async (req, res) => {
   try {
     console.log(req.body);
-    if(req.session.user){
-    
-    
-     username=req.session.user.username
-      const addressinserted=await User.updateOne({username:username},{$push:{address:{
-        houseName:req.body.hname,
-        street:req.body.street,
-        district:req.body.district,
-        country:req.body.country,
-        state:req.body.state,
-        pincode:req.body.pincode,
-        phone:req.body.number
-      }}})
-       res.redirect('/address')
-    }else{
+    if (req.session.user) {
+
+
+      const username = req.session.user.username
+      const addressinserted = await User.updateOne({ username: username }, {
+        $push: {
+          address: {
+            houseName: req.body.hname,
+            street: req.body.street,
+            district: req.body.district,
+            country: req.body.country,
+            state: req.body.state,
+            pincode: req.body.pincode,
+            phone: req.body.number
+          }
+        }
+      })
+      res.redirect('/address')
+    } else {
       res.redirect('/login')
     }
   } catch (error) {
@@ -347,100 +366,110 @@ const insertAddress=async(req,res)=>{
 
 
 //remove address
-const removeAddress = async(req,res)=>{
+const removeAddress = async (req, res) => {
   try {
 
-if(req.session.user){
-  const id=req.params.id;
- 
-  username=req.session.user.username;
-  const removeinserted=await User.updateOne({username:username},{$pull:{address:{
-   _id:id
-  }}})
-  res.redirect('/address')
-}else{
-  res.redirect('/login')
-}
+    if (req.session.user) {
+      const id = req.params.id;
+
+      const username = req.session.user.username;
+      const removeinserted = await User.updateOne({ username: username }, {
+        $pull: {
+          address: {
+            _id: id
+          }
+        }
+      })
+      res.redirect('/address')
+    } else {
+      res.redirect('/login')
+    }
 
   } catch (error) {
     console.log(error.message)
-}
+  }
 
 }
 
 
 //edit address load
 
-const editAddress =async (req,res)=>{
+const editAddress = async (req, res) => {
   try {
-    if(req.session.user){
-    const  id=req.params.id
-    username=req.session.user.username
-    const edit=await User.findOne({username:username,"address._id":id},{"address.$":1})
-    const userdetails=req.session.user;
-   console.log("hhhhhhhhhhhh"+edit)
-    
-    const categorydata = await Category.find({})
- 
-          res.render('editAddress',{edit:edit,categorydata:categorydata,userdetails:userdetails})
-    }else{
+    if (req.session.user) {
+      const id = req.params.id
+      const username = req.session.user.username
+      const edit = await User.findOne({ username: username, "address._id": id }, { "address.$": 1 })
+      const userdetails = req.session.user;
+      console.log("hhhhhhhhhhhh" + edit)
+
+      const categorydata = await Category.find({})
+
+      res.render('editAddress', { edit: edit, categorydata: categorydata, userdetails: userdetails })
+    } else {
       res.redirect('/login')
     }
-    
+
   } catch (error) {
     console.log(error.message)
   }
 }
 
 //edited address inserting
-const editedAddress=async(req,res)=>{
+const editedAddress = async (req, res) => {
   try {
-     if(req.session.user){
-         id=req.params.id;
-      
-         const setedited=await User.updateOne({username:req.session.user.username,"address._id":id},
-         {$set:{
-          "address.$":req.body
-          }})
-          res.redirect('/address')
-     }else{
+    if (req.session.user) {
+      id = req.params.id;
+
+      const setedited = await User.updateOne({ username: req.session.user.username, "address._id": id },
+        {
+          $set: {
+            "address.$": req.body
+          }
+        })
+      res.redirect('/address')
+    } else {
       res.redirect('/login')
-     }
+    }
   } catch (error) {
     console.log(error.message)
   }
 }
 
 //edit profile details
-const editProfile=async(req,res)=>{
+const editProfile = async (req, res) => {
   try {
-    if(req.session.user){
-      const id=req.session.user;
-       const userdetails=await User.findOne({id:id})
-         
+    if (req.session.user) {
+      const name = req.session.user.username;
+
+      const userdetails = await User.findOne({ username: name })
+
       const categorydata = await Category.find({})
-      res.render('editProfile',{userdetails:userdetails,categorydata:categorydata})
-    }else{
+      res.render('editProfile', { userdetails: userdetails, categorydata: categorydata })
+    } else {
       res.redirect('/login')
-  }} catch (error) {
+    }
+  } catch (error) {
     console.log(error.message)
   }
 }
 
 //profile edit insert
-const editedProfile=async(req, res)=>{
+const editedProfile = async (req, res) => {
   try {
     console.log(req.body);
-    if(req.session.user){
-       const update=await User.updateOne({username:req.session.user.username},{$set:{
-        firstname:req.body.fname,
-        lastname:req.body.lname,
-        email:req.body.email,
-        phone:req.body.phone,
-        username:req.body.username
-       }})
-     res.redirect('/user')
-    }else{
+    if (req.session.user) {
+      const update = await User.updateOne({ username: req.session.user.username }, {
+        $set: {
+          firstname: req.body.fname,
+          lastname: req.body.lname,
+          email: req.body.email,
+          phone: req.body.phone,
+          username: req.body.username
+        }
+      })
+      res.redirect('/user')
+    } else {
       res.redirect('/login')
     }
   } catch (error) {
@@ -453,7 +482,7 @@ const editedProfile=async(req, res)=>{
 //error
 const error = async (req, res) => {
   try {
-    
+
     res.render('/*')
   } catch (error) {
     console.log(error.message);

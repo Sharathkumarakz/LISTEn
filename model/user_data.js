@@ -47,10 +47,12 @@ const userData = new mongoose.Schema({
     },
     productTotalPrice: {
       type: Number,
+      required: true,
     },
   }],
   cartTotalPrice: {
     type: Number,
+    
   },
   address: [
     {

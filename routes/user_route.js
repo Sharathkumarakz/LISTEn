@@ -95,6 +95,11 @@ user_route.get('/removeAddress/:id',userController.removeAddress)
 user_route.get('/editAddress/:id',userController.editAddress)
 user_route.post('/editAddress/:id',userController.editedAddress)
 
+
+//change product quantity
+user_route.post ('/change-Product-Quantity',cartController.changeQuantity)
+
+
 user_route.use(function(req, res) {
   res.render('error').end('error');
 });

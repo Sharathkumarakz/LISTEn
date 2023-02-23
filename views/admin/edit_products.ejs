@@ -95,6 +95,21 @@
               </div>
               <% }); %>
             </form>
+
+            <!-- <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".bd-example-modal-lg">Edit Image</button> -->
+
+            <!-- <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+              <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                  <form action="/admin/editImage/" method="post">
+                    <input type="file" multiple name="image" class="form-control form-control-line"  onchange="viewImage(event)">
+                    <button type='submit'  class="btn btn-success">Submit</button>
+                  </form>
+                </div>
+              </div>
+            </div> -->
+
+
             <% if(typeof message !=='undefined' ){ %>
               <h5 style="color: rgb(224, 86, 86);">
                 <%= message %>
