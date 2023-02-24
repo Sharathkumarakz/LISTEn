@@ -18,7 +18,7 @@ user_route.use(bodyparser.urlencoded({extended:true}))
 const userController=require("../controllers/user_controller")
 const cartController=require("../controllers/cart_controller");
 const wishlistController=require("../controllers/wishlist_controller");
-
+const orderController=require("../controllers/order_controller");
 
 //get home
 user_route.get('/',userController.userLoad);
@@ -66,6 +66,11 @@ user_route.get('/addtoWishlist/:id',wishlistController.addToWishlist)
 
 //removewishlist
 user_route.get('/removeWishlist/:id',wishlistController.removeWishlist)
+
+
+//show checkout
+
+user_route.get('/checkout',orderController.viewCheckout)
 
 //logout
 user_route.get('/logout',auth.islogout,userController.userLogout);

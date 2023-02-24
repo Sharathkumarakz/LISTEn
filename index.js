@@ -43,6 +43,12 @@ const userRoute=require('./routes/user_route');
 app.use('/',userRoute); 
 
 
+app.use((err,req,res,next)=>{
+  console.log(err.stack);
+  res.status(500).send(err.stack)
+})
+
+
 app.listen(3000,function(){
   console.log("server is running");
 });

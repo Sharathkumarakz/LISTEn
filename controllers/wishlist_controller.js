@@ -6,8 +6,8 @@ const loadWishlist = async (req, res) => {
   try {
     if (req.session.user) {
       const id = req.session.user.username;
-       const userdetails=await User.findOne({username:id});
-      const wishlistData = await User.findOne({ _id:userdetails._id }).populate('wishlist.product').exec()
+      const userdetails = await User.findOne({ username: id });
+      const wishlistData = await User.findOne({ _id: userdetails._id }).populate('wishlist.product').exec()
 
       const categorydata = await Category.find({})
       res.render('wishlist', {
@@ -25,47 +25,47 @@ const loadWishlist = async (req, res) => {
 }
 
 
-const addToWishlist = async (req, res) => {
+const addToWishlist = async (req, res, next) => {
   try {
     if (req.session.user) {
       id = req.params.id;
-      const found=await User.findOne({username:req.session.user.username,"wishlist.product":id})
-      if(found){
+      const found = await User.findOne({ username: req.session.user.username, "wishlist.product": id })
+      if (found) {
         res.redirect('/wishlist')
-      }else{
-      const usename= req.session.user.username;
-      const categorydata = await Category.find({})
-      const userdetails= await User.findOne({username:usename})
-    
-
-     const  username = req.session.user.username;
+      } else {
+        const usename = req.session.user.username;
+        const categorydata = await Category.find({})
+        const userdetails = await User.findOne({ username: usename })
 
 
-      const wishlistInserted = await User.updateOne({ username: username }, { $push: { wishlist: { product: id } } })
-      const wishlistData = await User.findOne({ _id:userdetails._id }).populate('wishlist.product').exec()
-      res.render('wishlist', {
-        categorydata: categorydata,
-        userdetails: userdetails,
-        wishlistData: wishlistData
-      })
-   } 
-  } else {
+        const username = req.session.user.username;
+
+
+        const wishlistInserted = await User.updateOne({ username: username }, { $push: { wishlist: { product: id } } })
+        const wishlistData = await User.findOne({ _id: userdetails._id }).populate('wishlist.product').exec()
+        res.render('wishlist', {
+          categorydata: categorydata,
+          userdetails: userdetails,
+          wishlistData: wishlistData
+        })
+      }
+    } else {
       res.redirect('/login')
     }
-  
+
   } catch (error) {
-    console.log(error.message);
+    next(error);
   }
 }
 
 
 
-const removeWishlist = async (req, res) => {
+const removeWishlist = async (req, res, next) => {
   try {
     if (req.session.user) {
       const name = req.session.user.username;
       const categorydata = await Category.find({})
-   const  userdetails=await User.findOne({username:name})
+      const userdetails = await User.findOne({ username: name })
       const id = req.params.id;
 
       username = req.session.user.username;
@@ -73,7 +73,7 @@ const removeWishlist = async (req, res) => {
 
       const deleteWishlist = await User.updateOne({ username: username }, { $pull: { wishlist: { product: id } } })
 
-      const wishlistData = await User.findOne({_id:userdetails._id }).populate('wishlist.product').exec()
+      const wishlistData = await User.findOne({ _id: userdetails._id }).populate('wishlist.product').exec()
       res.render('wishlist', {
         categorydata: categorydata,
         userdetails: userdetails,
@@ -84,7 +84,7 @@ const removeWishlist = async (req, res) => {
     }
 
   } catch (error) {
-    console.log(error.message);
+    next(error);
   }
 }
 module.exports = {

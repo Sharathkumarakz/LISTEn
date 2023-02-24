@@ -12,15 +12,16 @@ const authtoken = process.env.TWILIO_AUTH_TOKEN;
 const client = require("twilio")(accountsid, authtoken);
 const bcrypt = require("bcrypt");
 const { ObjectId } = require('mongodb');
+const { request } = require('express');
 
-const userLoad = async (req, res) => {
+const userLoad = async (req, res, next) => {
   try {
 
     if (req.session.user) {
       const userdetails = req.session.user;
       const categoryData = await Category.find({})
       const banners = await ads.find({})
-      
+
       //  const cart=userdetails.cart.length
       const productData = await Product.find({ status: 1 }).populate('category').exec()
 
@@ -49,12 +50,12 @@ const userLoad = async (req, res) => {
     }
 
   } catch (error) {
-    console.log(error.message);
+    next(error);
   }
 }
 
 
-const userSingleProductLoad = async (req, res) => {
+const userSingleProductLoad = async (req, res, next) => {
 
   try {
     if (req.session.user) {
@@ -78,24 +79,24 @@ const userSingleProductLoad = async (req, res) => {
       res.render('singleproduct', { singleproduct: singleproduct, categoryData: categoryData });
     }
   } catch (error) {
-    console.log(error.message);
+    next(error);
   }
 
 }
 
 //load login
 
-const loadLogin = async (req, res) => {
+const loadLogin = async (req, res, next) => {
   try {
     res.render('login')
   } catch (error) {
-    console.log(error.message);
+    next(error);
   }
 
 }
 //login check
 
-const loginCheck = async (req, res) => {
+const loginCheck = async (req, res, next) => {
   try {
     const user = req.body.username;
     const password = req.body.password;
@@ -126,26 +127,26 @@ const loginCheck = async (req, res) => {
     }
 
   } catch (error) {
-    console.log(error.message);
+    next(error);
   }
 
 }
 
 
-const loadSignup = async (req, res) => {
+const loadSignup = async (req, res, next) => {
   try {
     res.render('signup')
   } catch (error) {
-    console.log(error.message);
+    next(error);
   }
 
 }
 
 //verify signup
 
-const verifySignup = async (req, res) => {
+const verifySignup = async (req, res, next) => {
 
-  req.session.user = req.body
+  req.session.userdata = req.body
   const found = await User.findOne({ username: req.body.username })
   if (found) {
     res.render('signup', { message: "username already exist ,try another" });
@@ -165,7 +166,7 @@ const verifySignup = async (req, res) => {
         });
       res.render('otppage')
     } catch (error) {
-      console.log(error.message);
+      next(error);
     }
   }
 }
@@ -176,7 +177,7 @@ const verifyOtp = async (req, res, next) => {
   const otp = req.body.otp;
   try {
     req.session.user
-    const details = req.session.user;
+    const details = req.session.userdata;
 
     const verifiedResponse = await client.verify.v2
       .services('VA3814afa129f17fe65c4ad63df60b09d3')
@@ -199,6 +200,7 @@ const verifyOtp = async (req, res, next) => {
       const userData = await userdata.save();
       // console.log()
       // console.log("sss" + userData)
+      req.session.user=userData
       if (userData) {
         res.redirect('/');
       } else {
@@ -209,7 +211,7 @@ const verifyOtp = async (req, res, next) => {
       res.render('otppage', { message: "wrong otp" })
     }
   } catch (error) {
-    console.log(error.message);
+    next(error);
   }
 }
 
@@ -217,7 +219,7 @@ const verifyOtp = async (req, res, next) => {
 
 
 //load prductspage
-const loadProducts = async (req, res) => {
+const loadProducts = async (req, res, next) => {
   try {
     if (req.session.user) {
       const name = req.params.id;
@@ -225,27 +227,31 @@ const loadProducts = async (req, res) => {
       const userdetails = req.session.user;
       const products = await Product.find({ category: name, status: 1 });
       const categorydata = await Category.find({})
-      res.render('productslist', { products: products,
-         categorydata: categorydata,
-          categoryData: categoryData,
-           userdetails: userdetails })
+      res.render('productslist', {
+        products: products,
+        categorydata: categorydata,
+        categoryData: categoryData,
+        userdetails: userdetails
+      })
     } else {
       const name = req.params.id;
       const categoryData = await Category.find({ _id: name })
       const products = await Product.find({ category: name, status: 1 });
       const categorydata = await Category.find({})
-      res.render('productslist', { products: products,
-         categorydata: categorydata, 
-         categoryData: categoryData })
+      res.render('productslist', {
+        products: products,
+        categorydata: categorydata,
+        categoryData: categoryData
+      })
     }
   } catch (error) {
-    console.log(error.message);
+    next(error);
   }
 
 }
 
 //show all products
-const viewAllProducts = async (req, res) => {
+const viewAllProducts = async (req, res, next) => {
   try {
     if (req.session.user) {
       const userdetails = req.session.user
@@ -262,23 +268,23 @@ const viewAllProducts = async (req, res) => {
       res.render('allproducts', { categorydata: categorydata, products: products, })
     }
   } catch (error) {
-    console.log(error.message);
+    next(error);
   }
 }
 
-const userLogout = async (req, res) => {
+const userLogout = async (req, res, next) => {
   try {
     req.session.destroy();
     res.redirect('/')
   } catch (error) {
-    console.log(error.message);
+    next(error);
   }
 
 }
 
 
 //user profile
-const userProfile = async (req, res) => {
+const userProfile = async (req, res, next) => {
   try {
     if (req.session.user) {
       const name = req.session.user.username;
@@ -291,33 +297,32 @@ const userProfile = async (req, res) => {
       res.redirect('/login')
     }
   } catch (error) {
-    console.log(error.message)
+    next(error);
   }
 }
 
 //address view
-const addressView = async (req, res) => {
+const addressView = async (req, res, next) => {
   try {
     if (req.session.user) {
       const name = req.session.user.username;
       const userdetails = await User.findOne({ username: name })
       const datas = await User.findOne({ _id: userdetails._id })
-      const pincode = datas.address[0].pincode;
-      console.log(pincode);
+  
       const categorydata = await Category.find({})
       res.render('address', { userdetails: userdetails, categorydata: categorydata, datas: datas })
     } else {
       res.redirect('/login')
     }
   } catch (error) {
-    console.log(error.message)
+    next(error);
   }
 }
 
 
 //add address
 
-const addAddress = async (req, res) => {
+const addAddress = async (req, res, next) => {
   try {
     if (req.session.user) {
       const userdetails = req.session.user;
@@ -329,13 +334,13 @@ const addAddress = async (req, res) => {
       res.redirect('/login')
     }
   } catch (error) {
-    console.log(error.message)
+    next(error);
   }
 }
 
 
 //insert address
-const insertAddress = async (req, res) => {
+const insertAddress = async (req, res, next) => {
   try {
     console.log(req.body);
     if (req.session.user) {
@@ -360,13 +365,13 @@ const insertAddress = async (req, res) => {
       res.redirect('/login')
     }
   } catch (error) {
-    console.log(error.message)
+    next(error);
   }
 }
 
 
 //remove address
-const removeAddress = async (req, res) => {
+const removeAddress = async (req, res, next) => {
   try {
 
     if (req.session.user) {
@@ -386,7 +391,7 @@ const removeAddress = async (req, res) => {
     }
 
   } catch (error) {
-    console.log(error.message)
+    next(error);
   }
 
 }
@@ -394,7 +399,7 @@ const removeAddress = async (req, res) => {
 
 //edit address load
 
-const editAddress = async (req, res) => {
+const editAddress = async (req, res, next) => {
   try {
     if (req.session.user) {
       const id = req.params.id
@@ -411,12 +416,12 @@ const editAddress = async (req, res) => {
     }
 
   } catch (error) {
-    console.log(error.message)
+    next(error);
   }
 }
 
 //edited address inserting
-const editedAddress = async (req, res) => {
+const editedAddress = async (req, res, next) => {
   try {
     if (req.session.user) {
       id = req.params.id;
@@ -432,12 +437,12 @@ const editedAddress = async (req, res) => {
       res.redirect('/login')
     }
   } catch (error) {
-    console.log(error.message)
+    next(error);
   }
 }
 
 //edit profile details
-const editProfile = async (req, res) => {
+const editProfile = async (req, res, next) => {
   try {
     if (req.session.user) {
       const name = req.session.user.username;
@@ -450,12 +455,12 @@ const editProfile = async (req, res) => {
       res.redirect('/login')
     }
   } catch (error) {
-    console.log(error.message)
+    next(error);
   }
 }
 
 //profile edit insert
-const editedProfile = async (req, res) => {
+const editedProfile = async (req, res, next) => {
   try {
     console.log(req.body);
     if (req.session.user) {
@@ -473,19 +478,19 @@ const editedProfile = async (req, res) => {
       res.redirect('/login')
     }
   } catch (error) {
-    console.log(error.message)
+    next(error);
   }
 }
 
 
 
 //error
-const error = async (req, res) => {
+const error = async (req, res, next) => {
   try {
 
     res.render('/*')
   } catch (error) {
-    console.log(error.message);
+    next(error);
   }
 
 }

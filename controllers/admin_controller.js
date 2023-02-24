@@ -2,22 +2,23 @@ const Admin = require('../model/admin_data');
 
 const User = require('../model/user_data');
 const { ObjectId } = require('mongodb');
-const moment=require('moment');
+const moment = require('moment');
 
 //admin login page
-const loadsignin = async (req, res) => {
+const loadsignin = async (req, res, next) => {
   try {
     res.render('admin_login');
 
   } catch (error) {
-    console.log(error.message);
+    next(error);
+
   }
 }
 
 
 
 //admin verify
-const adminverify = async (req, res) => {
+const adminverify = async (req, res, next) => {
   try {
     const password = req.body.password;
     const username = req.body.username;
@@ -26,8 +27,8 @@ const adminverify = async (req, res) => {
     // console.log(adminData)
     if (adminData) {
       if (adminData.password === password) {
-        req.session.admin_id=adminData._id
-       
+        req.session.admin_id = adminData._id
+
         res.redirect('/admin/dashboard')
       } else {
         res.render('admin_login', { message: "password is wrong" });
@@ -42,18 +43,18 @@ const adminverify = async (req, res) => {
 
 
   } catch (error) {
-    console.log(error.message);
+    next(error);
   }
 }
 
 
 //get dashboard
 
-const dashboard = async (req, res) => {
+const dashboard = async (req, res, next) => {
   try {
     res.render('admin_dashboard')
   } catch (error) {
-    console.log(error.message);
+    next(error);
   }
 }
 
@@ -64,13 +65,13 @@ const dashboard = async (req, res) => {
 
 
 //view user
-const viewUser = async (req, res) => {
+const viewUser = async (req, res, next) => {
   try {
     const user = await User.find({})
-     
-    res.render('user_management', { user:user,moment:moment })
+
+    res.render('user_management', { user: user, moment: moment })
   } catch (error) {
-    console.log(error.message);
+    next(error);
   }
 }
 
@@ -83,42 +84,42 @@ const viewUser = async (req, res) => {
 
 
 //block user
-const blockUser=async(req,res)=>{
+const blockUser = async (req, res, next) => {
   try {
-    
-    const id=req.params.id;
-    console.log("id"+req.params.id);
-   await User.updateOne({_id:id},{$set:{status:false}})
-  
+
+    const id = req.params.id;
+    console.log("id" + req.params.id);
+    await User.updateOne({ _id: id }, { $set: { status: false } })
+
     res.redirect('/admin/users');
   } catch (error) {
-    console.log(error.message);
+    next(error);
   }
 }
 
 
 //unblock user
-const unBlockUser=async(req,res)=>{
+const unBlockUser = async (req, res, next) => {
   try {
-    
-    const id=req.params.id;
-    console.log("id"+req.query.id);
-   await User.updateOne({_id:id},{$set:{status:true}})
-  
+
+    const id = req.params.id;
+    console.log("id" + req.query.id);
+    await User.updateOne({ _id: id }, { $set: { status: true } })
+
     res.redirect('/admin/users');
   } catch (error) {
-    console.log(error.message);
+    next(error);
   }
 }
 
 
 //logout
-const logOut=async(req,res)=>{
+const logOut = async (req, res, next) => {
   try {
     req.session.destroy();
     res.redirect('/admin')
   } catch (error) {
-    console.log(error.message);
+    next(error);
   }
 
 }
@@ -127,8 +128,8 @@ module.exports = {
   adminverify,
   dashboard,
   viewUser,
-   unBlockUser,
-  blockUser, 
- logOut
+  unBlockUser,
+  blockUser,
+  logOut
 }
 

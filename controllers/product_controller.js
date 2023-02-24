@@ -7,27 +7,27 @@ const { ObjectId } = require('mongodb');
 
 //show product list
 
-const viewProduct = async (req, res) => {
+const viewProduct = async (req, res, next) => {
   try {
 
     const products = await Product.find({})
-    const datas= await Product.find({}).populate('category').exec()
-    console.log("ccccccccccccccccccccc"+datas.name);
-    res.render('product_list',{products:products,datas:datas})
+    const datas = await Product.find({}).populate('category').exec()
+    
+    res.render('product_list', { products: products, datas: datas })
   } catch (error) {
-    console.log(error.message);
+    next(error);
   }
 }
 
 
 //add product page
-const   addProduct = async (req, res) => {
+const addProduct = async (req, res, next) => {
   try {
     const categoryData = await Category.find({})
-  
+
     res.render('add_products', { categoryData: categoryData })
   } catch (error) {
-    console.log(error.message);
+    next(error);
   }
 }
 
@@ -36,63 +36,63 @@ const   addProduct = async (req, res) => {
 
 
 //insert product
-const insertProduct = async (req, res) => {
-  if(req.body.name ==''||req.body.category ==''||req.body.stock ==''||req.body.price ==''||req.body.description ==''||req.body.brand==''){
+const insertProduct = async (req, res, next) => {
+  if (req.body.name == '' || req.body.category == '' || req.body.stock == '' || req.body.price == '' || req.body.description == '' || req.body.brand == '') {
     const categoryData = await Category.find({})
-    res.render('add_products',{categoryData:categoryData,message: "All felds are needed"});
+    res.render('add_products', { categoryData: categoryData, message: "All felds are needed" });
     console.log("hellow");
 
-   }else{
-   
-  try {
- 
-    // console.log(req.files);
-    const images=[];
-    for(file of req.files){
-      images.push(file.filename);
+  } else {
+
+    try {
+
+      // console.log(req.files);
+      const images = [];
+      for (file of req.files) {
+        images.push(file.filename);
+      }
+      const product = new Product({
+        name: req.body.name,
+        price: req.body.price,
+        description: req.body.description,
+        image: images,
+        category: req.body.category,
+        stock: req.body.stock,
+        brand: req.body.brand
+      });
+      //  console.log(req.body)
+      const productData = await product.save();
+
+      if (productData) {
+
+
+        res.redirect('/admin/products');
+      } else {
+
+        res.render('add_products', { message: "action failed" });
+
+      }
+
+
+
+    } catch (error) {
+      next(error);
     }
-    const product = new Product({
-      name: req.body.name,
-      price: req.body.price,
-      description: req.body.description,
-      image:images,
-      category: req.body.category,
-      stock: req.body.stock,
-      brand: req.body.brand
-    });
-    //  console.log(req.body)
-    const productData = await product.save();
-  
-    if (productData) {
-
-
-      res.redirect('/admin/products');
-    } else {
-
-      res.render('add_products', { message: "action failed"});
-
-    }
-  
-   
-
-  } catch (error) {
-    console.log(error.message);
   }
-}
 }
 
 
 
 //delete product
-const deleteProduct=async(req,res)=>{
+const deleteProduct = async (req, res, next) => {
   try {
-    
-    const id=req.params.id;
-    console.log("id"+req.query.id);
-   await Product.deleteOne({_id:id})
+
+    const id = req.params.id;
+    console.log("id" + req.query.id);
+    await Product.deleteOne({ _id: id })
     res.redirect('/admin/products');
   } catch (error) {
-    console.log(error.message);
+    next(error);
   }
 }
 
@@ -100,98 +100,97 @@ const deleteProduct=async(req,res)=>{
 
 //unlist products
 
-const unlistProduct=async(req,res)=>{
+const unlistProduct = async (req, res, next) => {
   try {
-    
-    const id=req.params.id;
-    console.log("id"+req.params.id);
-   await Product.updateOne({_id:id},{
-    $set:{status:false}
-   })
+
+    const id = req.params.id;
+    console.log("id" + req.params.id);
+    await Product.updateOne({ _id: id }, {
+      $set: { status: false }
+    })
     res.redirect('/admin/products');
   } catch (error) {
-    console.log(error.message);
+    next(error);
   }
 }
 
 
 //list products
 
-const listProduct=async(req,res)=>{
+const listProduct = async (req, res, next) => {
   try {
-    
-    const id=req.params.id;
-    console.log("id"+req.params.id);
-   await Product.updateOne({_id:id},{
-    $set:{status:true}
-   })
+
+    const id = req.params.id;
+    console.log("id" + req.params.id);
+    await Product.updateOne({ _id: id }, {
+      $set: { status: true }
+    })
     res.redirect('/admin/products');
   } catch (error) {
-    console.log(error.message);
+    next(error);
   }
 }
 
 
 
 //load edit product
-const loadEditProduct=async(req,res)=>{
+const loadEditProduct = async (req, res, next) => {
   try {
-    const id= req.params.id
-    const details1=await Product.findOne({_id:id}).populate('category').exec()
+    const id = req.params.id
+    const details1 = await Product.findOne({ _id: id }).populate('category').exec()
+
+    const details = await Product.find({ _id: id })
+    const main = details.id;
   
-    const details=await Product.find({_id:id})
-    const main=details.id;
-    console.log('this is detailssssssss in edit producttt' , details);
-     console.log("ddddddddddddddddddd"+details1.category.categoryName);
-     const catData=await Category.find({categoryName:details1.category.categoryName})
-    const categoryData=await Category.find({})
+    const catData = await Category.find({ categoryName: details1.category.categoryName })
+    const categoryData = await Category.find({})
     // console.log("iiiiiiiiidddddddd"+details)
-    res.render('edit_products',{details:details,categoryData:categoryData,main:main,catData:catData})
-    
+    res.render('edit_products', { details: details, categoryData: categoryData, main: main, catData: catData })
+
   } catch (error) {
-    console.log(error.message);
+    next(error);
   }
 
 }
 //editproduct
-const editProduct=async(req,res)=>{
+const editProduct = async (req, res, next) => {
   try {
-    const id= req.params.id;
+    const id = req.params.id;
     console.log(req.body);
     console.log(id);
     console.log(req.files);
-    const images=[];
-    for(file of req.files){
+    const images = [];
+    for (file of req.files) {
       images.push(file.filename);
     }
-    await Product.updateOne({_id:id},{$set:{
+    await Product.updateOne({ _id: id }, {
+      $set: {
         name: req.body.name,
         price: req.body.price,
         description: req.body.description,
-        image:images,
+        image: images,
         category: req.body.category,
         stock: req.body.stock,
         brand: req.body.brand
-   
-    }})
+
+      }
+    })
     res.redirect('/admin/products');
   } catch (error) {
-    console.log(error.message);
+    next(error);
   }
 
 }
 
 
 module.exports = {
-  
+
   viewProduct,
   addProduct,
   insertProduct,
-   unlistProduct,
+  unlistProduct,
   deleteProduct,
   listProduct,
   loadEditProduct,
- 
   editProduct,
- 
 }
