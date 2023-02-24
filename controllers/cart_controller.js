@@ -13,12 +13,12 @@ const viewCart = async (req, res, next) => {
 
       const id = req.session.user.username;
       const userdetail = await User.findOne({ username: id });
-      // console.log("pooooooooooooooooooii"+userdetails);
+   
 
       const categorydata = await Category.find({})
 
       const cartData = await User.findOne({ _id: userdetail._id }).populate('cart.product').exec()
-      // console.log("cccccccccccccccccdddddddd"+cartData);
+     
       const username = req.session.user.username
       const cart = await User.findOne({ username: username }).populate('cart.product').exec()
       let cartTotal = 0;

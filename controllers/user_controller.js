@@ -200,7 +200,7 @@ const verifyOtp = async (req, res, next) => {
       const userData = await userdata.save();
       // console.log()
       // console.log("sss" + userData)
-      req.session.user=userData
+      req.session.user = userData
       if (userData) {
         res.redirect('/');
       } else {
@@ -308,7 +308,7 @@ const addressView = async (req, res, next) => {
       const name = req.session.user.username;
       const userdetails = await User.findOne({ username: name })
       const datas = await User.findOne({ _id: userdetails._id })
-  
+
       const categorydata = await Category.find({})
       res.render('address', { userdetails: userdetails, categorydata: categorydata, datas: datas })
     } else {

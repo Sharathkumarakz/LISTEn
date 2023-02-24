@@ -9,11 +9,11 @@ const auth=require('../middlewares/auth');
 
 
 
-const bodyparser=require('body-parser')
 
 
-admin_route.use(bodyparser.json());
-admin_route.use(bodyparser.urlencoded({extended:true}))
+
+admin_route.use(express.json());
+admin_route.use(express.urlencoded({extended:true}))
 
 const multer=require("multer");
 const storage=multer.diskStorage({

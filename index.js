@@ -4,10 +4,6 @@ mongoose.connect("mongodb://127.0.0.1:27017/listen");
 
 
 
-
-
-
-// const bodyparser = require('body-parser')
 const session=require("express-session")
 const path=require('path')
 

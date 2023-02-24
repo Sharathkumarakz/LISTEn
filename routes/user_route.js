@@ -10,10 +10,8 @@ user_route.set('view engine','ejs');
 user_route.set('views','./views/user')
 
 
-
-const bodyparser=require('body-parser')
-user_route.use(bodyparser.json());
-user_route.use(bodyparser.urlencoded({extended:true}))
+user_route.use(express.json());
+user_route.use(express.urlencoded({extended:true}))
 
 const userController=require("../controllers/user_controller")
 const cartController=require("../controllers/cart_controller");
@@ -72,8 +70,14 @@ user_route.get('/removeWishlist/:id',wishlistController.removeWishlist)
 
 user_route.get('/checkout',orderController.viewCheckout)
 
+user_route.post('/checkout',orderController.successLoad)
+
 //logout
 user_route.get('/logout',auth.islogout,userController.userLogout);
+
+
+
+
 
 
 //user profile
