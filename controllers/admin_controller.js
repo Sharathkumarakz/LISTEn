@@ -1,5 +1,5 @@
 const Admin = require('../model/admin_data');
-
+const Order=require("../model/order_data");
 const User = require('../model/user_data');
 const { ObjectId } = require('mongodb');
 const moment = require('moment');
@@ -76,6 +76,36 @@ const viewUser = async (req, res, next) => {
 }
 
 
+//view order
+const viewOrder=async(req,res,next)=>{
+  try {
+   
+    const orderDetails=await Order.find({})
+
+    const order=[];
+    if(orderDetails.length>0){
+      for(let i=0;i<orderDetails.length;i++){
+        order.push(await Order.findOne({}).populate('product.productId'))
+      }
+    }
+    console.log("ooooooooooooooooooooooooooooooooooo"+order);
+
+  
+
+    const user=[];
+    if(orderDetails.length > 0) {
+      for(let i=0;i<orderDetails.length;i++){
+         user.push(await Order.findOne({}).populate('userId'))
+      }
+    }
+    console.log("uuuuuuuuuuuuuuuuuuuuuuuuuuu"+user);
+    res.render('orders',{user:user,order:order,orderDetails:orderDetails})
+
+  } catch (error) {
+    next(error)
+  }
+}
+
 
 
 
@@ -95,6 +125,26 @@ const blockUser = async (req, res, next) => {
   } catch (error) {
     next(error);
   }
+}
+
+
+
+const dropdown= async (req,res,next)=>{
+  console.log(req.body)
+  try {
+     console.log(req.body);
+     const orderId=req.body.orderId
+     const Status=req.body.status
+     const change = await Order.updateOne({orderId:orderId }, {
+      $set: { status: Status}
+     })
+     if(change){
+      res.json({ success: true,Status})
+     }
+  } catch (error) {
+    next(error);
+  }
+
 }
 
 
@@ -130,6 +180,8 @@ module.exports = {
   viewUser,
   unBlockUser,
   blockUser,
-  logOut
+  logOut,
+  viewOrder,
+  dropdown
 }
 

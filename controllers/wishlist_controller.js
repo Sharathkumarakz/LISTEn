@@ -31,7 +31,8 @@ const addToWishlist = async (req, res, next) => {
       id = req.params.id;
       const found = await User.findOne({ username: req.session.user.username, "wishlist.product": id })
       if (found) {
-        res.redirect('/wishlist')
+        // res.redirect('/wishlist')
+        res.redirect('/')
       } else {
         const usename = req.session.user.username;
         const categorydata = await Category.find({})
@@ -43,11 +44,12 @@ const addToWishlist = async (req, res, next) => {
 
         const wishlistInserted = await User.updateOne({ username: username }, { $push: { wishlist: { product: id } } })
         const wishlistData = await User.findOne({ _id: userdetails._id }).populate('wishlist.product').exec()
-        res.render('wishlist', {
-          categorydata: categorydata,
-          userdetails: userdetails,
-          wishlistData: wishlistData
-        })
+        // res.render('wishlist', {
+        //   categorydata: categorydata,
+        //   userdetails: userdetails,
+        //   wishlistData: wishlistData
+        // })
+        res.redirect('/')
       }
     } else {
       res.redirect('/login')

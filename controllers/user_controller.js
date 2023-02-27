@@ -288,8 +288,8 @@ const userProfile = async (req, res, next) => {
   try {
     if (req.session.user) {
       const name = req.session.user.username;
-      const ids = await User.findOne({ username: name })
-      const userdetails = await User.findOne({ _id: ids._id })
+      const ids = await User.findOne({ username:name })
+      const userdetails = await User.findOne({_id: ids._id })
 
       const categorydata = await Category.find({})
       res.render('profile', { userdetails: userdetails, categorydata: categorydata })
@@ -339,6 +339,24 @@ const addAddress = async (req, res, next) => {
 }
 
 
+
+const addAddressCheckout = async (req, res, next) => {
+  try {
+    if (req.session.user) {
+      const userdetails = req.session.user;
+
+
+      const categorydata = await Category.find({})
+      res.render('checkout_address', { userdetails: userdetails, categorydata: categorydata })
+    } else {
+      res.redirect('/login')
+    }
+  } catch (error) {
+    next(error);
+  }
+}
+
+
 //insert address
 const insertAddress = async (req, res, next) => {
   try {
@@ -368,6 +386,41 @@ const insertAddress = async (req, res, next) => {
     next(error);
   }
 }
+
+
+
+
+//insert address checkout
+const insertAddressheckout = async (req, res, next) => {
+  try {
+    console.log(req.body);
+    if (req.session.user) {
+
+
+      const username = req.session.user.username
+      const addressinserted = await User.updateOne({ username: username }, {
+        $push: {
+          address: {
+            houseName: req.body.hname,
+            street: req.body.street,
+            district: req.body.district,
+            country: req.body.country,
+            state: req.body.state,
+            pincode: req.body.pincode,
+            phone: req.body.number
+          }
+        }
+      })
+      res.redirect('/checkout')
+    } else {
+      res.redirect('/login')
+    }
+  } catch (error) {
+    next(error);
+  }
+}
+
+
 
 
 //remove address
@@ -464,6 +517,19 @@ const editedProfile = async (req, res, next) => {
   try {
     console.log(req.body);
     if (req.session.user) {
+
+       const found=await User.findOne({username:req.body.username})
+      
+      if(found){
+        
+        const name = req.session.user.username;
+        const userdetails = await User.findOne({ username: name })
+
+        const categorydata = await Category.find({})
+        res.render('editProfile', { userdetails: userdetails, categorydata: categorydata,message:'username Already exist. Try another' })
+
+
+      }else{
       const update = await User.updateOne({ username: req.session.user.username }, {
         $set: {
           firstname: req.body.fname,
@@ -474,7 +540,7 @@ const editedProfile = async (req, res, next) => {
         }
       })
       res.redirect('/user')
-    } else {
+   } } else {
       res.redirect('/login')
     }
   } catch (error) {
@@ -502,6 +568,8 @@ const error = async (req, res, next) => {
 module.exports = {
   userLoad,
   addAddress,
+  addAddressCheckout,
+  insertAddressheckout,
   userProfile,
   addressView,
   userSingleProductLoad,

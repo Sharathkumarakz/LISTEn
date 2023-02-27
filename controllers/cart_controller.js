@@ -60,7 +60,10 @@ const addCart = async (req, res, next) => {
         // const qnty=await User.updateOne({username:req.session.user.username,"cart.product":id},{
         //   $inc:{"cart.$.quantity":1}
         // })  
-        res.redirect('/cart')
+        const username = req.session.user.username;
+        const deleteWishlist = await User.updateOne({ username: username }, { $pull: { wishlist: { product: id } } })
+
+        res.redirect('/')
       } else {
 
 
@@ -80,10 +83,12 @@ const addCart = async (req, res, next) => {
         })
         const userdetails = await User.findOne({ username: username });
         const cartData = await User.findOne({ _id: userdetails._id }).populate('cart.product').exec()
+        
+      const deleteWishlist = await User.updateOne({ username: username }, { $pull: { wishlist: { product: id } } })
 
-        res.render('cart', { categorydata: categorydata, userdetails: userdetails, cartData: cartData })
+        // res.render('cart', { categorydata: categorydata, userdetails: userdetails, cartData: cartData })
         //  console.log("cccccccccccccc"+cartData);
-
+   res.redirect('/')
       }
     }
     else {

@@ -52,14 +52,18 @@
                 </div>
               </div>
               <hr>
-              <div class="row">
+              <!-- <div class="row">
                 <div class="col-sm-3">
                   <p class="mb-0" >username</p>
                 </div>
                 <div class="col-sm-9">
-                  <input type="text" name="username" class="form-control form-control-line" value="<%=userdetails.username %>">           </div>
+                  <input type="text" name="username" class="form-control form-control-line" value="<%=userdetails.username %>">  <% if(typeof message !=='undefined' ){ %>
+                    <h6 style="color: rgb(224, 86, 86);">
+                      <%= message %>
+                    </h6>
+                    <% } %>           </div>
               </div>
-              <hr>
+              <hr> -->
               <!-- <div class="row">
                 <div class="col-sm-3">
                   <p class="mb-0">Address</p>

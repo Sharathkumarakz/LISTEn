@@ -1,10 +1,10 @@
 const mongoose = require('mongoose');
 const { v4: uuidv4 } = require('uuid');
-const Product = require('../model/products_data');
+// const Product = require('../model/products_data');
 
-const Schema = mongoose.Schema;
+// const Schema = mongoose.Schema;
 
-const orderData = new Schema({
+const orderData = new mongoose.Schema({
   userId: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User',
@@ -28,7 +28,7 @@ const orderData = new Schema({
     {
       productId: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'product',
+        ref: 'Product',
         required: true,
       },
       quantity:{
@@ -54,5 +54,5 @@ const orderData = new Schema({
   },
 });
 
-const Order = mongoose.model('Order', orderData);
-module.exports = Order;
+module.exports = mongoose.model('Order', orderData);
+ 

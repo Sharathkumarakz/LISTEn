@@ -72,6 +72,9 @@ user_route.get('/checkout',orderController.viewCheckout)
 
 user_route.post('/checkout',orderController.successLoad)
 
+//view orders 
+user_route.get('/orders',orderController.viewOrders)
+
 //logout
 user_route.get('/logout',auth.islogout,userController.userLogout);
 
@@ -91,7 +94,8 @@ user_route.get('/address',userController.addressView);
 //user add address
 user_route.get('/addAddress',userController.addAddress);
 user_route.post('/addAddress',userController.insertAddress);
-
+user_route.get('/addAddressCheckout',userController.addAddressCheckout);
+user_route.post('/addAddressCheckout',userController.insertAddressheckout);
 //edit profile details
 user_route.get('/editProfile',userController.editProfile);
 user_route.post('/editedProfile/:id',userController.editedProfile);
@@ -100,6 +104,11 @@ user_route.post('/editedProfile/:id',userController.editedProfile);
 //remove address
 user_route.get('/removeAddress/:id',userController.removeAddress)
 
+
+//cancel order
+user_route.post('/cancelOrder',orderController.cancelOrder)
+
+
 //edit address
 user_route.get('/editAddress/:id',userController.editAddress)
 user_route.post('/editAddress/:id',userController.editedAddress)
@@ -107,6 +116,11 @@ user_route.post('/editAddress/:id',userController.editedAddress)
 
 //change product quantity
 user_route.post ('/change-Product-Quantity',cartController.changeQuantity)
+
+// view Orders
+user_route.get ('/viewOrders/:id',orderController.DetailOrderView)
+
+
 
 
 user_route.use(function(req, res) {

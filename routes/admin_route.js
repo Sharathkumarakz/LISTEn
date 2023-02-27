@@ -32,7 +32,7 @@ const adminController=require("../controllers/admin_controller")
 const productController=require("../controllers/product_controller")
 const categoryController=require("../controllers/category_controller")
 const adsController=require("../controllers/Ads_controller")
-
+const orderController=require("../controllers/order_controller")
 
 admin_route.get('/',auth.islogout,adminController.loadsignin);
 
@@ -64,6 +64,11 @@ admin_route.post('/addProducts',upload.array('image',4),productController.insert
 //delete category
  admin_route.get('/deleteCategory/:id',auth.islogin,categoryController.deleteCategory);
 
+//view order
+admin_route.get('/orders',auth.islogin,adminController.viewOrder);
+
+
+
 
  //delete product
  admin_route.get('/deleteProduct/:id',auth.islogin,productController.deleteProduct);
@@ -81,7 +86,8 @@ admin_route.get('/unlistProduct/:id',auth.islogin,productController.unlistProduc
 admin_route.get('/listProduct/:id',auth.islogin,productController.listProduct);
 
 
-
+//order Status
+admin_route.post('/change-order-status',adminController.dropdown);
 
 // banner
 admin_route.get('/addAdds',auth.islogin,adsController.addAdds);
@@ -104,7 +110,14 @@ admin_route.get('/logout',auth.islogin,adminController.logOut);
 
 //edit user
 admin_route.get('/editProduct/:id',auth.islogin,productController.loadEditProduct);
-admin_route.post('/editProduct/:id',upload.array('image',4),productController.editProduct);
+admin_route.post('/editProduct/:id',productController.editProduct);
+
+
+//edit image
+admin_route.post('/editImage/:id',upload.array('image',4),auth.islogin,productController.loadEditImage);
+admin_route.get('/deleteImage/:id/:imgId',auth.islogin,productController.deleteProductImage);
+
+
 
 //edit Ads
 admin_route.get('/ads',auth.islogin,adsController.loadAds);

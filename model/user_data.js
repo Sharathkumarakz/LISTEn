@@ -52,7 +52,7 @@ const userData = new mongoose.Schema({
   }],
   cartTotalPrice: {
     type: Number,
-    
+
   },
   address: [
     {

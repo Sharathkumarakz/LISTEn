@@ -15,25 +15,25 @@
 
 
       <!--djlkjlkajlkjkldajkkjslj-->
-      <% details.forEach(element=> { %>
+     
       <div class="col-lg-12 col-xlg-12 col-md-12">
         <div class="card">
           <!-- Tab panes -->
           <div class="card-body">
           
-            <form action="/admin/editProduct/<%= element._id%>" class="form-horizontal form-material" method="post"
-              enctype="multipart/form-data">
+            <form action="/admin/editProduct/<%= details._id%>" class="form-horizontal form-material" method="post"
+              >
               <div class="form-group">
                 
                 <label class="col-md-12">Name</label>
                 <div class="col-md-12">
-                  <input type="text" name="name" class="form-control form-control-line" value=" <%= element.name %>">
+                  <input type="text" name="name" class="form-control form-control-line" value=" <%= details.name %>">
                 </div>
               </div>
               <div class="form-group">
                 <label for="example-email" class="col-md-12">Brand</label>
                 <div class="col-md-12">
-                  <input type="text" name="brand" class="form-control form-control-line" name="example-email" value=" <%= element.brand %>"
+                  <input type="text" name="brand" class="form-control form-control-line" name="example-email" value=" <%= details.brand %>"
                     id="example-email">
                 </div>
               </div>
@@ -60,31 +60,32 @@
               <div class="form-group">
                 <label class="col-md-12">Price</label>
                 <div class="col-md-12">
-                  <input type="number" name="price" class="form-control form-control-line" value="<%= element.price %>">
+                  <input type="number" name="price" class="form-control form-control-line" value="<%= details.price %>">
                 </div>
               </div>
               <div class="form-group">
                 <label class="col-md-12">Stock</label>
                 <div class="col-md-12">
-                  <input type="number" name="stock" class="form-control form-control-line" value="<%= element.stock %>" >
+                  <input type="number" name="stock" class="form-control form-control-line" value="<%= details.stock %>" >
                 </div>
               </div>
               <div class="form-group">
                 <label class="col-md-12">Image</label>
                 <div class="col-md-12">
-                  <input type="file" multiple name="image" class="form-control form-control-line"  onchange="viewImage(event)">
+                  <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo">Edit Image</button>
+                  <!-- <input type="file" multiple name="image" class="form-control form-control-line"  onchange="viewImage(event)"> -->
                   <div class="row">
-                  <div><img id="imgView" style="width:100px;" src="/product_images/<%=element.image[0] %>" alt=""></div>
-                  <div><img id="imgView1"  style="width:100px;" src="/product_images/<%=element.image[1] %>" alt=""></div>
-                  <div><img id="imgView2"  style="width:100px;" src="/product_images/<%=element.image[2] %>" alt=""></div>
-                  <div><img id="imgView3"  style="width:100px;" src="/product_images/<%=element.image[3] %>" alt=""></div>
+                  <div><img id="imgView" style="width:100px;" src="/product_images/<%=details.image[0] %>" alt=""></div>
+                  <div><img id="imgView1"  style="width:100px;" src="/product_images/<%=details.image[1] %>" alt=""></div>
+                  <div><img id="imgView2"  style="width:100px;" src="/product_images/<%=details.image[2] %>" alt=""></div>
+                  <div><img id="imgView3"  style="width:100px;" src="/product_images/<%=details.image[3] %>" alt=""></div>
                 </div>
                 </div>
               </div>
               <div class="form-group">
                 <label class="col-md-12">Description</label>
                 <div class="col-md-12">
-                  <textarea rows="10" name="description" class="form-control form-control-line" ><%= element.description%></textarea>
+                  <textarea rows="10" name="description" class="form-control form-control-line" ><%= details.description%></textarea>
                 </div>
               </div>
              
@@ -93,7 +94,7 @@
                   <button type='submit'  class="btn btn-success">Submit</button>
                 </div>
               </div>
-              <% }); %>
+              
             </form>
 
             <!-- <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".bd-example-modal-lg">Edit Image</button> -->
@@ -125,6 +126,50 @@
     <!-- End PAge Content -->
     <!-- ============================================================== -->
   </div>
+
+<!-- modal -->
+
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" >
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Edit Product Image</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+     
+      <div><img id="imgView" style="width:100px;" src="/product_images/<%=details.image[0] %>" alt=""><a style="background-color: rgb(150, 10, 10); color: azure;" class="btn btn-secondary ml-5"  href="/admin/deleteImage/<%= details._id %>/<%=details.image[0] %>"> Delete</a></div>
+      <div><img id="imgView1"  style="width:100px;" src="/product_images/<%=details.image[1] %>" alt=""><a style="background-color: rgb(150, 10, 10); color: azure;"  class="btn btn-secondary ml-5" href="/admin/deleteImage/<%= details._id %>/<%=details.image[1] %>">Delete </a></div>
+      <div><img id="imgView2"  style="width:100px;" src="/product_images/<%=details.image[2] %>" alt=""><a style="background-color: rgb(150, 10, 10); color: azure;"  class="btn btn-secondary ml-5" href="/admin/deleteImage/<%= details._id %>/<%=details.image[2] %>">Delete </a></div>
+      <div><img id="imgView3"  style="width:100px;" src="/product_images/<%=details.image[3] %>" alt=""><a style="background-color: rgb(150, 10, 10); color: azure;"  class="btn btn-secondary ml-5" href="/admin/deleteImage/<%= details._id %>/<%=details.image[3] %>">Delete </a></div>
+
+
+     
+
+      <div class="modal-body">
+
+
+        <form action="/admin/editImage/<%=details._id %>" method="post" enctype="multipart/form-data">
+          <div class="form-group">
+            <!-- <label for="recipient-name" class="col-form-label">Recipient:</label>
+            <input type="text" class="form-control" id="recipient-name"> -->
+          </div>
+          <div class="form-group">
+     <input type="file" multiple name="image" class="form-control form-control-line"  onchange="viewImage(event)"> 
+          </div>
+
+          <button type="submit" class="btn btn-primary">Save Changes</button>
+        </form>
+      </div>
+      <div class="modal-footer">
+
+      </div>
+    </div>
+  </div>
+</div>
+
+
 
   <script>
     function viewImage(event) {

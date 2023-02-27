@@ -1,0 +1,115 @@
+<%- include("../layouts/user/header.ejs") %>
+
+<%- include("../layouts/user/headers.ejs") %>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+
+<section class="h-100 h-custom" style="background-color: #ffffff;">
+  <div class="container py-5 h-100">
+    <div class="row d-flex justify-content-center align-items-center h-100">
+      <div class="col-lg-12 col-xl-12">
+             <div class="card-body p-5">
+
+            <p class="lead fw-bold mb-5" style="color: #657bf7;">Order Details</p>
+
+            <div class="row">
+              <div class="col mb-3">
+                <p class="small text-muted mb-1">Oredered Date</p>
+                <p><% const date=order.date %>   <%=moment().format("MMM Do YY");    %></p>
+              </div>
+              <div class="col mb-3">
+                <p class="small text-muted mb-1">Order Id</p>
+                <p><%=order.orderId %></p>
+              </div>
+            </div>
+
+            <div class=" px-5 py-4" style="background-color: #cac4c4;">
+              <div class="row">
+                <div class="col-md-12 col-lg-9">
+                  <p><span style="font-size: 16px;"><b>Products</b></span><br>
+                    <% order.product.forEach((element)=>{%>
+                   <%=element.productId.name %>  <span style="font-size: 14px;"><%=element.quantity %></span>X<br>
+                    <% }) %>
+                  </p>
+                </div>
+                <div class="col-md-12 col-lg-3">
+                  <p><span style="font-size: 16px;"><b>Price</b></span><br>
+                    <% order.product.forEach((element)=>{%>
+                 <b><%=element.singleTotal %> </b>    <br>
+                    <% }) %>
+                  </p>
+                </div>
+                
+              </div>
+              <div class="row">
+                <div class="col-md-12 col-lg-9">
+                  <p class="mb-0">Payment Type</p>
+                </div>
+                <div class="col-md-12 col-lg-3">
+                  <p class="mb-0"><b><%=order.paymentType %></b></p>
+                </div>
+              </div>
+         
+              <div class="row">
+                <div class="col-md-12 col-lg-9">
+                  <p class="mb-0"><span style="font-size: 16px;"><b>Total Price</b></span></p>
+                </div>
+                <div class="col-md-12 col-lg-3">
+                  <p class="mb-0"><b><span style="font-size: 16px;"><b><%=order.total%></b></span></b></p>
+                </div>
+            </div>
+            </div>
+          
+          </div>
+              <div>
+                <div class="row">
+                  <div class="col-md-12 col-lg-9">
+                    <p class="mb-0"><span style="font-size: 16px;"><b>Address:<br>   </b>
+                      <%=order.deliveryAddress%>
+                 </span></p>
+                  </div>
+                  
+              </div>
+              </div>
+
+              <div class="pt-5">
+                <div class="row">
+                  <div class="col-md-12 col-lg-9">
+                    <p class="mb-0"><span style="font-size: 16px;"><b>Status:<br>   </b>
+                      <%=order.status%>
+                 </span></p>
+                  </div>
+                  
+              </div>
+              </div>
+            <div class="row my-4">
+              <div class="col-md-12 offset-md-8 col-lg-3 offset-lg-9">
+                <p class="lead fw-bold mb-0" style="color: #309bde;"><b>RS. <%=order.total%></b></p>
+              </div>
+            </div>
+
+          
+            <div class="row">
+              <div class="col-lg-12">
+
+                <div class="horizontal-timeline">
+
+                  <ul class="list-inline items d-flex justify-content-between">
+                
+                 
+                  </ul>
+
+                </div>
+
+              </div>
+            </div>
+
+
+          </div>
+       
+      </div>
+    </div>
+  </div>
+</section>
+
+
+ <%- include("../layouts/user/footer.ejs") %>

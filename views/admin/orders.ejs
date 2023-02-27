@@ -1,0 +1,167 @@
+<%- include("../layouts/admin/header.ejs") %>
+  <%- include("../layouts/admin/navbar.ejs") %>
+
+    <script src="//cdn.datatables.net/1.13.2/js/jquery.dataTables.min.js"></script>
+    <div class="page-wrapper">
+
+      <div class="container-fluid">
+
+        <div class="row page-titles">
+          <div class="col-md-5 align-self-center">
+            <h3 class="text-themecolor">Orders list</h3>
+
+          </div>
+
+        </div>
+
+        <!--djlkjlkajlkjkldajkkjslj-->
+        <div class="row">
+          <!-- column -->
+          <div class="col-12">
+            <div class="card">
+              <div class="card-body">
+                <h4 class="card-title">All Orders</h4>
+                <h6 class="card-subtitle">Orders<code>Table</code></h6>
+                <div class="table-responsive">
+                  <table id="myTable" class="table">
+                    <thead>
+                      <tr>
+                        <th>No.</th>
+                        <th>Order Id</th>
+                        <th>Product Name</th>
+                        <th>User</th>
+                        <th>Address</th>
+                        <th>Quantity</th>
+                        <th>Payment</th>
+                        <th>Price</th>
+                        <th>phone</th>
+                        <th>status</th>
+                        
+                      </tr>
+                    </thead>
+                    <tbody>
+
+                      <% if(orderDetails.length>0){ %>
+                        <% for(let i=0; i<orderDetails.length; i++){ %>
+
+
+                          <tr>
+                            <td>
+                              <%= i %>
+                            </td>
+                            <td>
+                              <%=orderDetails[i].orderId%>
+                            </td>
+                            <td>
+                              <% order[i].product.forEach((element)=>{ %>
+                                #<%= element.productId.name %><br>
+                                  <% })%>
+                            </td>
+                            <td>
+                              <%=user[i].userId.firstname %>
+                                <%=user[i].userId.lastname %>
+                            </td>
+                            <td>
+                              <%=orderDetails[i].deliveryAddress%>
+                            </td>
+                            <td>
+                              
+                                <% order[i].product.forEach((element)=>{ %>
+                                  <%= element.quantity %><br>
+                                    <%}) %>
+                            </td>
+                            <td>
+                              <%= order[i].paymentType%>
+                            </td>
+                            <td>
+                              <%= order[i].total %>
+                            </td>
+                            <td>
+                              <%=user[i].userId.phone %>
+                            </td>
+
+
+
+
+
+                            <td>
+                           
+                              <div class="btn-group">
+                               
+                                <span id="boot-icon" class="bi bi-three-dots-vertical dropdown-toggle"
+                                  style="font-size: 15px; color: rgb(255, 0, 0); -webkit-text-stroke-width: 0.9px; opacity: 1;"
+                                  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></span>
+
+
+                                <div class="dropdown-menu">
+
+                                  <div class="dropdown-item"
+                                    onclick="dropdown('<%= orderDetails[i].orderId %>','Pending')"> <span style="color: yellowgreen;">Pending</span></div>
+                                  <div class="dropdown-item"
+                                    onclick="dropdown('<%= orderDetails[i].orderId %>','processing')"><span style="color: rgb(227, 32, 201);">processing</span></div>
+                                  <div class="dropdown-item"
+                                    onclick="dropdown('<%= orderDetails[i].orderId %>','shipped')"><span style="color: rgb(71, 151, 201);">shipped</span></div>
+                                  <div class="dropdown-item"
+                                    onclick="dropdown('<%= orderDetails[i].orderId %>','delivered')"><span style="color: green;">delivered</span></div>
+                                  <div class="dropdown-divider"></div>
+   
+                                </div>
+                              </div>
+                              <span  style="color: blue;" id="<%=orderDetails[i].orderId%>">
+                                <%=orderDetails[i].status%>
+                              </span>
+                             
+                            </td>
+
+                            <!-- <td><button>Details</button></td> -->
+                          </tr>
+
+                          <% } %>
+                            <% } %>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+
+
+
+
+        <!-- End Feeds -->
+      </div>
+
+    </div>
+    <script>
+
+      $(document).ready(function () {
+        $('#myTable').DataTable();
+      });
+    </script>
+    <script>
+
+      function dropdown(orderId, status) {
+        console.log(orderId, status)
+        $.ajax({
+
+          url: '/admin/change-order-status',
+          data:{
+            orderId: orderId,
+            status: status
+          },
+          method: "post",
+          success: (response) => {
+            console.log(response);
+            document.getElementById(orderId).innerHTML = response.Status
+
+          }
+        })
+      }
+
+
+    </script>
+
+    <%- include("../layouts/admin/footer.ejs") %>
