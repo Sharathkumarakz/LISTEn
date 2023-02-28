@@ -4,6 +4,19 @@ const User = require('../model/user_data');
 const Order = require('../model/order_data');
 const order_data = require('../model/order_data');
 
+
+
+
+
+// const Razorpay=require('razorpay')
+// var instance = new Razorpay({
+//   key_id: 'rzp_test_oyzsQbMBs7ToCQ',
+//   key_secret: 'cdI0zZA72BYHTVS8mQpY27eX',
+// });
+
+
+
+
 const moment = require('moment');
 
 
@@ -136,10 +149,48 @@ const successLoad = async (req, res, next) => {
        
 
       } else if (method == "UPI") {
-        const categorydata = await Category.find({});
 
-        const userdetails = await User.findOne({ username: req.session.user.username })
-        res.render('success', { categorydata: categorydata, userdetails: userdetails })
+  //       console.log("booooooooooooooooody");
+  //       console.log(req.body);
+
+  //     var options={
+  //       amount:req.body.total,
+  //       currency:'INR',
+  //       receipt:"rcp_1",
+
+  //     };
+  //     instance.orders.create(options, function(err,orders){
+  //       console.log(orders);
+  //     })
+  //     function verify(orders){
+  //     var options = {
+  //       "key": "rzp_test_oyzsQbMBs7ToCQ", // Enter the Key ID generated from the Dashboard
+  //       "amount": order.amount, // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
+  //       "currency": "INR",
+  //       "name": "Acme Corp", //your business name
+  //       "description": "Test Transaction",
+  //       "image": "https://example.com/your_logo",
+  //       "order_id": order.id, //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
+  //       "callback_url": "https://eneqd3r9zrjok.x.pipedream.net/",
+  //       "prefill": {
+  //           "name": "Gaurav Kumar", //your customer's name
+  //           "email": "gaurav.kumar@example.com",
+  //           "contact": "9000090000"
+  //       },
+  //       "notes": {
+  //           "address": "Razorpay Corporate Office"
+  //       },
+  //       "theme": {
+  //           "color": "#3399cc"
+  //       }
+  //   };
+  // }         
+
+        
+        // const categorydata = await Category.find({});
+
+        // const userdetails = await User.findOne({ username: req.session.user.username })
+        // res.render('success', { categorydata: categorydata, userdetails: userdetails})
 
       } else {
 
@@ -222,7 +273,7 @@ const cancelOrder = async (req, res, next) => {
   try {
     if (req.session.user) {
       const orderId = req.body.orderId
-      const status = req.body.status
+      const status = req.body.value
       const change = await Order.updateOne({ _id: orderId }, {
         $set: {
           status: status

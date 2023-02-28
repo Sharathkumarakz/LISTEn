@@ -1,7 +1,12 @@
 <%- include("../layouts/user/header.ejs") %>
 
   <%- include("../layouts/user/headers.ejs") %>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.1/dist/sweetalert2.all.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.3.js" integrity="sha256-nQLuAZGRRcILA+6dMBOvcRh5Pe310sBpanc6+QBmyVM="
+    crossorigin="anonymous"></script>
+    
   <section class="h-100" style="background-color: #ffffff;">
+    <% if(wishlistData.wishlist.length>=1){%>
     <div class="container h-100 py-5">
       <div class="row d-flex justify-content-center align-items-center h-100">
         <div class="col-10">
@@ -25,11 +30,12 @@
                 </div>
                 <div class="col-md-3 col-lg-3 col-xl-3">
                   <p class="lead fw-normal mb-2"><%=element.product.name %></p>
+                  <span style="font-size: 12px;"><%=element.product.description %><span>
                    </div>
                 <div class="col-md-3 col-lg-3 col-xl-2 d-flex">
                
-                  <h5 class="mb-0"><%=element.product.price %></h5>
-
+                  <h5 class="mb-0">Rs.<%=element.product.price %></h5><br>
+                
                   
                 </div>
                 <div class="col-md-3 col-lg-2 col-xl-2 offset-lg-1">
@@ -41,10 +47,10 @@
 
                   </div>
                 <div class="col-md-3 col-lg-2 col-xl-2 text-end">
-                  <button type="button" class="btn btn-danger btn-sm me-1 mb-2 " data-mdb-toggle="tooltip"
-                  title="Remove item">
-                  <a style="color: aliceblue;" href="/removeWishlist/<%= element.product._id %>"> remove</a>
-
+                
+                  <button style="height: 30px;" onclick="validate('<%= element.product._id %>')"  class="btn btn-danger" >
+                    remove
+                  
                 </button>      
                 </div>
               </div>
@@ -54,8 +60,47 @@
         </div>
       </div>
     </div>
+    <%} else{%>
+      
+      <div class="mt-5" style="align-content: center;">
+        <img class="center" src="https://ibella.us/admin_assets/CustomImage/wishlist-empty.jpg" alt="empty cart">
+      <%}%>
+      </div>
+     
   </section>
 
 
+  <script>
+    function validate(deleteId) {
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "You wan't to remove from wishlist!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'yes,remove!'
+        }).then((result) => {
+               if (result.isConfirmed) {
+                            $.ajax({
+                                url: '/removeWishlist/' + deleteId,
+                                method: 'get',
+                                success: (response) => {
+                                    Swal.fire({
+                                        title: 'Removed!',
+                                        text: 'Your removed',
+                                        icon: 'success',
+                                        showConfirmButton: false
+                                    })
+                                    setTimeout(() => {
+                                        location.reload()
+                                    }, 1000);
+                                }
+                            })
+                        }
+        })
+    }
+  </script>
+  
 
       <%- include("../layouts/user/footer.ejs") %>

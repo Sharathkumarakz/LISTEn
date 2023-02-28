@@ -1,6 +1,6 @@
-const mongoose=require("mongoose");
-mongoose.connect("mongodb://127.0.0.1:27017/listen");
+// const mongoose=require("mongoose");
 
+const mongoose=require('./config/mongo')
 
 
 
@@ -14,7 +14,7 @@ const express = require("express");
 const app=express();
 const nocache = require("nocache");
 
-
+const razorpay=require('razorpay')
 // app.use(bodyparser.urlencoded({ extended: false }))
 
 // app.use(bodyparser.json())
@@ -28,6 +28,16 @@ app.use(session({
   cookie:{maxAge:60000000}
 }));
 app.use(nocache());
+
+app.set('view engine','ejs');
+
+
+
+
+app.use(express.json());
+app.use(express.urlencoded({extended:true}))
+
+
 
 //to access public folder
 app.use(express.static(path.join(__dirname,"public")))

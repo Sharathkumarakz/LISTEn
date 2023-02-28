@@ -6,12 +6,9 @@ const moment=require('moment');
 
 const auth=require('../middlewares/userauth');
 
-user_route.set('view engine','ejs');
+// user_route.set('view engine','ejs');
 user_route.set('views','./views/user')
 
-
-user_route.use(express.json());
-user_route.use(express.urlencoded({extended:true}))
 
 const userController=require("../controllers/user_controller")
 const cartController=require("../controllers/cart_controller");
@@ -79,8 +76,9 @@ user_route.get('/orders',orderController.viewOrders)
 user_route.get('/logout',auth.islogout,userController.userLogout);
 
 
-
-
+//change password
+user_route.get('/changePassword',userController.loadChangePassword);
+user_route.post('/changePassword',userController.changePassword);
 
 
 //user profile

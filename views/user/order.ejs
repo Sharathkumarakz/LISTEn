@@ -1,6 +1,9 @@
 <%- include("../layouts/user/header.ejs") %>
 
   <%- include("../layouts/user/headers.ejs") %>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.1/dist/sweetalert2.all.min.js"></script>
+  <script src="https://code.jquery.com/jquery-3.6.3.js" integrity="sha256-nQLuAZGRRcILA+6dMBOvcRh5Pe310sBpanc6+QBmyVM="
+      crossorigin="anonymous"></script>
   <section class="h-100 gradient-custom">
     <div class="container py-5 h-100">
       <div class="row d-flex justify-content-center align-items-center h-100">
@@ -73,10 +76,11 @@
                         <div class="col-md-2 text-center d-flex justify-content-center align-items-center">
                           <p class="mb-0 ">Address: <%= element.deliveryAddress%></p>
                         </div>
-                        <button   style="height: 30px; border-radius: 7px; background-color: rgb(228, 81, 81);" onclick="cancelOrder('<%=element._id %>','cancelled')"><span>Cancel</span></button>
-                   
+                      <% if(element.status!=="cancelled"){ %>
+                        <button   style="height: 30px; border-radius: 7px; background-color: rgb(228, 81, 81);" onclick="validate('<%=element._id %>','cancelled')"><span >Cancel</span></button>
+                     <% } %>
                              <p style="color: rgb(13, 89, 7);" class="ml-50 mt-1 ms-xl-5">Status:<span  id="<%=element._id %>"  style="font-size: 16px; color: green;"> <%= element.status%></span></p>
-                     
+                       
                             </div>
                       
                     </div>
@@ -96,24 +100,63 @@
 
   <script>
 
-    function cancelOrder(orderId,status) {
-      console.log(orderId)
-      $.ajax({
+    // function cancelOrder(orderId,status) {
+    //   console.log(orderId)
+    //   $.ajax({
 
-        url: '/cancelOrder',
-        data:{
-          orderId: orderId,
-          status:status
-        },
-        method: "post",
-        success: (response) => {
-          console.log(response);
-          document.getElementById(orderId).innerHTML = response.status
+    //     url: '/cancelOrder',
+    //     data:{
+    //       orderId: orderId,
+    //       status:status
+    //     },
+    //     method: "post",
+    //     success: (response) => {
+    //       console.log(response);
+    //       document.getElementById(orderId).innerHTML = response.status
 
-        }
-      })
+    //     }
+    //   })
+    // }
+    function validate(orderId,value) {
+        value = value
+        orderId = orderId
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, Cancel it!'
+        }).then((result) => {
+          if (result.isConfirmed) {
+            $.ajax({
+                url: '/cancelOrder',
+                data: {
+                    orderId: orderId,
+                    value: value
+                },
+                method: 'post',
+                success: (response) => {
+                    
+                        Swal.fire({
+                            title: 'Cancelled!',
+                            text: 'Your Order has been Cancelled.',
+                            icon: 'success',
+                            showConfirmButton: false
+                        })
+                        setTimeout(() => {
+                            location.reload()
+                        }, 1000);
+                        document.getElementById(orderId).innerHTML = response.status
+                   
+                }
+            })
+          }
+        })
     }
 
-
   </script>
+
+
     <%- include("../layouts/user/footer.ejs") %>

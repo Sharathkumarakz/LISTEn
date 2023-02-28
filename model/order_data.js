@@ -50,7 +50,7 @@ const orderData = new mongoose.Schema({
   },
   status: {
     type: String,
-    default: 'pending',
+    default: 'confirmed',
   },
 });
 

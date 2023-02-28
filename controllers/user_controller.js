@@ -206,7 +206,7 @@ const verifyOtp = async (req, res, next) => {
       } else {
         res.render('otppage', { message: "wrong otp" })
       }
-
+      lo
     } else {
       res.render('otppage', { message: "wrong otp" })
     }
@@ -288,8 +288,8 @@ const userProfile = async (req, res, next) => {
   try {
     if (req.session.user) {
       const name = req.session.user.username;
-      const ids = await User.findOne({ username:name })
-      const userdetails = await User.findOne({_id: ids._id })
+      const ids = await User.findOne({ username: name })
+      const userdetails = await User.findOne({ _id: ids._id })
 
       const categorydata = await Category.find({})
       res.render('profile', { userdetails: userdetails, categorydata: categorydata })
@@ -518,35 +518,96 @@ const editedProfile = async (req, res, next) => {
     console.log(req.body);
     if (req.session.user) {
 
-       const found=await User.findOne({username:req.body.username})
-      
-      if(found){
-        
+      const found = await User.findOne({ username: req.body.username })
+
+      if (found) {
+
         const name = req.session.user.username;
         const userdetails = await User.findOne({ username: name })
 
         const categorydata = await Category.find({})
-        res.render('editProfile', { userdetails: userdetails, categorydata: categorydata,message:'username Already exist. Try another' })
+        res.render('editProfile', { userdetails: userdetails, categorydata: categorydata, message: 'username Already exist. Try another' })
 
 
-      }else{
-      const update = await User.updateOne({ username: req.session.user.username }, {
-        $set: {
-          firstname: req.body.fname,
-          lastname: req.body.lname,
-          email: req.body.email,
-          phone: req.body.phone,
-          username: req.body.username
-        }
-      })
-      res.redirect('/user')
-   } } else {
+      } else {
+        const update = await User.updateOne({ username: req.session.user.username }, {
+          $set: {
+            firstname: req.body.fname,
+            lastname: req.body.lname,
+            email: req.body.email,
+            phone: req.body.phone,
+            username: req.body.username
+          }
+        })
+        res.redirect('/user')
+      }
+    } else {
       res.redirect('/login')
     }
   } catch (error) {
     next(error);
   }
 }
+
+//change password load
+const loadChangePassword = async (req, res, next) => {
+  try {
+    if (req.session.user) {
+      const name = req.session.user.username
+      const userdetails = await User.findOne({ username: name })
+      const categorydata = await Category.find({})
+      res.render('change_password', { userdetails: userdetails, categorydata: categorydata })
+
+
+    } else {
+      res.redirect('/login');
+    }
+
+  } catch (error) {
+    next(error);
+
+  }
+}
+
+//change password load
+const changePassword = async (req, res, next) => {
+  try {
+    if (req.session.user) {
+      const datas = await User.findOne({ username: req.session.user.username })
+      const old = req.body.old
+      const compared = await bcrypt.compare(old, datas.password)
+      if (compared) {
+        if (req.body.new == req.body.confirm) {
+          const New = req.body.new
+          const change = await bcrypt.hash(New, 10)
+          console.log(change);
+          const saving = await User.updateOne({ username: datas.username }, { $set: { password: change } })
+          res.redirect('/user')
+        } else {
+          const name = req.session.user.username
+          const userdetails = await User.findOne({ username: name })
+          const categorydata = await Category.find({})
+
+          res.render('change_password', { userdetails: userdetails, categorydata: categorydata, message2: 'failed to confirm password' })
+        }
+
+      } else {
+        const name = req.session.user.username
+        const userdetails = await User.findOne({ username: name })
+        const categorydata = await Category.find({})
+
+        res.render('change_password', { userdetails: userdetails, categorydata: categorydata, message: 'Incorrect Password' })
+      }
+    } else {
+      res.redirect('/login');
+    }
+
+  } catch (error) {
+    next(error);
+
+  }
+}
+
 
 
 
@@ -587,5 +648,7 @@ module.exports = {
   editAddress,
   editedAddress,
   editProfile,
-  editedProfile
+  editedProfile,
+  loadChangePassword,
+  changePassword
 }

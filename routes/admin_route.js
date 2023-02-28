@@ -1,32 +1,16 @@
 const express=require("express");
 const admin_route=express();
-const path=require("path");
+// const path=require("path");
 
-admin_route.set('view engine','ejs');
+
 admin_route.set('views','./views/admin')
 
 const auth=require('../middlewares/auth');
+const upload=require('../middlewares/multer')
 
 
 
 
-
-
-admin_route.use(express.json());
-admin_route.use(express.urlencoded({extended:true}))
-
-const multer=require("multer");
-const storage=multer.diskStorage({
-  destination:function(req,file,cb){
-    cb(null,path.join(__dirname,'../public/product_images'));
-  },
-  filename:function(req,file,cb){
-    const name=Date.now()+'-'+file.originalname;
- cb(null,name);
-  }
-});
-
-const upload=multer({storage:storage})
 
 const adminController=require("../controllers/admin_controller")
 const productController=require("../controllers/product_controller")
