@@ -3,7 +3,8 @@ const Product = require('../model/products_data');
 const User = require('../model/user_data');
 const Order = require('../model/order_data');
 const order_data = require('../model/order_data');
-
+const Coupon=require('../model/coupon_data');
+const { v4: uuidv4 } = require('uuid');
 
 
 
@@ -112,18 +113,21 @@ const successLoad = async (req, res, next) => {
           const singleTotal = orders.qntyPrice[i]
           orderDetails.push({ productId: productId, quantity: quantity, singleTotal: singleTotal })
 
-          const reduceStock=await Product.updateOne({_id:productId},{$inc:{quantity:100}})
+          // const reduceStock=await Product.updateOne({_id:productId},{$inc:{quantity:100}})
    
         }
         const ordersave = new Order({
           userId: id,
           product: orders.product,
-          total: orders.total,
+          total:req.body.total1,
+          orderId:`order_id_${uuidv4()}`, 
           deliveryAddress: orders.address,
-          paymentType: orders.test
+          paymentType: orders.test,
+          date:Date.now(),
+          discount:req.body.discount1
         })
         const saveData = await ordersave.save()
-
+            await Coupon.updateOne({code:req.body.code},{$push:{userUsed:username._id}})  
         
 
         const removing = await User.updateOne({ username: req.session.user.username }, {
@@ -131,18 +135,22 @@ const successLoad = async (req, res, next) => {
             cart: { product: { $in: productId } }
 
           }
-        })
+        }) 
 
-        const orderdetail=await Order.findOne({userId:id})
-        const orderId=orderdetail._id
+        // const orderdetail=await Order.findOne({userId:id})
+        // const orderId=orderdetail._id
         
-
-       
-        const order = await Order.findOne({ _id:orderId}).populate('product.productId')
-        console.log("ayega");
-        console.log(order);
+        const latestOrder = await Order
+        .findOne({})
+        .sort({ date: -1 })
+        .lean();
+      console.log(latestOrder);
+     
+        const order = await Order.findOne({ _id:latestOrder._id}).populate('product.productId')
+        console.log("ayega");  
+        console.log("order");
         const categorydata = await Category.find({});
-  
+         
         const userdetails = await User.findOne({ username: req.session.user.username })
         res.render('success', { categorydata: categorydata, userdetails: userdetails, order: order, moment: moment })
   

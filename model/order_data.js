@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const { v4: uuidv4 } = require('uuid');
+
 // const Product = require('../model/products_data');
 
 // const Schema = mongoose.Schema;
@@ -14,7 +14,7 @@ const orderData = new mongoose.Schema({
     type: String,
     unique: true,
     required: true,
-    default: `order_id_${uuidv4()}`, // generate a custom order ID using uuid
+    // generate a custom order ID using uuid
   },
   deliveryAddress: {
     type: String,
@@ -22,7 +22,7 @@ const orderData = new mongoose.Schema({
   },
   date: {
     type: Date,
-    default: Date.now(),
+    
   },
   product: [
     {
@@ -44,14 +44,14 @@ const orderData = new mongoose.Schema({
   total: {
     type: Number,
   },
+  discount:{
+    type: Number,
+  },
   paymentType: {
     type: String,
     required:true,
   },
-  status: {
-    type: String,
-    default: 'confirmed',
-  },
+
 });
 
 module.exports = mongoose.model('Order', orderData);

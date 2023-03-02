@@ -80,26 +80,27 @@ const viewUser = async (req, res, next) => {
 const viewOrder=async(req,res,next)=>{
   try {
    
-    const orderDetails=await Order.find({})
-
-    const order=[];
-    if(orderDetails.length>0){
-      for(let i=0;i<orderDetails.length;i++){
-        order.push(await Order.findOne({}).populate('product.productId'))
-      }
-    }
-    console.log("ooooooooooooooooooooooooooooooooooo"+order);
+    const orderDetails=await Order.find({}).populate('product.productId').populate('userId')
+    
+    // const order=[];
+    // if(orderDetails.length>0){
+    //   for(let i=0;i<orderDetails.length;i++){
+    //     order.push(await Order.findOne({}).populate('product.productId'))
+    //   }
+    // }
+    // console.log("ooooooooooooooooooooooooooooooooooo"+order);
 
   
-
-    const user=[];
-    if(orderDetails.length > 0) {
-      for(let i=0;i<orderDetails.length;i++){
-         user.push(await Order.findOne({}).populate('userId'))
-      }
-    }
-    console.log("uuuuuuuuuuuuuuuuuuuuuuuuuuu"+user);
-    res.render('orders',{user:user,order:order,orderDetails:orderDetails})
+      
+    // const user=[];
+    // if(orderDetails.length > 0) {
+    //   for(let i=0;i<orderDetails.length;i++){
+    //      user.push(await Order.findOne({}).populate('userId'))
+    //   }
+    // }
+    // console.log("uuuuuuuuuuuuuuuuuuuuuuuuuuu"+user);
+    // user:user,order:order,
+    res.render('orders',{orderDetails:orderDetails})
 
   } catch (error) {
     next(error)

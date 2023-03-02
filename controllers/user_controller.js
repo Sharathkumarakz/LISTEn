@@ -650,5 +650,6 @@ module.exports = {
   editProfile,
   editedProfile,
   loadChangePassword,
-  changePassword
+  changePassword,
+ 
 }

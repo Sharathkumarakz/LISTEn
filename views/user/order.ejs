@@ -34,7 +34,7 @@
                     </div>
                     <div class="col-md-2 text-center d-flex justify-content-center align-items-center">
                       <p class=" mb-0">Products <br><% element.product.forEach((element1)=>{ %>
-                        <%=element1.productId.name %> <br>
+                        &#9679; <%=element1.productId.name %> <br>
                     <%  }) %>
                       </p>
                     </div>
@@ -42,7 +42,7 @@
              
                       <p class=" mb-0 ">Quantity<br>  
                                <% element.product.forEach((element1)=>{ %>
-                                <%=element1.quantity %><br>                               
+                                &#9679;  <%=element1.quantity %><br>                               
                            
                            
                             <%})%>
@@ -74,7 +74,7 @@
                       </div> -->
                       <div class="d-flex justify-content-around mb-1">
                         <div class="col-md-2 text-center d-flex justify-content-center align-items-center">
-                          <p class="mb-0 ">Address: <%= element.deliveryAddress%></p>
+                          <!-- <p class="mb-0 ">Address: <%= element.deliveryAddress%></p> -->
                         </div>
                       <% if(element.status!=="cancelled"){ %>
                         <button   style="height: 30px; border-radius: 7px; background-color: rgb(228, 81, 81);" onclick="validate('<%=element._id %>','cancelled')"><span >Cancel</span></button>

@@ -17,6 +17,7 @@ const productController=require("../controllers/product_controller")
 const categoryController=require("../controllers/category_controller")
 const adsController=require("../controllers/Ads_controller")
 const orderController=require("../controllers/order_controller")
+const couponController=require("../controllers/coupon_controller")
 
 admin_route.get('/',auth.islogout,adminController.loadsignin);
 
@@ -101,7 +102,11 @@ admin_route.post('/editProduct/:id',productController.editProduct);
 admin_route.post('/editImage/:id',upload.array('image',4),auth.islogin,productController.loadEditImage);
 admin_route.get('/deleteImage/:id/:imgId',auth.islogin,productController.deleteProductImage);
 
-
+//coupon view
+admin_route.get('/coupons',auth.islogin,couponController.loadCoupons)
+admin_route.get('/addCoupons',auth.islogin,couponController.loadAddCoupon)
+admin_route.post('/addCoupons',couponController.insertCoupon)
+admin_route.get('/deleteCoupon/:id',auth.islogin,couponController.deleteCoupon)
 
 //edit Ads
 admin_route.get('/ads',auth.islogin,adsController.loadAds);

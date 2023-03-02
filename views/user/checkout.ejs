@@ -1,7 +1,9 @@
 <%- include("../layouts/user/header.ejs") %>
 
     <%- include("../layouts/user/headers.ejs") %>
-
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.1/dist/sweetalert2.all.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.3.js" integrity="sha256-nQLuAZGRRcILA+6dMBOvcRh5Pe310sBpanc6+QBmyVM="
+        crossorigin="anonymous"></script>
         <div class=" container-fluid my-5 ">
             <div class="row justify-content-center ">
                 <div class="col-xl-10">
@@ -72,7 +74,7 @@
                                             <select
                                                 style="height: 50px; border-radius: 5px; border-color: rgb(202, 201, 201); color: rgb(140, 135, 135);"
                                                 name="address">
-                                                <option selected>address</option>
+                                                <option selected >address</option>
                                                 <% userData.address.forEach((element)=>{ %>
                                                     <option
                                                         value="<%=element.houseName %>,<%=element.street %>,<%=element.district %> <%=element.state %>,<%=element.country %> <%=element.pincode %>">
@@ -86,7 +88,7 @@
                                               <button class="mt-2" style="color: rgb(195, 199, 199); border-radius: 5px;"><a style="color: black;" href="/addAddressCheckout">Add Address</a></button>
                                             </div>
                                             <div class="row no-gutters">
-                                                <div class="col-sm-6 pr-sm-2">
+                                                <div class="col-sm-4 pr-sm-2">
                                                     <div class="form-group">
                                                         <label for="NAME" class="small text-muted mb-1">Phone
                                                             Number</label>
@@ -95,14 +97,7 @@
                                                             value="<%= userData.phone %>">
                                                     </div>
                                                 </div>
-                                                <div class="col-sm-6">
-                                                    <div class="form-group">
-                                                        <label for="NAME" class="small text-muted mb-1">------</label>
-                                                        <input type="text" class="form-control form-control-sm"
-                                                            name="NAME" id="NAME" aria-describedby="helpId"
-                                                            placeholder="183">
-                                                    </div>
-                                                </div>
+                                             
                                             </div>
 
                                         </div>
@@ -130,7 +125,7 @@
                                                                         <p class="mb-0"><b>
                                                                                 <%=element.product.name %>
                                                                             </b></p><small class="text-muted">
-                                                                            <%=element.product.description %>
+                                                                           
                                                                         </small>
                                                                     </div>
                                                                 </div>
@@ -160,26 +155,28 @@
                                                                 <div class="flex-sm-col col-auto">
                                                                     <p class="mb-1"><b>
                                                                             <%= userData.cartTotalPrice %>
-                                                                            <input type="hidden" name="total" value="  <%= userData.cartTotalPrice %>">  
+                                                                            <input type="hidden" name="total" value="<%= userData.cartTotalPrice %>">  
                                                                         </b></p>
                                                                 </div>
                                                             </div>
                                                             <div class="row justify-content-between">
                                                                 <div class="col">
-                                                                    <p class="mb-1"><b>Shipping</b></p>
+                                                                    <p class="mb-1"><b>Discount</b></p>
                                                                 </div>
                                                                 <div class="flex-sm-col col-auto">
-                                                                    <p class="mb-1"><b>0 SEK</b></p>
+                                                                    <p id="discount" class="mb-1"><b>0</b></p>
                                                                 </div>
+                                                                <input  id="discount1" name="discount1" type="hidden" value="">
                                                             </div>
                                                             <div class="row justify-content-between">
                                                                 <div class="col-4">
                                                                     <p><b>Total</b></p>
                                                                 </div>
                                                                 <div class="flex-sm-col col-auto">
-                                                                    <p class="mb-1"><b>RS.<%= userData.cartTotalPrice %>
+                                                                    <p id="total" class="mb-1"><b>RS.<%= userData.cartTotalPrice %>
 
                                                                                 </b></p>
+                                                                                <input  id="total1" name="total1" type="hidden" value="<%= userData.cartTotalPrice %>">
                                                                 </div>
                                                             </div>
                                                             <hr class="my-0">
@@ -188,7 +185,29 @@
                                                     <!-- <div class="row mb-5 mt-4 ">
                                     <div classrs
                                     ="col-md-7 col-lg-6 mx-auto"><button type="button" class="btn btn-block btn-outline-primary btn-lg">ADD GIFT CODE</button></div>
-                                </div> -->
+                                </div> -->   <form id="formCoupon" >
+                                    <div class="col-sm-4">
+                                        <div class="form-group">
+                                            <label for="NAME" class="small text-muted mb-1">Coupon Code</label>
+                                            <input  type="text" form="formCoupon"  class="form-control form-control-sm"
+                                                name="code" id="NAMEcode" name="code" aria-describedby="helpId"
+                                                >
+                                            
+                                        </div>
+                                        <button style="background-color: aquamarine; color: black; border-radius: 5px;"   onclick="applyCoupon('<%= userData.cartTotalPrice %>', $('#NAMEcode').val())" form="formCoupon">Redeem Now</button>
+                                        
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <div class="form-group">
+                                              
+                                        </div>
+                                       
+                                    </div>
+                                </form>
+                            
+                                <input type="hidden" name="code" id="code" value=''>
+
+                               
                                                     <label for="NAME" class="small text-muted mb-1">Payment
                                                         Method</label><br><br>
                                                     <div class="form-group">
@@ -198,6 +217,7 @@
                                                     <div class="form-group">
                                                         <input type="radio" name="test" value="UPI">UPI<br><br>
                                                     </div>
+                                                    
                                                     <% if(typeof message !=='undefined' ){ %>
                                                         <h5 style="color: rgb(224, 86, 86);">
                                                           <%= message %>
@@ -205,8 +225,9 @@
                                                         <% } %>
                                                     <div class="row mb-md-5">
                                                         <div class="col">
-                                                            <button type="submit" name="" id=""
+                                                            <button type="submit"   name="" id=""
                                                                 class="btn  btn-lg btn-block ">PURCHASE NOW</button>
+                                                               
                                                         </div>
                                                     </div>
                                         </div>
@@ -218,5 +239,63 @@
                 </div>
             </div>
         </div>
+     <script>
      
+     function applyCoupon(total,code) {
+      
+        $.ajax({
+
+          url: '/applyCoupon',
+          data: {
+            total:total,
+             code:code
+          },
+          method: "post",
+          success:(response) => {
+           if(response.datefailed){
+            console.log("failed to match");
+            Swal.fire({
+  icon: 'error',
+  title: 'Oops...',
+  text: 'Coupon Expired.',
+})
+           }else if(response.amountnokay){
+            console.log("pattilla");
+            Swal.fire({
+  icon: 'error',
+  title: 'Oops...',
+  text: 'To access this coupen buy something more than 1500rs.',
+  
+})
+           }else if(response.amountokay){
+            console.log("vangaam")  
+            console.log("ooookayyy");
+            document.getElementById('code').value=response.code
+            document.getElementById('discount').innerHTML=response.discountValue
+            document.getElementById('discount1').value=response.discountValue
+            document.getElementById('total').innerHTML=response.value
+            document.getElementById('total1').value=response.value
+            Swal.fire(
+  'Good job!',
+  'Coupen granted!',
+  'success'
+)
+            console.log("ttttt"+response.value);
+            console.log("dissss"+response.discountValue);
+            
+           }else if(response.used){
+            Swal.fire({
+  icon: 'error',
+  title: 'Oops...',
+  text: 'Already Used.',
+})
+           }
+             
+          }
+        })
+      }
+      
+    </script>
+
+     </script>
         <%- include("../layouts/user/footer.ejs") %>

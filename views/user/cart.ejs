@@ -4,8 +4,23 @@
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.1/dist/sweetalert2.all.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.6.3.js" integrity="sha256-nQLuAZGRRcILA+6dMBOvcRh5Pe310sBpanc6+QBmyVM="
     crossorigin="anonymous"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 
     <section class="h-100 gradient-custom mt-5">
-      <% if(userdetails.cartTotalPrice>0){ %>
+     
       <div class="container py-5">
         <div class="row d-flex justify-content-center my-4">
           <div class="col-md-10">
@@ -16,25 +31,25 @@
               <% cartData.cart.forEach((element)=>{ %>
               
                 <div class="card-body">
-                  
+                   -->
                   <!-- Single item -->
-                  <div class="row">
-                    <div class="col-lg-3 col-md-12 mb-4 mb-lg-0">
+                  <!-- <div class="row">
+                    <div class="col-lg-3 col-md-12 mb-4 mb-lg-0"> -->
                       <!-- Image -->
-                      <div class="bg-image hover-overlay hover-zoom ripple rounded" data-mdb-ripple-color="light">
+                      <!-- <div class="bg-image hover-overlay hover-zoom ripple rounded" data-mdb-ripple-color="light">
                         <img src="/product_images/<%=element.product.image[2] %>" class="w-100"
                           alt="Blue Jeans Jacket" />
                          
                         <a href="#!">
                           <div class="mask" style="background-color: rgba(251, 251, 251, 0.2)"></div>
                         </a>
-                      </div>
+                      </div> -->
                       <!-- Image -->
-                    </div>
+                    <!-- </div>
 
-                    <div class="col-lg-5 col-md-6 mb-4 mb-lg-0">
+                    <div class="col-lg-5 col-md-6 mb-4 mb-lg-0"> -->
                       <!-- Data -->
-                      <p><strong>
+                      <!-- <p><strong>
                           <%=element.product.name%>
                         </strong></p>
                       <p>
@@ -48,13 +63,13 @@
                           remove
                         
                     
-                      </button>
+                      </button> -->
                       <!-- <button type="button" class="btn btn-danger btn-sm mb-2" data-mdb-toggle="tooltip"
                   title="Move to the wish list">
                  
                 </button> -->
                       <!-- Data -->
-                    </div>
+                    <!-- </div>
 
 
 
@@ -69,16 +84,16 @@
                       
                           <%= element.quantity %>
                         </span><button class="cart-item-count ml-3"
-                          onclick="changeQuantity('<%= element.product._id %>',1,'<%= element.productTotalPrice %>')">+</button>
+                          onclick="changeQuantity('<%= element.product._id %>',1,'<%= element.productTotalPrice %>')">+</button> -->
                         <!-- <p class="text-start text-md-center"> -->
-                        <strong>Total :<span class="<%= element.product._id %>">
+                        <!-- <strong>Total :<span class="<%= element.product._id %>">
                             <%=element.productTotalPrice%>
                           </span></strong>
                         </p>
                       </div>
                     </div>
 
-                  </div>
+                  </div> -->
                   <!-- Quantity -->
 
                   <!-- Price -->
@@ -93,7 +108,7 @@
             <!-- Single item -->
 
             <!-- Single item -->
-          </div>
+          <!-- </div>
         </div>
 
 
@@ -137,13 +152,8 @@
 
       </div>
       </div>
-      <%} else{%>
-      <div  style="align-content: center;">
-        <img class="center" src="https://cdni.iconscout.com/illustration/premium/thumb/empty-cart-2130356-1800917.png" alt="empty cart">
-        <h3 style="text-align:center ;"><i>Cart Is Empty</i></h3>
-      </div>
-      <%}%>
-    </section>
+   
+    </section> -->
     <!-- <script>
          jQuery(document).ready(($) => {
         $('.quantity').on('click', '.plus', function(e) {
@@ -162,6 +172,172 @@
         });
     });
       </script> -->
+
+
+
+
+
+      
+
+
+
+
+<section>
+  <section class="h-100 gradient-custom">
+    <% if(userdetails.cartTotalPrice>0){ %>
+    <div class="container py-5">
+      <div class="row d-flex justify-content-center my-4">
+        <div class="col-md-8">
+          <div class="card mb-4">
+            <div class="card-header py-3">
+              <h5 class="mb-0">Cart items</h5>
+            </div>
+            <% cartData.cart.forEach((element)=>{ %>
+            <div class="card-body">
+              <!-- Single item -->
+              <div class="row">
+                <div class="col-lg-3 col-md-12 mb-4 mb-lg-0">
+                  <!-- Image -->
+                  <div class="bg-image hover-overlay hover-zoom ripple rounded" data-mdb-ripple-color="light">
+                    <img src="/product_images/<%=element.product.image[2] %>"
+                      class="w-100" alt="Blue Jeans Jacket" />
+                    <a href="#!">
+                      <div class="mask" style="background-color: rgba(251, 251, 251, 0.2)"></div>
+                    </a>
+                  </div>
+                  <!-- Image -->
+                </div>
+  
+                <div class="col-lg-5 col-md-6 mb-4 mb-lg-0">
+                  <!-- Data -->
+                  <p><strong><%=element.product.name%></strong></p>
+                  <p><%=element.product.description%></p>
+                  <p>Price: <%=element.product.price%></p>
+                 
+                  <button  onclick="validate('<%= element.product._id %>')"  type="button" class="btn btn-danger btn-sm mb-2" data-mdb-toggle="tooltip"
+                    title="Move to the wish list">
+                    <i class="fa fa-trash"></i>
+                  </button>
+                  <!-- Data -->
+                </div>
+  
+                <div class="col-lg-4 col-md-6 mb-4 mb-lg-0">
+                  <!-- Quantity -->
+                  <span> &nbsp;&nbsp;&nbsp;  &nbsp;&nbsp;&nbsp;  &nbsp;quantity</span>
+                  <div class="d-flex mb-4" style="max-width: 300px">
+                    <button class="btn btn-primary px-3 me-2"
+                    onclick="changeQuantity('<%= element.product._id %>',-1,'<%= element.productTotalPrice %>')">
+                      <i class="fa fa-minus"></i>
+                    </button>
+  
+                    <div  style="width: 50px; height: 5px; text-align: center;" class="form-outline">
+                      <span id="<%= element.product._id %>">
+                      
+                        <%= element.quantity %>
+                      </span>
+                    </div>
+  
+                    <button class="btn btn-primary px-3 ms-2"
+                    onclick="changeQuantity('<%= element.product._id %>',1,'<%= element.productTotalPrice %>')">
+                      <i class="fa fa-plus"></i>
+                    </button>
+                  </div>
+                  <!-- Quantity -->
+  
+                  <!-- Price -->
+                  <p   class="<%= element.product._id %>" class="text-start text-md-center">
+                    <strong><%=element.productTotalPrice%></strong>
+                  </p>
+                  <!-- Price -->
+                </div>
+              </div>
+              <!-- Single item -->
+  
+              <hr class="my-4" />
+  
+            
+              <!-- Single item -->
+            </div>
+            <%})%>
+          </div>
+          
+          
+        </div>
+        <div class="col-md-4">
+          <div class="card mb-4">
+            <div class="card-header py-3">
+              <h5 class="mb-0">Summary</h5>
+            </div>
+            <div class="card-body">
+              <ul class="list-group list-group-flush">
+                <li
+                  class="list-group-item d-flex justify-content-between align-items-center border-0 px-0 pb-0">
+                  Products
+                  <span>$53.98</span>
+                </li>
+                <li class="list-group-item d-flex justify-content-between align-items-center px-0">
+                  Shipping
+                  <span>Gratis</span>
+                </li>
+                <li
+                  class="list-group-item d-flex justify-content-between align-items-center border-0 px-0 mb-3">
+                  <div>
+                    <strong>Total amount</strong>
+                    <strong>
+                      <p class="mb-0">(including VAT)</p>
+                    </strong>
+                  </div>
+                    <% if(typeof userdetails!=='undefined'){ %>
+                    <span id="total"><strong > <%=userdetails.cartTotalPrice %></strong></span>
+                    <%}%>
+                </li>
+              </ul>
+              <% if(typeof message !=='undefined' ){ %>
+                <h5 style="color: rgb(224, 86, 86);">
+                  <%= message %>
+                </h5>
+                <% } %>
+                <% if(typeof cartData!=='undefined' ){%>
+              <button type="button" class="btn btn-primary btn-lg btn-block">
+                <a style="color: aliceblue;"  href="/checkout"> Go to checkout</a> 
+              </button>
+              <%}%>
+
+             
+              
+          
+
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <%} else{%>
+      <div  style="align-content: center;">
+        <img class="center" src="https://cdni.iconscout.com/illustration/premium/thumb/empty-cart-2130356-1800917.png" alt="empty cart">
+        <h3 style="text-align:center ;"><i>Cart Is Empty</i></h3>
+      </div>
+      <%}%>
+  </section>
+</section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     <script>
 
       function changeQuantity(proId, count, ptotal) {

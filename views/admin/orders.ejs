@@ -42,42 +42,43 @@
                     <tbody>
 
                       <% if(orderDetails.length>0){ %>
-                        <% for(let i=0; i<orderDetails.length; i++){ %>
-
-
+                        <% let j=0 %>
+                        <% for(let i=orderDetails.length-1; i>=0; i--){ %>
+                         
+                            <% j++ %>
                           <tr>
                             <td>
-                              <%= i %>
+                              <%= j %>
                             </td>
                             <td>
-                              <%=orderDetails[i].orderId%>
+                              <%= orderDetails[i].orderId%>
                             </td>
                             <td>
-                              <% order[i].product.forEach((element)=>{ %>
-                                #<%= element.productId.name %><br>
+                              <% orderDetails[i].product.forEach((element)=>{ %>
+                                &#9679; <%= element.productId.name %><br>
                                   <% })%>
                             </td>
                             <td>
-                              <%=user[i].userId.firstname %>
-                                <%=user[i].userId.lastname %>
+                              <%=orderDetails[i].userId.firstname %>
+                                <%=orderDetails[i].userId.lastname %>
                             </td>
                             <td>
                               <%=orderDetails[i].deliveryAddress%>
                             </td>
                             <td>
                               
-                                <% order[i].product.forEach((element)=>{ %>
-                                  <%= element.quantity %><br>
+                                <% orderDetails[i].product.forEach((element)=>{ %>
+                                  &#9679; <%= element.quantity %><br>
                                     <%}) %>
                             </td>
                             <td>
-                              <%= order[i].paymentType%>
+                              <%= orderDetails[i].paymentType%>
                             </td>
                             <td>
-                              <%= order[i].total %>
+                              <%= orderDetails[i].total %>
                             </td>
                             <td>
-                              <%=user[i].userId.phone %>
+                              <%=orderDetails[i].userId.phone %>
                             </td>
 
 

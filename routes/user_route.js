@@ -14,6 +14,8 @@ const userController=require("../controllers/user_controller")
 const cartController=require("../controllers/cart_controller");
 const wishlistController=require("../controllers/wishlist_controller");
 const orderController=require("../controllers/order_controller");
+const couponController=require("../controllers/coupon_controller");
+const { compileFunction } = require("vm");
 
 //get home
 user_route.get('/',userController.userLoad);
@@ -118,7 +120,7 @@ user_route.post ('/change-Product-Quantity',cartController.changeQuantity)
 // view Orders
 user_route.get ('/viewOrders/:id',orderController.DetailOrderView)
 
-
+user_route.post('/applycoupon',couponController.applyCoupon)
 
 
 user_route.use(function(req, res) {
