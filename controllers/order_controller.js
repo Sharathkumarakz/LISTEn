@@ -19,16 +19,20 @@ const { v4: uuidv4 } = require('uuid');
 
 
 const moment = require('moment');
+const { truncateSync } = require('fs');
 
 
 
 const viewCheckout = async (req, res, next) => {
   try {
     if (req.session.user) {
-
+  
       const categorydata = await Category.find({});
 
       const userData = await User.findOne({ username: req.session.user.username }).populate('cart.product').exec()
+      if(userData.cart.length==0){
+   res.redirect('/cart')
+      }else{
       const total = userData.cartTotalPrice
       if (total <= 0) {
         const id = req.session.user.username;
@@ -63,7 +67,7 @@ const viewCheckout = async (req, res, next) => {
         const userdetails = await User.findOne({ username: req.session.user.username })
         res.render('checkout', { categorydata: categorydata, userdetails: userdetails, userData: userData })
 
-      }
+      }}
 
 
 
@@ -158,47 +162,8 @@ const successLoad = async (req, res, next) => {
 
       } else if (method == "UPI") {
 
-  //       console.log("booooooooooooooooody");
-  //       console.log(req.body);
-
-  //     var options={
-  //       amount:req.body.total,
-  //       currency:'INR',
-  //       receipt:"rcp_1",
-
-  //     };
-  //     instance.orders.create(options, function(err,orders){
-  //       console.log(orders);
-  //     })
-  //     function verify(orders){
-  //     var options = {
-  //       "key": "rzp_test_oyzsQbMBs7ToCQ", // Enter the Key ID generated from the Dashboard
-  //       "amount": order.amount, // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
-  //       "currency": "INR",
-  //       "name": "Acme Corp", //your business name
-  //       "description": "Test Transaction",
-  //       "image": "https://example.com/your_logo",
-  //       "order_id": order.id, //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
-  //       "callback_url": "https://eneqd3r9zrjok.x.pipedream.net/",
-  //       "prefill": {
-  //           "name": "Gaurav Kumar", //your customer's name
-  //           "email": "gaurav.kumar@example.com",
-  //           "contact": "9000090000"
-  //       },
-  //       "notes": {
-  //           "address": "Razorpay Corporate Office"
-  //       },
-  //       "theme": {
-  //           "color": "#3399cc"
-  //       }
-  //   };
-  // }         
-
         
-        // const categorydata = await Category.find({});
 
-        // const userdetails = await User.findOne({ username: req.session.user.username })
-        // res.render('success', { categorydata: categorydata, userdetails: userdetails})
 
       } else {
 
@@ -299,11 +264,40 @@ const cancelOrder = async (req, res, next) => {
 }
 
 
+
+
+const addAddressToCheckout=async(req,res,next)=>{
+    try {
+        console.log("aaaaaaaaaaaaaaaddd");
+        console.log(req.body);
+        const username = req.session.user.username
+        const addressinserted = await User.updateOne({ username: username }, {
+          $push: {
+            address: {
+              houseName: req.body.hname,
+              street: req.body.street,
+              district: req.body.district,
+              country: req.body.country,
+              state: req.body.state,
+              pincode: req.body.pincode,
+              phone: req.body.number
+            }
+          }
+        })
+      res.json({success:true})  
+    } catch (error) {
+      next(error);
+    }
+}
+
+
+
 module.exports = {
   viewCheckout,
   successLoad,
   viewOrders,
   DetailOrderView,
-  cancelOrder
+  cancelOrder,
+  addAddressToCheckout
 
 }

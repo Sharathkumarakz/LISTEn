@@ -94,8 +94,8 @@ user_route.get('/address',userController.addressView);
 //user add address
 user_route.get('/addAddress',userController.addAddress);
 user_route.post('/addAddress',userController.insertAddress);
-user_route.get('/addAddressCheckout',userController.addAddressCheckout);
-user_route.post('/addAddressCheckout',userController.insertAddressheckout);
+// user_route.get('/addAddressCheckout',userController.addAddressCheckout);
+// user_route.post('/addAddressCheckout',userController.insertAddressheckout);
 //edit profile details
 user_route.get('/editProfile',userController.editProfile);
 user_route.post('/editedProfile/:id',userController.editedProfile);
@@ -121,6 +121,10 @@ user_route.post ('/change-Product-Quantity',cartController.changeQuantity)
 user_route.get ('/viewOrders/:id',orderController.DetailOrderView)
 
 user_route.post('/applycoupon',couponController.applyCoupon)
+
+
+user_route.post('/checkoutAddAddress',orderController.addAddressToCheckout)
+
 
 
 user_route.use(function(req, res) {

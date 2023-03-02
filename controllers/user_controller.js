@@ -340,21 +340,21 @@ const addAddress = async (req, res, next) => {
 
 
 
-const addAddressCheckout = async (req, res, next) => {
-  try {
-    if (req.session.user) {
-      const userdetails = req.session.user;
+// const addAddressCheckout = async (req, res, next) => {
+//   try {
+//     if (req.session.user) {
+//       const userdetails = req.session.user;
 
 
-      const categorydata = await Category.find({})
-      res.render('checkout_address', { userdetails: userdetails, categorydata: categorydata })
-    } else {
-      res.redirect('/login')
-    }
-  } catch (error) {
-    next(error);
-  }
-}
+//       const categorydata = await Category.find({})
+//       res.render('checkout_address', { userdetails: userdetails, categorydata: categorydata })
+//     } else {
+//       res.redirect('/login')
+//     }
+//   } catch (error) {
+//     next(error);
+//   }
+// }
 
 
 //insert address
@@ -390,35 +390,35 @@ const insertAddress = async (req, res, next) => {
 
 
 
-//insert address checkout
-const insertAddressheckout = async (req, res, next) => {
-  try {
-    console.log(req.body);
-    if (req.session.user) {
+// //insert address checkout
+// const insertAddressheckout = async (req, res, next) => {
+//   try {
+//     console.log(req.body);
+//     if (req.session.user) {
 
 
-      const username = req.session.user.username
-      const addressinserted = await User.updateOne({ username: username }, {
-        $push: {
-          address: {
-            houseName: req.body.hname,
-            street: req.body.street,
-            district: req.body.district,
-            country: req.body.country,
-            state: req.body.state,
-            pincode: req.body.pincode,
-            phone: req.body.number
-          }
-        }
-      })
-      res.redirect('/checkout')
-    } else {
-      res.redirect('/login')
-    }
-  } catch (error) {
-    next(error);
-  }
-}
+//       const username = req.session.user.username
+//       const addressinserted = await User.updateOne({ username: username }, {
+//         $push: {
+//           address: {
+//             houseName: req.body.hname,
+//             street: req.body.street,
+//             district: req.body.district,
+//             country: req.body.country,
+//             state: req.body.state,
+//             pincode: req.body.pincode,
+//             phone: req.body.number
+//           }
+//         }
+//       })
+//       res.redirect('/checkout')
+//     } else {
+//       res.redirect('/login')
+//     }
+//   } catch (error) {
+//     next(error);
+//   }
+// }
 
 
 
@@ -629,8 +629,8 @@ const error = async (req, res, next) => {
 module.exports = {
   userLoad,
   addAddress,
-  addAddressCheckout,
-  insertAddressheckout,
+  // addAddressCheckout,
+  // insertAddressheckout,
   userProfile,
   addressView,
   userSingleProductLoad,

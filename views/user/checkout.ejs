@@ -1,9 +1,11 @@
 <%- include("../layouts/user/header.ejs") %>
 
     <%- include("../layouts/user/headers.ejs") %>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.1/dist/sweetalert2.all.min.js"></script>
-    <script src="https://code.jquery.com/jquery-3.6.3.js" integrity="sha256-nQLuAZGRRcILA+6dMBOvcRh5Pe310sBpanc6+QBmyVM="
-        crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.1/dist/sweetalert2.all.min.js"></script>
+        <script src="https://code.jquery.com/jquery-3.6.3.js"
+            integrity="sha256-nQLuAZGRRcILA+6dMBOvcRh5Pe310sBpanc6+QBmyVM=" crossorigin="anonymous"></script>
+        <div style="background: #000; height:20%;">
+        </div>
         <div class=" container-fluid my-5 ">
             <div class="row justify-content-center ">
                 <div class="col-xl-10">
@@ -62,30 +64,43 @@
                                             </div>
                                             <div class="form-group">
                                                 <label for="NAME" class="small text-muted mb-1">full Name</label>
-                                                <input type="text" class="form-control form-control-sm" 
-                                                    id="NAME" aria-describedby="helpId"
+                                                <input type="text" class="form-control form-control-sm" id="NAME"
+                                                    aria-describedby="helpId"
                                                     value="<%= userData.firstname %> <%= userData.lastname %>">
                                             </div>
-                                  <input type="hidden" name="userId" value="<%= userData._id %>">
+                                            <input type="hidden" name="userId" value="<%= userData._id %>">
                                             <!-- <div class="form-group">
                                 <label for="NAME" class="small text-muted mb-1">Phone Number</label>
                                 <input type="text" class="form-control form-control-sm" name="NAME" id="NAME" aria-describedby="helpId" placeholder="BBBootstrap Team">
                             </div> -->
-                                            <select
-                                                style="height: 50px; border-radius: 5px; border-color: rgb(202, 201, 201); color: rgb(140, 135, 135);"
-                                                name="address">
-                                                <option selected >address</option>
-                                                <% userData.address.forEach((element)=>{ %>
-                                                    <option
-                                                        value="<%=element.houseName %>,<%=element.street %>,<%=element.district %> <%=element.state %>,<%=element.country %> <%=element.pincode %>">
-                                                        <%=element.houseName %>,<%=element.street %>,<%=element.district
-                                                                    %>,<%=element.state %>,<%=element.country %>,
-                                                                            <%=element.pincode %>
-                                                    </option>
-                                                    <% }) %>
-                                            </select>
+                                            <div id="myDiv">
+                                                <label>Address</label>
+                                                <select
+                                                    style="height: 50px; border-radius: 5px; border-color: rgb(202, 201, 201); color: rgb(140, 135, 135);"
+                                                    name="address">
+
+
+                                                    <% userData.address.forEach((element)=>{ %>
+                                                        <option
+                                                            value="<%=element.houseName %>,<%=element.street %>,<%=element.district %> <%=element.state %>,<%=element.country %> <%=element.pincode %>">
+                                                            <%=element.houseName %>,<%=element.street %>,
+                                                                    <%=element.district %>,<%=element.state %>,
+                                                                            <%=element.country %>,
+                                                                                <%=element.pincode %>
+                                                        </option>
+                                                        <% }) %>
+                                                </select>
+                                            </div>
                                             <div class="form-group">
-                                              <button class="mt-2" style="color: rgb(195, 199, 199); border-radius: 5px;"><a style="color: black;" href="/addAddressCheckout">Add Address</a></button>
+                                                <!-- <button class="mt-2"
+                                                    style="color: rgb(195, 199, 199); border-radius: 5px;"><a
+                                                        style="color: black;" href="/addAddressCheckout">Add
+                                                        Address</a></button> -->
+                                                <!-- Button trigger modal -->
+                                                <button type="button" class="btn btn-primary mt-2" data-toggle="modal"
+                                                    data-target="#exampleModalCenter">
+                                                    Add Address
+                                                </button>
                                             </div>
                                             <div class="row no-gutters">
                                                 <div class="col-sm-4 pr-sm-2">
@@ -97,7 +112,7 @@
                                                             value="<%= userData.phone %>">
                                                     </div>
                                                 </div>
-                                             
+
                                             </div>
 
                                         </div>
@@ -118,14 +133,15 @@
                                                             <img style="width:50px" class=" img-fluid"
                                                                 src="/product_images/<%=element.product.image[0] %>"
                                                                 width="62" height="62">
-                                                           <input type="hidden" name="proId" value="<%= element.product._id %>">           
+                                                            <input type="hidden" name="proId"
+                                                                value="<%= element.product._id %>">
                                                             <div class="media-body  my-auto">
                                                                 <div class="row ">
                                                                     <div class="col-auto">
                                                                         <p class="mb-0"><b>
                                                                                 <%=element.product.name %>
                                                                             </b></p><small class="text-muted">
-                                                                           
+
                                                                         </small>
                                                                     </div>
                                                                 </div>
@@ -136,11 +152,13 @@
                                                         <p class="boxed-1">
                                                             <%=element.quantity %>
                                                         </p>
-                                                        <input type="hidden" name="proQ" value="  <%=element.quantity %>">  
+                                                        <input type="hidden" name="proQ"
+                                                            value="  <%=element.quantity %>">
                                                     </div>
                                                     <div class=" pl-0 flex-sm-col col-auto  my-auto ">
                                                         <p><b>RS.<%=element.productTotalPrice %></b></p>
-                                                        <input type="hidden" name="qntyPrice" value="<%=element.productTotalPrice %>">  
+                                                        <input type="hidden" name="qntyPrice"
+                                                            value="<%=element.productTotalPrice %>">
                                                     </div>
                                                 </div>
                                                 <hr class="my-2">
@@ -155,7 +173,8 @@
                                                                 <div class="flex-sm-col col-auto">
                                                                     <p class="mb-1"><b>
                                                                             <%= userData.cartTotalPrice %>
-                                                                            <input type="hidden" name="total" value="<%= userData.cartTotalPrice %>">  
+                                                                                <input type="hidden" name="total"
+                                                                                    value="<%= userData.cartTotalPrice %>">
                                                                         </b></p>
                                                                 </div>
                                                             </div>
@@ -166,17 +185,20 @@
                                                                 <div class="flex-sm-col col-auto">
                                                                     <p id="discount" class="mb-1"><b>0</b></p>
                                                                 </div>
-                                                                <input  id="discount1" name="discount1" type="hidden" value="">
+                                                                <input id="discount1" name="discount1" type="hidden"
+                                                                    value="">
                                                             </div>
                                                             <div class="row justify-content-between">
                                                                 <div class="col-4">
                                                                     <p><b>Total</b></p>
                                                                 </div>
                                                                 <div class="flex-sm-col col-auto">
-                                                                    <p id="total" class="mb-1"><b>RS.<%= userData.cartTotalPrice %>
+                                                                    <p id="total" class="mb-1"><b>RS.<%=
+                                                                                userData.cartTotalPrice %>
 
-                                                                                </b></p>
-                                                                                <input  id="total1" name="total1" type="hidden" value="<%= userData.cartTotalPrice %>">
+                                                                        </b></p>
+                                                                    <input id="total1" name="total1" type="hidden"
+                                                                        value="<%= userData.cartTotalPrice %>">
                                                                 </div>
                                                             </div>
                                                             <hr class="my-0">
@@ -185,29 +207,34 @@
                                                     <!-- <div class="row mb-5 mt-4 ">
                                     <div classrs
                                     ="col-md-7 col-lg-6 mx-auto"><button type="button" class="btn btn-block btn-outline-primary btn-lg">ADD GIFT CODE</button></div>
-                                </div> -->   <form id="formCoupon" >
-                                    <div class="col-sm-4">
-                                        <div class="form-group">
-                                            <label for="NAME" class="small text-muted mb-1">Coupon Code</label>
-                                            <input  type="text" form="formCoupon"  class="form-control form-control-sm"
-                                                name="code" id="NAMEcode" name="code" aria-describedby="helpId"
-                                                >
-                                            
-                                        </div>
-                                        <button style="background-color: aquamarine; color: black; border-radius: 5px;"   onclick="applyCoupon('<%= userData.cartTotalPrice %>', $('#NAMEcode').val())" form="formCoupon">Redeem Now</button>
-                                        
-                                    </div>
-                                    <div class="col-sm-4">
-                                        <div class="form-group">
-                                              
-                                        </div>
-                                       
-                                    </div>
-                                </form>
-                            
-                                <input type="hidden" name="code" id="code" value=''>
+                                </div> -->
+                                                    <form id="formCoupon">
+                                                        <div class="col-sm-4">
+                                                            <div class="form-group">
+                                                                <label for="NAME" class="small text-muted mb-1">Coupon
+                                                                    Code</label>
+                                                                <input type="text" form="formCoupon"
+                                                                    class="form-control form-control-sm" name="code"
+                                                                    id="NAMEcode" name="code" aria-describedby="helpId">
 
-                               
+                                                            </div>
+                                                            <button
+                                                                style="background-color: aquamarine; color: black; border-radius: 5px;"
+                                                                onclick="applyCoupon('<%= userData.cartTotalPrice %>', $('#NAMEcode').val())"
+                                                                form="formCoupon">Redeem Now</button>
+
+                                                        </div>
+                                                        <div class="col-sm-4">
+                                                            <div class="form-group">
+
+                                                            </div>
+
+                                                        </div>
+                                                    </form>
+
+                                                    <input type="hidden" name="code" id="code" value=''>
+
+
                                                     <label for="NAME" class="small text-muted mb-1">Payment
                                                         Method</label><br><br>
                                                     <div class="form-group">
@@ -217,19 +244,20 @@
                                                     <div class="form-group">
                                                         <input type="radio" name="test" value="UPI">UPI<br><br>
                                                     </div>
-                                                    
+
                                                     <% if(typeof message !=='undefined' ){ %>
                                                         <h5 style="color: rgb(224, 86, 86);">
-                                                          <%= message %>
+                                                            <%= message %>
                                                         </h5>
                                                         <% } %>
-                                                    <div class="row mb-md-5">
-                                                        <div class="col">
-                                                            <button type="submit"   name="" id=""
-                                                                class="btn  btn-lg btn-block ">PURCHASE NOW</button>
-                                                               
-                                                        </div>
-                                                    </div>
+                                                            <div class="row mb-md-5">
+                                                                <div class="col">
+                                                                    <button type="submit" name="" id=""
+                                                                        class="btn  btn-lg btn-block ">PURCHASE
+                                                                        NOW</button>
+
+                                                                </div>
+                                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -239,63 +267,200 @@
                 </div>
             </div>
         </div>
-     <script>
-     
-     function applyCoupon(total,code) {
-      
-        $.ajax({
 
-          url: '/applyCoupon',
-          data: {
-            total:total,
-             code:code
-          },
-          method: "post",
-          success:(response) => {
-           if(response.datefailed){
-            console.log("failed to match");
-            Swal.fire({
-  icon: 'error',
-  title: 'Oops...',
-  text: 'Coupon Expired.',
-})
-           }else if(response.amountnokay){
-            console.log("pattilla");
-            Swal.fire({
-  icon: 'error',
-  title: 'Oops...',
-  text: 'To access this coupen buy something more than 1500rs.',
-  
-})
-           }else if(response.amountokay){
-            console.log("vangaam")  
-            console.log("ooookayyy");
-            document.getElementById('code').value=response.code
-            document.getElementById('discount').innerHTML=response.discountValue
-            document.getElementById('discount1').value=response.discountValue
-            document.getElementById('total').innerHTML=response.value
-            document.getElementById('total1').value=response.value
-            Swal.fire(
-  'Good job!',
-  'Coupen granted!',
-  'success'
-)
-            console.log("ttttt"+response.value);
-            console.log("dissss"+response.discountValue);
-            
-           }else if(response.used){
-            Swal.fire({
-  icon: 'error',
-  title: 'Oops...',
-  text: 'Already Used.',
-})
-           }
-             
-          }
-        })
-      }
-      
-    </script>
+        <section>
+            <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog"
+                aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLongTitle">Add Address</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <form id="myForm">
+                                <div class="row">
+                                    <div class="col-md-12 mb-4">
 
-     </script>
+                                        <div class="form-outline">
+                                            <label class="form-label">House Name</label>
+                                            <input type="text" name="hname" class="form-control form-control-lg" />
+
+                                        </div>
+
+                                    </div>
+
+                                    <div class="col-md-6 mb-4">
+
+                                        <div class="form-outline">
+                                            <label class="form-label">Street</label>
+                                            <input type="text" name="street" class="form-control form-control-lg" />
+
+                                        </div>
+
+                                    </div>
+                                    <div class="col-md-6 mb-4">
+
+                                        <div class="form-outline">
+                                            <label class="form-label">District</label>
+                                            <input type="text" name="district" class="form-control form-control-lg" />
+
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-6 mb-4 d-flex align-items-center">
+
+                                        <div class="form-outline datepicker w-100">
+                                            <label class="form-label">State</label>
+                                            <input type="text" name="state" class="form-control form-control-lg"
+                                                id="birthdayDate" />
+
+                                        </div>
+
+                                    </div>
+
+                                    <div class="col-md-6 mb-4 pb-2">
+
+                                        <div class="form-outline">
+                                            <label class="form-label">Country</label>
+                                            <input type="text" name="country" class="form-control form-control-lg" />
+
+                                        </div>
+
+                                    </div>
+                                </div>
+
+
+                                <div class="row">
+                                    <div class="col-md-6 mb-4 pb-2">
+
+                                        <div class="form-outline">
+                                            <label class="form-label">pincode</label>
+                                            <input type="Number" id="emailAddress" name="pincode"
+                                                class="form-control form-control-lg" />
+
+                                        </div>
+
+                                    </div>
+                                    <div class="col-md-6 mb-4 pb-2">
+
+                                        <div class="form-outline">
+                                            <label class="form-label">Phone Number</label>
+                                            <input type="Number" name="number" class="form-control form-control-lg" />
+
+                                        </div>
+
+                                    </div>
+                                </div>
+
+
+
+                                <div class="mt-4 pt-2">
+                                    <button  style="background-color: #000; color: aliceblue;"   type="submit">Submit</button>
+                                </div>
+
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <script>
+
+            function applyCoupon(total, code) {
+
+                $.ajax({
+
+                    url: '/applyCoupon',
+                    data: {
+                        total: total,
+                        code: code
+                    },
+                    method: "post",
+                    success: (response) => {
+                        if (response.datefailed) {
+                            console.log("failed to match");
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Oops...',
+                                text: 'Coupon Expired.',
+                            })
+                        } else if (response.amountnokay) {
+                            console.log("pattilla");
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Oops...',
+                                text: 'To access this coupen buy something more than 1500rs.',
+
+                            })
+                        } else if (response.amountokay) {
+                            console.log("vangaam")
+                            console.log("ooookayyy");
+                            document.getElementById('code').value = response.code
+                            document.getElementById('discount').innerHTML = response.discountValue
+                            document.getElementById('discount1').value = response.discountValue
+                            document.getElementById('total').innerHTML = response.value
+                            document.getElementById('total1').value = response.value
+                            Swal.fire(
+                                'Good job!',
+                                'Coupen granted!',
+                                'success'
+                            )
+                            console.log("ttttt" + response.value);
+                            console.log("dissss" + response.discountValue);
+
+                        } else if (response.used) {
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Oops...',
+                                text: 'Already Used.',
+                            })
+                        } else if (response.invalid) {
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Oops...',
+                                text: 'Invalid Coupon.',
+                            })
+                        }
+
+                    }
+                })
+            }
+
+        </script>
+
+        <script>
+
+            $('#myForm').submit(function (e) {
+                e.preventDefault(); 
+
+                var formData = $(this).serialize(); 
+
+                $.ajax({
+                    url: '/checkoutAddAddress', // replace with the URL of your server-side script
+                    type: 'POST', // use POST method
+                    data: formData,
+                    success: (response) => {
+                        // handle the response from the server
+                        console.log(response);
+                        console.log("aaavunnuu");
+                        $('#exampleModalCenter').on('hidden.bs.modal', function () {
+                            $(this).find('form').trigger('reset');
+                        });
+                        $('#exampleModalCenter').modal('hide');
+                        $('#myDiv').load('/checkout #myDiv')
+                    },
+
+                });
+            });
+
+        </script>
         <%- include("../layouts/user/footer.ejs") %>

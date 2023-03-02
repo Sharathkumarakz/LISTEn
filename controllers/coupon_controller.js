@@ -52,7 +52,9 @@ const applyCoupon=async (req,res,next)=>{
 
        console.log(req.body);
       const couponDetails=await Coupon.findOne({code:req.body.code})
+      if(couponDetails){
       const user=await User.findOne({username: req.session.user.username})
+      
       const found=await Coupon.findOne({code:req.body.code,userUsed: { $in: [user._id] } })
       const code=couponDetails.code
       console.log(couponDetails);
@@ -87,7 +89,9 @@ const applyCoupon=async (req,res,next)=>{
       }else{
    
          res.json({datefailed:true})
-      }}
+      }}}else{
+        res.json({invalid:true})
+      }
     } catch (error) {
        next(error)
     }

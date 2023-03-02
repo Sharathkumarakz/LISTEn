@@ -52,6 +52,10 @@ const orderData = new mongoose.Schema({
     required:true,
   },
 
+   status:{
+    type:String,
+    default:"confirmed"
+   }
 });
 
 module.exports = mongoose.model('Order', orderData);
