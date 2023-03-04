@@ -1,32 +1,36 @@
 <%- include("../layouts/user/header.ejs") %>
 
   <%- include("../layouts/user/headers.ejs") %>
-  <section style="background-color: #ffffff;">
-    <div class="container py-5">
-      <div class="row">
-        <div class="col">
-          <nav aria-label="breadcrumb" class="bg-light rounded-3 p-3 mb-4">
-            <ol class="breadcrumb mb-0">
-           
-            </ol>
-          </nav>
-        </div>
-      </div>
-      <% if(typeof userdetails!=='undefined'){ %>
-      <div class="row">
-        <div class="col-lg-4">
-          <div class="card mb-4">
-            <div class="card-body text-center">
-              <img src="https://thumbs.dreamstime.com/b/default-avatar-profile-icon-vector-social-media-user-image-182145777.jpg" alt="avatar"
-                class="rounded-circle img-fluid" style="width: 150px;">
-              <h5 class="my-3"><%= userdetails.firstname %> <%= userdetails.lastname %></h5>
-              <p class="text-muted mb-1">LISTEn</p>
-              <p class="text-muted mb-4">LISTEn to listen</p>
-              <div class="d-flex justify-content-center mb-2">
-                       </div>
-            </div>
+    <section style="background-color: #ffffff;">
+      <div class="container py-5">
+        <div class="row">
+          <div class="col">
+            <nav aria-label="breadcrumb" class="bg-light rounded-3 p-3 mb-4">
+              <ol class="breadcrumb mb-0">
+
+              </ol>
+            </nav>
           </div>
-          <!-- <div class="card mb-4 mb-lg-0">
+        </div>
+        <% if(typeof userdetails!=='undefined' ){ %>
+          <div class="row">
+            <div class="col-lg-4">
+              <div class="card mb-4">
+                <div class="card-body text-center">
+                  <img
+                    src="https://thumbs.dreamstime.com/b/default-avatar-profile-icon-vector-social-media-user-image-182145777.jpg"
+                    alt="avatar" class="rounded-circle img-fluid" style="width: 150px;">
+                  <h5 class="my-3">
+                    <%= userdetails.firstname %>
+                      <%= userdetails.lastname %>
+                  </h5>
+                  <p class="text-muted mb-1">LISTEn</p>
+                  <p class="text-muted mb-4">LISTEn to listen</p>
+                  <div class="d-flex justify-content-center mb-2">
+                  </div>
+                </div>
+              </div>
+              <!-- <div class="card mb-4 mb-lg-0">
             <div class="card-body p-0">
               <ul class="list-group list-group-flush rounded-3">
                 <li class="list-group-item d-flex justify-content-between align-items-center p-3">
@@ -53,51 +57,60 @@
             </div>
           </div>
         </div> -->
-        </div>
-       
-       
-       
-        <div class="col-lg-8">
-          <div class="card mb-4">
-            <div class="card-body">
-              <div class="row">
-                <div class="col-sm-3">
-                  <p class="mb-0">Full Name</p>
-                </div>
-                <div class="col-sm-9">
-                  <p class="text-muted mb-0"><%= userdetails.firstname %> <%= userdetails.lastname %></p>
-                </div>
-              </div>
-              <hr>
-              
-              <div class="row">
-                <div class="col-sm-3">
-                  <p class="mb-0">Email</p>
-                </div>
-                <div class="col-sm-9">
-                  <p class="text-muted mb-0"><%= userdetails.email %></p>
-                </div>
-              </div>
-              <hr>
-              <div class="row">
-                <div class="col-sm-3">
-                  <p class="mb-0">Phone</p>
-                </div>
-                <div class="col-sm-9">
-                  <p class="text-muted mb-0"><%= userdetails.phone %></p>
-                </div>
-              </div>
-              <hr>
-              <div class="row">
-                <div class="col-sm-3">
-                  <p class="mb-0">username</p>
-                </div>
-                <div class="col-sm-9">
-                  <p class="text-muted mb-0"><%= userdetails.username %></p>
-                </div>
-              </div>
-              <hr>
-              <!-- <div class="row">
+            </div>
+
+
+
+            <div class="col-lg-8">
+              <div class="card mb-4">
+                <div class="card-body">
+                  <div class="row">
+                    <div class="col-sm-3">
+                      <p class="mb-0">Full Name</p>
+                    </div>
+                    <div class="col-sm-9">
+                      <p class="text-muted mb-0">
+                        <%= userdetails.firstname %>
+                          <%= userdetails.lastname %>
+                      </p>
+                    </div>
+                  </div>
+                  <hr>
+
+                  <div class="row">
+                    <div class="col-sm-3">
+                      <p class="mb-0">Email</p>
+                    </div>
+                    <div class="col-sm-9">
+                      <p class="text-muted mb-0">
+                        <%= userdetails.email %>
+                      </p>
+                    </div>
+                  </div>
+                  <hr>
+                  <div class="row">
+                    <div class="col-sm-3">
+                      <p class="mb-0">Phone</p>
+                    </div>
+                    <div class="col-sm-9">
+                      <p class="text-muted mb-0">
+                        <%= userdetails.phone %>
+                      </p>
+                    </div>
+                  </div>
+                  <hr>
+                  <div class="row">
+                    <div class="col-sm-3">
+                      <p class="mb-0">username</p>
+                    </div>
+                    <div class="col-sm-9">
+                      <p class="text-muted mb-0">
+                        <%= userdetails.username %>
+                      </p>
+                    </div>
+                  </div>
+                  <hr>
+                  <!-- <div class="row">
                 <div class="col-sm-3">
                   <p class="mb-0">Address</p>
                 </div>
@@ -105,21 +118,300 @@
                   <p class="text-muted mb-0">Bay Area, San Francisco, CA</p>
                 </div>
               </div> -->
+                </div>
+              </div>
+              <button type="button" style="background-color: rgb(203, 241, 186)"><a style="color:black";
+                  href="/address">Address</a></button>
+              <!-- <button type="button" class="btn btn-primary ms-1"><a style="color: aliceblue;" href="/editProfile">Edit
+                  Profile</a></button> -->
+              <button type="button"style="background-color: rgb(203, 241, 186); "><a style=" color:black";
+                  href="/orders">Orders</a></button>
+                  
+              <button type="button" style="background-color: rgb(203, 241, 186);" data-toggle="modal" data-target="#userEdit">
+                Edit Profile
+              </button>
+              <button type="button" style="background-color: rgb(203, 241, 186);"  data-toggle="modal" data-target="#exampleModalCenter">
+                Change Password
+              </button>
             </div>
           </div>
-          <button type="button" class="btn btn-primary ms-1"><a style="color: aliceblue;" href="/address">Address</a></button>
-          <button type="button" class="btn btn-primary ms-1"><a style="color: aliceblue;" href="/editProfile">Edit Profile</a></button>
-          <button type="button" class="btn btn-primary ms-1"><a style="color: aliceblue;" href="/orders">Orders</a></button>
-          <button type="button" class="btn btn-primary ms-1"><a style="color: aliceblue;" href="/changePassword">Change Password</a></button>
+          <%} %>
+      </div>
+      </div>
+
+
+    </section>
+
+
+
+
+    <!-- modal Change password -->
+    <section>
+      <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog"
+        aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+          <div class="modal-content " style="background-color: rgb(214, 241, 202);" >
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLongTitle">Add Address</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <form action="" method="post" id="password">
+                <div class="row">
+                  <div class="col-md-12 mb-4">
+
+                    <div class="form-outline">
+                      <label class="form-label">Old password</label>
+                      <input type="text" name="old" class="form-control form-control-lg" />
+                     
+                    </div>
+                    <!-- <% if(typeof message !=='undefined' ){ %>
+                          <h6 style="color: rgb(224, 86, 86);">
+                            <%= message %>
+                          </h6>
+                          <% } %> -->
+                  </div>
+
+                  <div class="col-md-6 mb-4">
+
+                    <div class="form-outline">
+                      <label class="form-label">New password</label>
+                      <input type="password" name="new" class="form-control form-control-lg" />
          
+                    </div>
+
+                  </div>
+                  <div class="col-md-6 mb-4">
+
+                    <div class="form-outline">
+                      <label class="form-label">Confirm Password</label>
+                      <input type="password" name="confirm" class="form-control form-control-lg" />
+                    
+                    </div>
+
+                  </div>
+
+                  <!-- <% if(typeof message2 !=='undefined' ){ %>
+                        <h6 style="color: rgb(224, 86, 86);">
+                          <%= message2 %>
+                        </h6>
+                        <% } %> -->
+                </div>
+                <div id="alertpassword" class="alert alert-danger" role="alert" style="display: none;">
+
+                </div>
+                <div id="alertpassword1" class="alert alert-success" role="alert" style="display: none;">
+
+                </div>
+                <div class="mt-4 pt-2">
+                  <input class="btn btn-primary btn-lg" type="submit" value="Submit">
+                </div>
+
+              </form>
+
+
+            </div>
+            <div class="modal-footer">
+
+            </div>
           </div>
         </div>
-        <%} %>
       </div>
-    </div>
+    </section>
 
-    
-  </section>
- 
 
-      <%- include("../layouts/user/footer.ejs") %>
+    <!-- modal edit user details -->
+
+    <section>
+      <div class="modal fade" id="userEdit" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+        aria-hidden="true" >
+        <div class="modal-dialog modal-dialog-centered" role="document">
+          <div class="modal-content" style="background-color: rgb(211, 239, 198)">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLongTitle">Edit User Details</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body" >
+              <div id="alertpasswordUser1" class="alert alert-success" role="alert" style="display: none;">
+
+              </div>
+              <form action="" method="post" id="userDetailsEdit">
+
+                <div class="col-lg-12">
+                  <div class="card mb-4">
+                    <div class="card-body" style="background-color: rgb(213, 238, 201);">
+                      <div class="row">
+                        <div class="col-sm-3">
+                          <p class="mb-0">first Name</p>
+
+                        </div>
+                        <div class="col-sm-9">
+                          <input type="text" name="fname" class="form-control form-control-line"
+                            value="<%=userdetails.firstname %>">
+                        </div>
+                      </div>
+                      <input type="hidden" name="userId" value="userdetails._id">
+                      <hr>
+                      <div class="row">
+                        <div class="col-sm-3">
+                          <p class="mb-0">last Name</p>
+                        </div>
+                        <div class="col-sm-9">
+                          <input type="text" name="lname" class="form-control form-control-line"
+                            value="<%=userdetails.lastname %>">
+                        </div>
+                      </div>
+                      <hr>
+                      <div class="row">
+                        <div class="col-sm-3">
+                          <p class="mb-0">Email</p>
+                        </div>
+                        <div class="col-sm-9">
+                          <input type="text" name="email" class="form-control form-control-line"
+                            value="<%=userdetails.email %>">
+                        </div>
+                      </div>
+                      <hr>
+                      <div class="row">
+                        <div class="col-sm-3">
+                          <p class="mb-0">Phone</p>
+                        </div>
+                        <div class="col-sm-9">
+                          <input type="Number" name="phone" class="form-control form-control-line"
+                            value="<%=userdetails.phone%>">
+                        </div>
+                      </div>
+                      <hr>
+                      <!-- <div class="row">
+                    <div class="col-sm-3">
+                      <p class="mb-0" >username</p>
+                    </div>
+                    <div class="col-sm-9">
+                      <input type="text" name="username" class="form-control form-control-line" value="<%=userdetails.username %>">  <% if(typeof message !=='undefined' ){ %>
+                        <h6 style="color: rgb(224, 86, 86);">
+                          <%= message %>
+                        </h6>
+                        <% } %>           </div>
+                  </div>
+                  <hr> -->
+                      <!-- <div class="row">
+                    <div class="col-sm-3">
+                      <p class="mb-0">Address</p>
+                    </div>
+                    <div class="col-sm-9">
+                      <p class="text-muted mb-0">Bay Area, San Francisco, CA</p>
+                    </div>
+                  </div> -->
+                    </div>
+                  </div>
+                  <div id="alertpasswordUser" class="alert alert-danger" role="alert" style="display: none;">
+
+                  </div>
+                 
+                  <button type="submit">Save Action</a></button>
+                </div>
+            </div>
+            </form>
+
+
+          </div>
+          <div class="modal-footer">
+
+          </div>
+        </div>
+      </div>
+      </div>
+    </section>
+
+
+
+
+
+
+    <script>
+      $('#password').submit(function (e) {
+        e.preventDefault();
+
+        var formData = $(this).serialize();
+
+
+
+        $.ajax({
+          url: '/changePassword', // replace with the URL of your server-side script
+          type: 'POST', // use POST method
+          data: formData,
+          success: (response) => {
+
+            // handle the response from the server
+            console.log("yes")
+            console.log(response);
+            if (response.done) {
+              $('#alertpassword1').attr({ style: "display: block" }).html("Success")
+              setTimeout(() => {
+                $('#alertpassword1').hide()
+              }, 3000)
+              location.href = '/user'
+            } else if (response.failedToMatch) {
+              $('#alertpassword').attr({ style: "display: block" }).html("Failed to match New Password")
+              setTimeout(() => {
+                $('#alertpassword').hide()
+              }, 3000)
+            } else if (response.incorrect) {
+              $('#alertpassword').attr({ style: "display: block" }).html("Incorrect Password")
+              setTimeout(() => {
+                $('#alertpassword').hide()
+              }, 3000)
+            } else if (response.required) {
+              $('#alertpassword').attr({ style: "display: block" }).html("All fields Are Required")
+              setTimeout(() => {
+                $('#alertpassword').hide()
+              }, 3000)
+            }
+          },
+
+        });
+      });
+
+
+      $('#userDetailsEdit').submit(function (e) {
+        e.preventDefault();
+
+        var formData = $(this).serialize();
+
+
+
+        $.ajax({
+          url: '/editedProfile', // replace with the URL of your server-side script
+          type: 'POST', // use POST method
+          data: formData,
+          success: (response) => {
+
+            // handle the response from the server
+            console.log("yes")
+            console.log(response);
+            if (response.done) {
+              $('#alertpasswordUser1').attr({ style: "display: block" }).html("Saved")
+              setTimeout(() => {
+                $('#alertpasswordUser1').hide()
+              }, 3000)
+              location.href = '/user'
+            } else if (response.NullField) {
+              $('#alertpasswordUser').attr({ style: "display: block" }).html("All fields Are Required")
+              setTimeout(() => {
+                $('#alertpasswordUser').hide()
+              }, 3000)
+            }
+          },
+
+        });
+      });
+
+
+
+
+    </script>
+    <%- include("../layouts/user/footer.ejs") %>

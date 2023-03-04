@@ -61,7 +61,7 @@ const userSingleProductLoad = async (req, res, next) => {
     if (req.session.user) {
       const id = req.params.id;
       const userdetails = req.session.user;
-      console.log("ssssssssssssssssss" + userdetails)
+
       const cartcheck = await User.findOne({ _id: userdetails._id, 'cart.product': id }, { 'product.$': 1 })
       const categoryData = await Category.find({})
       if (cartcheck) {
@@ -292,6 +292,7 @@ const userProfile = async (req, res, next) => {
       const userdetails = await User.findOne({ _id: ids._id })
 
       const categorydata = await Category.find({})
+
       res.render('profile', { userdetails: userdetails, categorydata: categorydata })
     } else {
       res.redirect('/login')
@@ -322,21 +323,21 @@ const addressView = async (req, res, next) => {
 
 //add address
 
-const addAddress = async (req, res, next) => {
-  try {
-    if (req.session.user) {
-      const userdetails = req.session.user;
+// const addAddress = async (req, res, next) => {
+//   try {
+//     if (req.session.user) {
+//       const userdetails = req.session.user;
 
 
-      const categorydata = await Category.find({})
-      res.render('addAddress', { userdetails: userdetails, categorydata: categorydata })
-    } else {
-      res.redirect('/login')
-    }
-  } catch (error) {
-    next(error);
-  }
-}
+//       const categorydata = await Category.find({})
+//       res.render('addAddress', { userdetails: userdetails, categorydata: categorydata })
+//     } else {
+//       res.redirect('/login')
+//     }
+//   } catch (error) {
+//     next(error);
+//   }
+// }
 
 
 
@@ -378,7 +379,8 @@ const insertAddress = async (req, res, next) => {
           }
         }
       })
-      res.redirect('/address')
+      // res.redirect('/address')
+      res.json({status:true})
     } else {
       res.redirect('/login')
     }
@@ -495,40 +497,42 @@ const editedAddress = async (req, res, next) => {
 }
 
 //edit profile details
-const editProfile = async (req, res, next) => {
-  try {
-    if (req.session.user) {
-      const name = req.session.user.username;
+// const editProfile = async (req, res, next) => {
+//   try {
+//     if (req.session.user) {
+//       const name = req.session.user.username;
 
-      const userdetails = await User.findOne({ username: name })
+//       const userdetails = await User.findOne({ username: name })
 
-      const categorydata = await Category.find({})
-      res.render('editProfile', { userdetails: userdetails, categorydata: categorydata })
-    } else {
-      res.redirect('/login')
-    }
-  } catch (error) {
-    next(error);
-  }
-}
+//       const categorydata = await Category.find({})
+//       console.log("oooooooooooook");
+//       res.render('editProfile', { userdetails: userdetails, categorydata: categorydata })
+//     } else {
+//       res.redirect('/login')
+//     }
+//   } catch (error) {
+//     next(error);
+//   }
+// }
 
 //profile edit insert
 const editedProfile = async (req, res, next) => {
   try {
+    console.log("vannnnnnnnnnnnu");
     console.log(req.body);
     if (req.session.user) {
 
-      const found = await User.findOne({ username: req.body.username })
-
-      if (found) {
-
-        const name = req.session.user.username;
-        const userdetails = await User.findOne({ username: name })
-
-        const categorydata = await Category.find({})
-        res.render('editProfile', { userdetails: userdetails, categorydata: categorydata, message: 'username Already exist. Try another' })
 
 
+      if (req.body.fname == "" || req.body.lname == "" || req.body.email == "" || req.body.phone == "") {
+
+        // const name = req.session.user.username;
+        // const userdetails = await User.findOne({ username: name })
+
+        // const categorydata = await Category.find({})
+        // res.render('editProfile', { userdetails: userdetails, categorydata: categorydata, message: 'username Already exist. Try another' })
+
+        res.json({ NullField: true })
       } else {
         const update = await User.updateOne({ username: req.session.user.username }, {
           $set: {
@@ -536,10 +540,11 @@ const editedProfile = async (req, res, next) => {
             lastname: req.body.lname,
             email: req.body.email,
             phone: req.body.phone,
-            username: req.body.username
+            // username: req.body.username
           }
         })
-        res.redirect('/user')
+        res.json({ done: true })
+        // res.redirect('/user')
       }
     } else {
       res.redirect('/login')
@@ -549,54 +554,64 @@ const editedProfile = async (req, res, next) => {
   }
 }
 
-//change password load
-const loadChangePassword = async (req, res, next) => {
-  try {
-    if (req.session.user) {
-      const name = req.session.user.username
-      const userdetails = await User.findOne({ username: name })
-      const categorydata = await Category.find({})
-      res.render('change_password', { userdetails: userdetails, categorydata: categorydata })
+// //change password load
+// const loadChangePassword = async (req, res, next) => {
+//   try {
+//     if (req.session.user) {
+//       const name = req.session.user.username
+//       const userdetails = await User.findOne({ username: name })
+//       const categorydata = await Category.find({})
+//       res.render('change_password', { userdetails: userdetails, categorydata: categorydata })
 
 
-    } else {
-      res.redirect('/login');
-    }
+//     } else {
+//       res.redirect('/login');
+//     }
 
-  } catch (error) {
-    next(error);
+//   } catch (error) {
+//     next(error);
 
-  }
-}
+//   }
+// }
 
 //change password load
 const changePassword = async (req, res, next) => {
   try {
     if (req.session.user) {
-      const datas = await User.findOne({ username: req.session.user.username })
-      const old = req.body.old
-      const compared = await bcrypt.compare(old, datas.password)
-      if (compared) {
-        if (req.body.new == req.body.confirm) {
-          const New = req.body.new
-          const change = await bcrypt.hash(New, 10)
-          console.log(change);
-          const saving = await User.updateOne({ username: datas.username }, { $set: { password: change } })
-          res.redirect('/user')
+
+      if (req.body.old == "" || req.body.new == "" || req.body.confirm == "") {
+        res.json({ required: true })
+      } else {
+        const datas = await User.findOne({ username: req.session.user.username })
+        console.log(req.body.old);
+        const old = req.body.old
+        const compared = await bcrypt.compare(old, datas.password)
+        if (compared) {
+          if (req.body.new == req.body.confirm) {
+            const New = req.body.new
+            const change = await bcrypt.hash(New, 10)
+            console.log(change);
+            const saving = await User.updateOne({ username: datas.username }, { $set: { password: change } })
+            // res.redirect('/user')
+            res.json({ done: true })
+          } else {
+            const name = req.session.user.username
+            const userdetails = await User.findOne({ username: name })
+            const categorydata = await Category.find({})
+
+            // res.render('change_password', { userdetails: userdetails, categorydata: categorydata, message2: 'failed to confirm password' })
+            res.json({ failedToMatch: true })
+          }
+
         } else {
           const name = req.session.user.username
           const userdetails = await User.findOne({ username: name })
           const categorydata = await Category.find({})
 
-          res.render('change_password', { userdetails: userdetails, categorydata: categorydata, message2: 'failed to confirm password' })
+          // res.render('change_password', { userdetails: userdetails, categorydata: categorydata, message: 'Incorrect Password' })
+          res.json({ incorrect: true })
+
         }
-
-      } else {
-        const name = req.session.user.username
-        const userdetails = await User.findOne({ username: name })
-        const categorydata = await Category.find({})
-
-        res.render('change_password', { userdetails: userdetails, categorydata: categorydata, message: 'Incorrect Password' })
       }
     } else {
       res.redirect('/login');
@@ -628,7 +643,7 @@ const error = async (req, res, next) => {
 
 module.exports = {
   userLoad,
-  addAddress,
+  // addAddress,
   // addAddressCheckout,
   // insertAddressheckout,
   userProfile,
@@ -647,9 +662,9 @@ module.exports = {
   removeAddress,
   editAddress,
   editedAddress,
-  editProfile,
+  // editProfile,
   editedProfile,
-  loadChangePassword,
+  // loadChangePassword,
   changePassword,
- 
+
 }

@@ -1,6 +1,9 @@
 <%- include("../layouts/user/header.ejs") %>
 <%- include("../layouts/user/headers.ejs") %>
-
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.1/dist/sweetalert2.all.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.3.js"
+    integrity="sha256-nQLuAZGRRcILA+6dMBOvcRh5Pe310sBpanc6+QBmyVM=" crossorigin="anonymous"></script>
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
     <!-- ***** Products Area Starts ***** -->
     <section class="section" id="products">
         <div class="container">
@@ -29,10 +32,13 @@
 
                             <div class="hover-content">
                                 <ul>
-                                    <li><a href="/singleproduct/<%= element._id %>"><i class="fa fa-eye"></i></a></li>
-                                    <li><a href="/addtoWishlist/<%= element._id %>"><i class="fa fa-star"></i></a></li>
-                                    <li><a href="/addcart/<%= element._id %>"><i class="fa fa-shopping-cart"></i></a></li>
-                                </ul>
+                                    
+                                    <li><a style="width:53px; height:53px; border: 1px; " class="ml-3" href="/singleproduct/<%= element._id %>"><i class="fa fa-eye"></i></a></li>
+                                            
+                                    <li><button style="width:55px; height:55px; border-color: aliceblue; " class="ml-4" onclick="addtoWishlist('<%= element._id %>')"><i class="fa fa-star"></i></button><li>
+                       
+                                    <li><button style="width:55px; height:55px;  border-color: aliceblue;"  onclick="addToCart('<%= element._id %>')"><i class="fa fa-shopping-cart"></i></button><li>
+                             </ul>
                             </div>
                             <img src="/product_images/<%= element.image[2] %>" alt="">
                         </div>
@@ -58,6 +64,62 @@
         </div>
 
     </section>
-
+    <script>
+        function addToCart(proId){
+          console.log(proId);
+          $.ajax({
+                url: '/addcart/'+proId, // replace with the URL of your server-side script
+                type: 'get', // use POST method
+                
+                success: (response) => {
+                  console.log(response);
+                  if(response.done){
+                      Swal.fire(
+                                      'Good job!',
+                                      'added to Cart',
+                                      'success'
+                                  )
+                  }else if(response.exist){
+                      Swal.fire(
+                                      'Good job!',
+                                      'already in Cart',
+                                      'success'
+                                  )
+                  }else{
+                      location.href = '/login'
+                  }
+      
+        }})}
+      
+      
+        function addtoWishlist(proId){
+          console.log(proId);
+          $.ajax({
+                url: '/addtoWishlist/'+proId, // replace with the URL of your server-side script
+                type: 'get', // use POST method
+                
+                success: (response) => {
+                  console.log(response);
+                  if(response.done){
+                      Swal.fire(
+                                      'Good job!',
+                                      'added to wishlist',
+                                      'success'
+                                  )
+                  }else if(response.exist){
+                      Swal.fire(
+                                      'Good job!',
+                                      'already in wishlist',
+                                      'success'
+                                  )
+                  }else{
+                      location.href = '/login'
+                  }
+      
+        }})}
+          
+      
+      
+         </script>
     <!-- ***** Footer Start ***** -->
     <%- include("../layouts/user/footer.ejs") %>

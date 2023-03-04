@@ -1,20 +1,19 @@
-
 <%- include("../layouts/user/header.ejs") %>
 
   <%- include("../layouts/user/headers.ejs") %>
-  <section style="background-color: #ffffff;">
-    <div class="container py-5">
-      <div class="row">
-        <div class="col">
-          <nav aria-label="breadcrumb" class="bg-light rounded-3 p-3 mb-4">
-            <ol class="breadcrumb mb-0">
-           
-            </ol>
-          </nav>
+    <section style="background-color: #ffffff;">
+      <div class="container py-5">
+        <div class="row">
+          <div class="col">
+            <nav aria-label="breadcrumb" class="bg-light rounded-3 p-3 mb-4">
+              <ol class="breadcrumb mb-0">
+
+              </ol>
+            </nav>
+          </div>
         </div>
-      </div>
-    
-          <!-- <div class="card mb-4 mb-lg-0">
+
+        <!-- <div class="card mb-4 mb-lg-0">
             <div class="card-body p-0">
               <ul class="list-group list-group-flush rounded-3">
                 <li class="list-group-item d-flex justify-content-between align-items-center p-3">
@@ -41,61 +40,195 @@
             </div>
           </div>
         </div> -->
-        </div>
-      
-     
-       
-       
-        <div class="col-lg-8 container-fluid">
-          <button type="button" class="btn btn-outline-primary ms-1"><a href="/addAddress">Add Address</a></button>
- 
-          <div class="card mb-4 pt-5">
-            <div class="card-body">
-             
+      </div>
 
-             
-                
-            
+
+
+
+      <div class="col-lg-8 container-fluid">
+        <!-- <button type="button" class="btn btn-outline-primary ms-1"><a href="/addAddress">Add Address</a></button> -->
+        <button type="button" class="mb-5" style="border-radius: 5px;  background-color:  rgb(203, 241, 186); color:#000000" data-toggle="modal" data-target=".bd-example-modal-lg">Add
+          Address</button>
+
+        <div class="card mb-4 pt-5">
+          <div class="card-body">
+
+
+
+
+
             <% datas.address.forEach((element,index)=>{ %>
-             
-             
+
+
               <div class="row">
                 <div class="col-sm-2">
-                  <p class="mb-0"> Address <%=index+1 %></p>
+                  <p class="mb-0"> Address <%=index+1 %>
+                  </p>
                 </div>
                 <div class="col-sm-7">
                   <p class="text-muted mb-0">
                     <%=element.houseName %>,
-                    <%=element.street %>,
-                    <%=element.disrtrict %>,
-                    <%=element.state %>,
-                    <%=element.country %>,
-                    <%=element.pincode %>,
-                    <%=element.phone %>,
+                      <%=element.street %>,
+                        <%=element.disrtrict %>,
+                          <%=element.state %>,
+                            <%=element.country %>,
+                              <%=element.pincode %>,
+                                <%=element.phone %>,
                   </p>
                 </div>
                 <div class="col-sm-2">
-                  <a style="color: rgb(222, 22, 22);" a  href="/removeAddress/<%=element._id %>">remove</a>
+                  <a style="color: rgb(222, 22, 22);" a href="/removeAddress/<%=element._id %>">remove</a>
                 </div>
                 <div class="col-sm-1">
                   <a style="color: blue;" href="/editAddress/<%=element._id %>">Edit</a>
                 </div>
               </div>
               <hr>
-          <%}) %>
-             </div>
+              <%}) %>
+          </div>
+        </div>
+      </div>
+      </div>
+
+      </div>
+      </div>
+
+      </div>
+      </div>
+
+
+    </section>
+    <section>
+
+      <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+          <div class="modal-content">
+            <div class="container py-5 h-100" style="background-color: rgb(203, 241, 186);">
+              <div class="row justify-content-center align-items-center h-100">
+                <div class="col-12 col-lg-9 col-xl-7">
+
+                  <div class="">
+                    <h3>Add New Address</h3>
+                    <form action="" method="post" id="addAddress">
+                      <div class="row ">
+                        <div class="col-md-12 mb-4">
+                          <div id="alertpassword1" class="alert alert-success" role="alert" style="display: none;">
+
+                          </div>
+                          <div class="form-outline ">
+                            <label class="form-label">House Name</label>
+                            <input type="text" name="hname" class="form-control form-control-lg" required />
+
+                          </div>
+
+                        </div>
+
+                        <div class="col-md-6 mb-4">
+
+                          <div class="form-outline">
+                            <label class="form-label">Street</label>
+                            <input type="text" name="street" class="form-control form-control-lg" required />
+
+                          </div>
+
+                        </div>
+                        <div class="col-md-6 mb-4">
+
+                          <div class="form-outline">
+                            <label class="form-label">District</label>
+                            <input type="text" name="district" class="form-control form-control-lg" />
+
+                          </div>
+
+                        </div>
+                      </div>
+
+                      <div class="row">
+                        <div class="col-md-6 mb-4 d-flex align-items-center">
+
+                          <div class="form-outline datepicker w-100">
+                            <label class="form-label">State</label>
+                            <input type="text" name="state" class="form-control form-control-lg" id="birthdayDate"
+                              required />
+
+                          </div>
+
+                        </div>
+
+                        <div class="col-md-6 mb-4 pb-2">
+
+                          <div class="form-outline">
+                            <label class="form-label">Country</label>
+                            <input type="text" name="country" class="form-control form-control-lg" required />
+
+                          </div>
+
+                        </div>
+                      </div>
+
+
+                      <div class="row">
+                        <div class="col-md-6 mb-4 pb-2">
+
+                          <div class="form-outline">
+                            <label class="form-label">pincode</label>
+                            <input type="Number" id="emailAddress" name="pincode" class="form-control form-control-lg"
+                              required />
+
+                          </div>
+
+                        </div>
+                        <div class="col-md-6 mb-4 pb-2">
+
+                          <div class="form-outline">
+                            <label class="form-label">Phone Number</label>
+                            <input type="Number" name="number" class="form-control form-control-lg" required />
+
+                          </div>
+
+                        </div>
+                      </div>
+
+
+
+                      <div class="mt-4 pt-2">
+                        <input class="btn btn-primary btn-lg" type="submit" value="Submit">
+                      </div>
+
+                    </form>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
-        
-          </div>
         </div>
-       
       </div>
-    </div>
+      </div>
+    </section>
+    <script>
+      $('#addAddress').submit(function (e) {
+        e.preventDefault();
+        var formData = $(this).serialize();
+        $.ajax({
+          url: '/addAddress', // replace with the URL of your server-side script
+          type: 'POST', // use POST method
+          data: formData,
+          success: (response) => {
+            // handle the response from the server
+            console.log("yes")
+            console.log(response);
+            if (response.status) {
+              $('#alertpasswordUser1').attr({ style: "display: block" }).html("Saved")
+              setTimeout(() => {
+                $('#alertpasswordUser1').hide()
+              }, 3000)
+              location.href = '/address'
+            }
 
-    
-  </section>
- 
 
-      <%- include("../layouts/user/footer.ejs") %>
+          }
+        })
+      })
+    </script>
+    <%- include("../layouts/user/footer.ejs") %>

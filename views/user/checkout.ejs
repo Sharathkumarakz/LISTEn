@@ -4,12 +4,13 @@
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.1/dist/sweetalert2.all.min.js"></script>
         <script src="https://code.jquery.com/jquery-3.6.3.js"
             integrity="sha256-nQLuAZGRRcILA+6dMBOvcRh5Pe310sBpanc6+QBmyVM=" crossorigin="anonymous"></script>
+            <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
         <div style="background: #000; height:20%;">
         </div>
         <div class=" container-fluid my-5 ">
             <div class="row justify-content-center ">
                 <div class="col-xl-10">
-                    <form action="" method="post">
+                    <form action="" method="" id="mainForm">
                         <div class="card shadow-lg ">
                             <div class="row p-2 mt-3 justify-content-between mx-sm-2">
                                 <div class="col">
@@ -252,7 +253,7 @@
                                                         <% } %>
                                                             <div class="row mb-md-5">
                                                                 <div class="col">
-                                                                    <button type="submit" name="" id=""
+                                                                    <button type="submit"
                                                                         class="btn  btn-lg btn-block ">PURCHASE
                                                                         NOW</button>
 
@@ -361,7 +362,8 @@
 
 
                                 <div class="mt-4 pt-2">
-                                    <button  style="background-color: #000; color: aliceblue;"   type="submit">Submit</button>
+                                    <button style="background-color: #000; color: aliceblue;"
+                                        type="submit">Submit</button>
                                 </div>
 
                             </form>
@@ -373,7 +375,9 @@
                 </div>
             </div>
         </section>
+
         <script>
+
 
             function applyCoupon(total, code) {
 
@@ -435,14 +439,11 @@
                 })
             }
 
-        </script>
-
-        <script>
 
             $('#myForm').submit(function (e) {
-                e.preventDefault(); 
+                e.preventDefault();
 
-                var formData = $(this).serialize(); 
+                var formData = $(this).serialize();
 
                 $.ajax({
                     url: '/checkoutAddAddress', // replace with the URL of your server-side script
@@ -451,7 +452,6 @@
                     success: (response) => {
                         // handle the response from the server
                         console.log(response);
-                        console.log("aaavunnuu");
                         $('#exampleModalCenter').on('hidden.bs.modal', function () {
                             $(this).find('form').trigger('reset');
                         });
@@ -462,5 +462,91 @@
                 });
             });
 
+
+            //main form submit for success
+            $('#mainForm').submit(function (e) {
+                e.preventDefault();
+                var formData = $(this).serialize();
+                $.ajax({
+                    url: '/checkout', // replace with the URL of your server-side script
+                    type: 'POST', // use POST method
+                    data: formData,
+                    success: (response) => {
+                        // handle the response from the server
+                        console.log("yes")
+                        console.log(response);
+                        if (response.status) {
+                            location.href = '/success'
+                        } else if (response.radio) {
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Oops...',
+                                text: 'Select Payment Method.',
+                            })
+                        } else if (response.viewRazorpay) {
+                            razorpayPayment(response.order)
+
+                        }
+                    },
+
+                });
+            });
+            function razorpayPayment(order) {
+                var options = {
+                    "key": "rzp_test_oyzsQbMBs7ToCQ", // Enter the Key ID generated from the Dashboard
+                    "amount":order.amount, // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
+                    "currency": "INR",
+                    "name": "LISTEn", //your business name
+                    "description": "Test Transaction",
+                    "image": "https://example.com/your_logo",
+                    "order_id": order.id, //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
+                    "handler": function (response) {
+                        // alert(response.razorpay_payment_id);
+                        // alert(response.razorpay_order_id);
+                        // alert(response.razorpay_signature)
+
+                        verifyPayment(response,order)
+                    },
+                    "prefill": {
+                        "name": "Sharath kumar A", //your customer's name
+                        "email": "sharathkannanakz@gmail.com",
+                        "contact": "9000090000"
+                    },
+                    "notes": {
+                        "address": "Razorpay Corporate Office"
+                    },
+                    "theme": {
+                        "color": "#3399cc"
+                    }
+                };
+                var rzp1 = new Razorpay(options);
+                rzp1.open();
+
+            }
+
+            function verifyPayment(payment, order) {
+                $.ajax({
+                    url:'/verify-payment',
+                    data: {
+                        payment,
+                        order
+                    },
+                    method: "post",
+                    success: (response) => {
+                        // handle the response from the server
+                        console.log("yes")
+                        console.log(response);
+                        if (response.status) {
+                            location.href = '/success'
+                        } 
+                    }})
+
+            }
+
         </script>
+
+
+
+
+
         <%- include("../layouts/user/footer.ejs") %>

@@ -32,7 +32,8 @@ const addToWishlist = async (req, res, next) => {
       const found = await User.findOne({ username: req.session.user.username, "wishlist.product": id })
       if (found) {
         // res.redirect('/wishlist')
-        res.redirect('/')
+        // res.redirect('/')
+        res.json({exist:true})
       } else {
         const usename = req.session.user.username;
         const categorydata = await Category.find({})
@@ -49,10 +50,12 @@ const addToWishlist = async (req, res, next) => {
         //   userdetails: userdetails,
         //   wishlistData: wishlistData
         // })
-        res.redirect('/')
+        // res.redirect('/')
+        res.json({done:true})
       }
     } else {
-      res.redirect('/login')
+      // res.redirect('/login')
+      res.json({logout:true})
     }
 
   } catch (error) {

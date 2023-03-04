@@ -70,6 +70,9 @@ user_route.get('/removeWishlist/:id',wishlistController.removeWishlist)
 user_route.get('/checkout',orderController.viewCheckout)
 
 user_route.post('/checkout',orderController.successLoad)
+user_route.post('/verify-payment',orderController.PaymentVerified)
+
+
 
 //view orders 
 user_route.get('/orders',orderController.viewOrders)
@@ -79,7 +82,7 @@ user_route.get('/logout',auth.islogout,userController.userLogout);
 
 
 //change password
-user_route.get('/changePassword',userController.loadChangePassword);
+// user_route.get('/changePassword',userController.loadChangePassword);
 user_route.post('/changePassword',userController.changePassword);
 
 
@@ -92,17 +95,20 @@ user_route.get('/address',userController.addressView);
 
 
 //user add address
-user_route.get('/addAddress',userController.addAddress);
+// user_route.get('/addAddress',userController.addAddress);
 user_route.post('/addAddress',userController.insertAddress);
 // user_route.get('/addAddressCheckout',userController.addAddressCheckout);
 // user_route.post('/addAddressCheckout',userController.insertAddressheckout);
-//edit profile details
-user_route.get('/editProfile',userController.editProfile);
-user_route.post('/editedProfile/:id',userController.editedProfile);
+//edit profile details      
+// user_route.get('/editProfile',userController.editProfile);
+user_route.post('/editedProfile',userController.editedProfile);
 
 
 //remove address
 user_route.get('/removeAddress/:id',userController.removeAddress)
+
+//get success page
+user_route.get('/success',orderController.orderConfirmation)
 
 
 //cancel order

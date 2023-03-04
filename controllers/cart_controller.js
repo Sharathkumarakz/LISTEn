@@ -13,12 +13,12 @@ const viewCart = async (req, res, next) => {
 
       const id = req.session.user.username;
       const userdetail = await User.findOne({ username: id });
-   
+
 
       const categorydata = await Category.find({})
 
       const cartData = await User.findOne({ _id: userdetail._id }).populate('cart.product').exec()
-     
+
       const username = req.session.user.username
       const cart = await User.findOne({ username: username }).populate('cart.product').exec()
       let cartTotal = 0;
@@ -50,6 +50,7 @@ const viewCart = async (req, res, next) => {
 
 const addCart = async (req, res, next) => {
   try {
+    console.log("ethhunno");
     const id = req.params.id
     const prodetails = await Product.findOne({ _id: id })
     if (req.session.user) {
@@ -62,8 +63,7 @@ const addCart = async (req, res, next) => {
         // })  
         const username = req.session.user.username;
         const deleteWishlist = await User.updateOne({ username: username }, { $pull: { wishlist: { product: id } } })
-
-        res.redirect('/')
+        res.json({ exist: true })
       } else {
 
 
@@ -83,12 +83,13 @@ const addCart = async (req, res, next) => {
         })
         const userdetails = await User.findOne({ username: username });
         const cartData = await User.findOne({ _id: userdetails._id }).populate('cart.product').exec()
-        
-      const deleteWishlist = await User.updateOne({ username: username }, { $pull: { wishlist: { product: id } } })
+
+        const deleteWishlist = await User.updateOne({ username: username }, { $pull: { wishlist: { product: id } } })
 
         // res.render('cart', { categorydata: categorydata, userdetails: userdetails, cartData: cartData })
         //  console.log("cccccccccccccc"+cartData);
-   res.redirect('/')
+        //  res.redirect('/')
+        res.json({ done: true })
       }
     }
     else {
@@ -106,17 +107,13 @@ const deleteCart = async (req, res, next) => {
     if (req.session.user) {
       id = req.params.id
       const username = req.session.user.username;
-
-
       const deleted = await User.updateOne({ username: username }, { $pull: { cart: { product: id } } })
 
-      // const userdetails=await User.findOne({username:username})
-      // const categorydata = await Category.find({})
-      // const cartData=await User.findOne({_id:userdetails._id}).populate('cart.product').exec()
-      res.redirect('/cart')
+      res.json({ done: true })
+
 
     } else {
-      res.redirect('/login')
+      res.json({ logout: true })
     }
   } catch (error) {
     next(error);
@@ -157,12 +154,12 @@ const changeQuantity = async (req, res, next) => {
       const add = await User.updateOne({ username: username }, {
         $set: { cartTotalPrice: cartTotal }
       })
-     
+
       res.json({ success: true, productprice, cartTotal })
 
 
     } else {
-      res.redirect("/login");
+      res.json({ logout: true })
     }
   } catch (error) {
     next(error);
