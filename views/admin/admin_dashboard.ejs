@@ -1,84 +1,7 @@
 <%- include("../layouts/admin/header.ejs") %>
 <%- include("../layouts/admin/navbar.ejs") %>
 
-    
-<!-- 
-    <div class="page-wrapper">
-
-        <div class="container-fluid">
-
-            <div class="row page-titles">
-                <div class="col-md-5 align-self-center">
-                    <h3 class="text-themecolor">Dashboard</h3>
-
-                </div>
-
-            </div>
-            <div class="row">
-                 Column -->
-      
-                <!-- <div class="col-lg-4">
-                    <div class="card">
-                        <div class="card-body">
-                            <div class="d-flex m-b-30 no-block">
-                                <h5 class="card-title m-b-0 align-self-center">Our Visitors</h5>
-                                <div class="ml-auto">
-                                    <select class="custom-select b-0">
-                                        <option selected="">Today</option>
-                                        <option value="1">Tomorrow</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div id="visitor" style="height:260px; width:100%;"></div>
-                            <ul class="list-inline m-t-30 text-center font-12">
-                                <li><i class="fa fa-circle text-purple"></i> Tablet</li>
-                                <li><i class="fa fa-circle text-success"></i> Desktops</li>
-                                <li><i class="fa fa-circle text-info"></i> Mobile</li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div> --> 
-
-
-                    <!-- <div class="col-lg-4">
-                        <div class="card">
-                            <div class="card-body">
-                                <div class="d-flex m-b-30 no-block">
-                                    <h5 class="card-title m-b-0 align-self-center">Our Visitors</h5>
-                                    <div class="ml-auto">
-                                        <select class="custom-select b-0">
-                                            <option selected="">Today</option>
-                                            <option value="1">Tomorrow</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div id="visitor" style="height:260px; width:100%;"></div>
-                                <ul class="list-inline m-t-30 text-center font-12">
-                                    <li><i class="fa fa-circle text-purple"></i> Tablet</li>
-                                    <li><i class="fa fa-circle text-success"></i> Desktops</li>
-                                    <li><i class="fa fa-circle text-info"></i> Mobile</li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-  <div class="page-wrapper">
-
-    <div class="container-fluid">
-
-      <div class="row page-titles">
-        <div class="col-md-5 align-self-center">
-          <h3 class="text-themecolor">Coupon list</h3>
-
-        </div>
-
-      </div>
-      <a class="waves-effect waves-dark p-4" href="/admin/addCoupons" aria-expanded="false"><i
-        class="fa fa-gift"></i><span class="hide-menu">Add Coupon</span></a>
-      
-      <div class="row">
-
+ 
 
  
 
@@ -95,106 +18,43 @@
                     </div>
             
                   </div>
-                  <a class="waves-effect waves-dark p-4" href="/admin/addCoupons" aria-expanded="false"></i><span class="hide-menu">Dashboard</span></a>
+                  <a style="text-align:right;" class="waves-effect waves-dark p-4" href="/admin/dashboard" aria-expanded="false"></i><span class="hide-menu">Refresh</span></a>
                   <!--djlkjlkajlkjkldajkkjslj-->
 <div class="row">
-                  <!-- <div class="card text-white bg-primary mb-3 m-1" style="max-width: 18rem;">
-                    <div class="card-header">Header</div>
-                    <div class="card-body">
-                      <h5 class="card-title">Primary card title</h5>
-                      <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                    </div>
-                  </div>
-                  <div class="card text-white bg-secondary mb-3 m-1" style="max-width: 18rem;">
-                    <div class="card-header">Header</div>
-                    <div class="card-body">
-                      <h5 class="card-title">Secondary card title</h5>
-                      <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                    </div>
-                  </div>
-                  <div class="card text-white bg-success mb-3 m-1" style="max-width: 18rem;">
-                    <div class="card-header">Header</div>
-                    <div class="card-body">
-                      <h5 class="card-title">Success card title</h5>
-                      <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                    </div>
-                  </div>
-                  <div class="card text-white bg-danger mb-3 m-1" style="max-width: 18rem;">
-                    <div class="card-header">Header</div>
-                    <div class="card-body">
-                      <h5 class="card-title">Danger card title</h5>
-                      <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                    </div>
-                  </div>
-                  <div class="card text-white bg-warning mb-3 m-1" style="max-width: 18rem;">
-                    <div class="card-header">Header</div>
-                    <div class="card-body">
-                      <h5 class="card-title">Warning card title</h5>
-                      <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                    </div>
-
-
-                </div> -->
+        
 
                 <% for(let i=0;i<categoryData.length;i++){ %>
-                  <div class="card text-white bg-info mb-3 m-1" style="max-width: 18rem;">
+                  <%  let count=0 %>
+                <% for(let j=0;j<productData.length;j++){ %>
+                 
+                  <%if (categoryData[i].categoryName===productData[j].category.categoryName){ %>
+                          
+                       <% count++ %>
+
+                       <%}%>
+                     
+                       <%   } %>
+                 
+              
+                  <div style="background-color: rgb(138, 202, 236); color: black;" class="card  mb-3 m-1" style="max-width: 18rem;">
                     <div class="card-header"><%=categoryData[i].categoryName%></div>
                     <div class="card-body">
                       <h5 class="card-title">Total Available Products</h5>
-                      <p class="card-text">1000.</p>
+                      <b> <%= count %></b>
                     </div>
                   </div>
+              
               <%  } %>
-                  <!-- <div class="card bg-light mb-3" style="max-width: 18rem;">
-                    <div class="card-header">Header</div>
-                    <div class="card-body">
-                      <h5 class="card-title">Light card title</h5>
-                      <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                    </div>
-                  </div>
-                  <div class="card text-white bg-dark mb-3" style="max-width: 18rem;">
-                    <div class="card-header">Header</div>
-                    <div class="card-body">
-                      <h5 class="card-title">Dark card title</h5>
-                      <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                    </div>
-                  </div>
-                </div>
-
-                <div class="col-lg-8">
-                    <div class="card">
-                        <div class="card-body">
-                            <div class="d-flex no-block">
-                                <div>
-                                    <h5 class="card-title m-b-0">Sales Chart</h5>
-                                </div>
-                                <div class="ml-auto">
-                                    <ul class="list-inline text-center font-12">
-                                        <li><i class="fa fa-circle text-success"></i> SITE A</li>
-                                        <li><i class="fa fa-circle text-info"></i> SITE B</li>
-                                        <li><i class="fa fa-circle text-primary"></i> SITE C</li>
-                                    </ul>
-                                </div>
-                            </div>
-                            <div class="" id="sales-chart" style="height: 355px;"></div>
-                        </div>
-                    </div>
-                </div>
-             -->
-
-
-
-
-
-
-
-
-
-
-            <!-- End Feeds -->
+               
         </div>
 
     </div>
 
+
+
+
+
+
+    
 
     <%- include("../layouts/admin/footer.ejs") %>

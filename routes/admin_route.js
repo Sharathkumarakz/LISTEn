@@ -98,6 +98,9 @@ admin_route.get('/editProduct/:id',auth.islogin,productController.loadEditProduc
 admin_route.post('/editProduct/:id',productController.editProduct);
 
 
+//view order Details
+admin_route.get('/viewOrderDetails/:id',auth.islogin,orderController.loadViewOrder);
+
 //edit image
 admin_route.post('/editImage/:id',upload.array('image',4),auth.islogin,productController.loadEditImage);
 admin_route.get('/deleteImage/:id/:imgId',auth.islogin,productController.deleteProductImage);

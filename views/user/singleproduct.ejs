@@ -1,8 +1,8 @@
 <%- include("../layouts/user/header.ejs") %>
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.1/dist/sweetalert2.all.min.js"></script>
-<script src="https://code.jquery.com/jquery-3.6.3.js"
-    integrity="sha256-nQLuAZGRRcILA+6dMBOvcRh5Pe310sBpanc6+QBmyVM=" crossorigin="anonymous"></script>
-    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.1/dist/sweetalert2.all.min.js"></script>
+  <script src="https://code.jquery.com/jquery-3.6.3.js" integrity="sha256-nQLuAZGRRcILA+6dMBOvcRh5Pe310sBpanc6+QBmyVM="
+    crossorigin="anonymous"></script>
+  <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
   <!-- ***** Header Area End ***** -->
   <div id="preloader">
     <div class="jumper">
@@ -96,9 +96,9 @@
 
 
 
-              <img  class="small_img"  style="width: 200px;" src="/product_images/<%=element.image[1] %>" alt="">
-              <img  class="small_img" style="width: 200px;" src="/product_images/<%=element.image[3] %>" alt="">
-              <img  class="small_img" style="width: 200px;" src="/product_images/<%=element.image[0] %>" alt="">
+              <img class="small_img" style="width: 200px;" src="/product_images/<%=element.image[1] %>" alt="">
+              <img class="small_img" style="width: 200px;" src="/product_images/<%=element.image[3] %>" alt="">
+              <img class="small_img" style="width: 200px;" src="/product_images/<%=element.image[0] %>" alt="">
 
             </div>
           </div>
@@ -132,21 +132,22 @@
                       name="quantity" value="1" title="Qty" class="input-text qty text" size="4" pattern=""
                       inputmode=""><input type="button" value="+" class="plus">
                   </div> -->
-                 
+
                 </div>
               </div>
               <div class="total">
-             
-            <% if(typeof cartcheck !=='undefined' ){ %>   
-                <div class="main-border-button pb-2"><a href="/cart">view Cart</a></div>
-               <% }else{ %>
-                <li><button style="width:55px; height:55px;  border-color: aliceblue;"  onclick="addToCart('<%= productData[j]._id %>')"><i class="fa fa-shopping-cart"></i></button><li>
-                           
-             <%  }   %>            
-                <h4>Total:<%=element.price %>
-                </h4>
-                <div class="main-border-button" ><a href="#">Buy Now </a></div>
-      
+
+                <% if(typeof cartcheck !=='undefined' ){ %>
+                  <div class="main-border-button pb-2"><a href="/cart">view Cart</a></div>
+                  <% }else{ %>
+                    <div class="main-border-button pb-2" onclick="addToCart('<%= element._id %>')"><a>Add to Cart</a>
+                    </div>
+
+                    <% } %>
+                      <h4>Total:<%=element.price %>
+                      </h4>
+                      <div class="main-border-button"><a href="#">Buy Now </a></div>
+
               </div>
             </div>
           </div>
@@ -156,31 +157,37 @@
 
   </section>
   <script>
-    function addToCart(proId){
-    console.log(proId);
-    $.ajax({
-          url: '/addcart/'+proId, // replace with the URL of your server-side script
-          type: 'get', // use POST method
-          
-          success: (response) => {
-            console.log(response);
-            if(response.done){
-                Swal.fire(
-                                'Good job!',
-                                'added to Cart',
-                                'success'
-                            )
-            }else if(response.exist){
-                Swal.fire(
-                                'Good job!',
-                                'already in Cart',
-                                'success'
-                            )
-            }else{
-                location.href = '/login'
-            }
+    function addToCart(proId) {
+      console.log(proId);
+      $.ajax({
+        url: '/addcart/' + proId, // replace with the URL of your server-side script
+        type: 'get', // use POST method
 
-  }})}
+        success: (response) => {
+          console.log(response);
+          if (response.done) {
+            Swal.fire({
+              position: 'top-end',
+              icon: 'success',
+              title: 'Added to Cart',
+              showConfirmButton: false,
+              timer: 1500
+            })
+          } else if (response.exist) {
+            Swal.fire({
+              position: 'top-end',
+              
+              title: 'Already in Cart',
+              showConfirmButton: false,
+              timer: 1500
+            })
+          } else {
+            location.href = '/login'
+          }
+
+        }
+      })
+    }
   </script>
   <!-- ***** Product Area Ends ***** -->
 
@@ -199,15 +206,15 @@
   <!-- <script src="/zoomsingle/zoomsl.js" type="text/javascript"></script>
   <script src="/zoomsingle/zoomsl.min.js" type="text/javascript"></script> -->
 
-  
+
   <script type="text/javascript">
     $(document).ready(function () {
       $(".big_img").imagezoomsl({
-          zoomrange:[4,4]
+        zoomrange: [4, 4]
       })
-       
-      })
- 
+
+    })
+
 
   </script>
 

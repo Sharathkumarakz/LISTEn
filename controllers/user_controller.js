@@ -488,8 +488,10 @@ const editedAddress = async (req, res, next) => {
           }
         })
       res.redirect('/address')
+   
     } else {
       res.redirect('/login')
+      // res.json({logout:true})
     }
   } catch (error) {
     next(error);

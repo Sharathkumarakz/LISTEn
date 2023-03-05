@@ -3,6 +3,7 @@
 <script src="https://code.jquery.com/jquery-3.6.3.js"
     integrity="sha256-nQLuAZGRRcILA+6dMBOvcRh5Pe310sBpanc6+QBmyVM=" crossorigin="anonymous"></script>
     <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+   
     <!-- ***** Header Area End ***** -->
     <div id="preloader">
         <div class="jumper">
@@ -202,6 +203,17 @@
             </div>
         </div>
     </section>
+<section>
+
+</section>
+
+
+
+
+
+
+
+
     <% if (found){ %>
         <% continue %>
               <% }%>
@@ -211,58 +223,67 @@
     <!-- ***** Women Area Starts ***** -->
    
    <script>
-  function addToCart(proId){
-    console.log(proId);
-    $.ajax({
-          url: '/addcart/'+proId, // replace with the URL of your server-side script
-          type: 'get', // use POST method
-          
-          success: (response) => {
-            console.log(response);
-            if(response.done){
-                Swal.fire(
-                                'Good job!',
-                                'added to Cart',
-                                'success'
-                            )
-            }else if(response.exist){
-                Swal.fire(
-                                'Good job!',
-                                'already in Cart',
-                                'success'
-                            )
-            }else{
-                location.href = '/login'
-            }
+  function addToCart(proId) {
+      console.log(proId);
+      $.ajax({
+        url: '/addcart/' + proId, // replace with the URL of your server-side script
+        type: 'get', // use POST method
 
-  }})}
+        success: (response) => {
+          console.log(response);
+          if (response.done) {
+            Swal.fire({
+              position: 'top-end',
+              icon: 'success',
+              title: 'Added to Cart',
+              showConfirmButton: false,
+              timer: 1500
+            })
+          } else if (response.exist) {
+            Swal.fire({
+              position: 'top-end',
+              
+              title: 'Already in Cart',
+              showConfirmButton: false,
+              timer: 1500
+            })
+          } else {
+            location.href = '/login'
+          }
 
+        }
+      })
+    }
 
-  function addtoWishlist(proId){
-    console.log(proId);
-    $.ajax({
-          url: '/addtoWishlist/'+proId, // replace with the URL of your server-side script
-          type: 'get', // use POST method
-          
-          success: (response) => {
-            console.log(response);
-            if(response.done){
-                Swal.fire(
-                                'Good job!',
-                                'added to wishlist',
-                                'success'
-                            )
-            }else if(response.exist){
-                Swal.fire(
-                                'Good job!',
-                                'already in wishlist',
-                                'success'
-                            )
-            }else{
-                location.href = '/login'
-            }
-
-  }})}
+    function addtoWishlist(proId){
+          console.log(proId);
+          $.ajax({
+                url: '/addtoWishlist/'+proId, // replace with the URL of your server-side script
+                type: 'get', // use POST method
+                
+                success: (response) => {
+                  console.log(response);
+                  if(response.done){
+                    Swal.fire({
+              position: 'top-end',
+              icon: 'success',
+              title: 'Added to Whishlist',
+              showConfirmButton: false,
+              timer: 1500
+            })
+                  }else if(response.exist){
+                    Swal.fire({
+              position: 'top-end',
+             
+              title: 'Already in Wishlist',
+              showConfirmButton: false,
+              timer: 1500
+            })
+                  }else{
+                      location.href = '/login'
+                  }
+      
+        }})}
     
 
 

@@ -2,6 +2,7 @@ const Admin = require('../model/admin_data');
 const Order=require("../model/order_data");
 const User = require('../model/user_data');
 const Category = require('../model/category_data');
+const Product = require('../model/products_data');
 const { ObjectId } = require('mongodb');
 const moment = require('moment');
 
@@ -54,8 +55,9 @@ const adminverify = async (req, res, next) => {
 const dashboard = async (req, res, next) => {
   try {
     const categoryData=await Category.find({})
-    // const Products=await Products.find({})
-    res.render('admin_dashboard',{categoryData:categoryData})
+   const productData=await Product.find({}).populate('category').exec()
+   console.log(productData);
+    res.render('admin_dashboard',{categoryData:categoryData,productData:productData})
   } catch (error) {
     next(error);
   }

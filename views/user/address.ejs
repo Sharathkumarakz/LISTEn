@@ -1,11 +1,14 @@
 <%- include("../layouts/user/header.ejs") %>
 
   <%- include("../layouts/user/headers.ejs") %>
-    <section style="background-color: #ffffff;">
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.1/dist/sweetalert2.all.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.3.js" integrity="sha256-nQLuAZGRRcILA+6dMBOvcRh5Pe310sBpanc6+QBmyVM="
+    crossorigin="anonymous"></script>
+    <section style="background-color: #ffffff;" id="address">
       <div class="container py-5">
         <div class="row">
           <div class="col">
-            <nav aria-label="breadcrumb" class="bg-light rounded-3 p-3 mb-4">
+            <nav aria-label="breadcrumb" class=" ">
               <ol class="breadcrumb mb-0">
 
               </ol>
@@ -47,7 +50,7 @@
 
       <div class="col-lg-8 container-fluid">
         <!-- <button type="button" class="btn btn-outline-primary ms-1"><a href="/addAddress">Add Address</a></button> -->
-        <button type="button" class="mb-5" style="border-radius: 5px;  background-color:  rgb(203, 241, 186); color:#000000" data-toggle="modal" data-target=".bd-example-modal-lg">Add
+        <button type="button" class="mb-5" style="border-radius: 5px;  background-color:   rgb(226, 227, 225); color:#000000" data-toggle="modal" data-target=".bd-example-modal-lg">Add
           Address</button>
 
         <div class="card mb-4 pt-5">
@@ -77,7 +80,10 @@
                   </p>
                 </div>
                 <div class="col-sm-2">
-                  <a style="color: rgb(222, 22, 22);" a href="/removeAddress/<%=element._id %>">remove</a>
+                  <button type="button" class="btn btn-danger" onclick="validate('<%= element._id %>')">
+                    delete
+                  </button>
+          
                 </div>
                 <div class="col-sm-1">
                   <a style="color: blue;" href="/editAddress/<%=element._id %>">Edit</a>
@@ -104,7 +110,7 @@
         aria-hidden="true">
         <div class="modal-dialog modal-lg">
           <div class="modal-content">
-            <div class="container py-5 h-100" style="background-color: rgb(203, 241, 186);">
+            <div class="container py-5 h-100" style="background-color: rgb(226, 227, 225)">
               <div class="row justify-content-center align-items-center h-100">
                 <div class="col-12 col-lg-9 col-xl-7">
 
@@ -113,12 +119,12 @@
                     <form action="" method="post" id="addAddress">
                       <div class="row ">
                         <div class="col-md-12 mb-4">
-                          <div id="alertpassword1" class="alert alert-success" role="alert" style="display: none;">
+                          <div id="alertpasswordUser1" class="alert alert-success" role="alert" style="display: none;">
 
                           </div>
                           <div class="form-outline ">
                             <label class="form-label">House Name</label>
-                            <input type="text" name="hname" class="form-control form-control-lg" required />
+                            <input type="text" name="hname" class="form-control form-control-lg"  />
 
                           </div>
 
@@ -128,7 +134,7 @@
 
                           <div class="form-outline">
                             <label class="form-label">Street</label>
-                            <input type="text" name="street" class="form-control form-control-lg" required />
+                            <input type="text" name="street" class="form-control form-control-lg"/>
 
                           </div>
 
@@ -150,7 +156,7 @@
                           <div class="form-outline datepicker w-100">
                             <label class="form-label">State</label>
                             <input type="text" name="state" class="form-control form-control-lg" id="birthdayDate"
-                              required />
+                              />
 
                           </div>
 
@@ -160,7 +166,7 @@
 
                           <div class="form-outline">
                             <label class="form-label">Country</label>
-                            <input type="text" name="country" class="form-control form-control-lg" required />
+                            <input type="text" name="country" class="form-control form-control-lg"/>
 
                           </div>
 
@@ -174,7 +180,7 @@
                           <div class="form-outline">
                             <label class="form-label">pincode</label>
                             <input type="Number" id="emailAddress" name="pincode" class="form-control form-control-lg"
-                              required />
+                               />
 
                           </div>
 
@@ -183,14 +189,15 @@
 
                           <div class="form-outline">
                             <label class="form-label">Phone Number</label>
-                            <input type="Number" name="number" class="form-control form-control-lg" required />
+                            <input type="Number" name="number" class="form-control form-control-lg"  />
 
                           </div>
 
                         </div>
                       </div>
+                      <div id="alertpasswordUser" class="alert alert-danger" role="alert" style="display: none;">
 
-
+                      </div>
 
                       <div class="mt-4 pt-2">
                         <input class="btn btn-primary btn-lg" type="submit" value="Submit">
@@ -210,6 +217,18 @@
       $('#addAddress').submit(function (e) {
         e.preventDefault();
         var formData = $(this).serialize();
+        const inputs=document.querySelectorAll('form input')
+        let inputFieldNull=false
+        for(let i=0;i<inputs.length;i++){
+    if(inputs[i].value.trim()==""){
+      inputFieldNull=true
+      $('#alertpasswordUser').attr({ style: "display: block" }).html("All fields Required")
+              setTimeout(() => {
+                $('#alertpasswordUser').hide()
+              }, 3000)
+    }
+        }
+        if(!inputFieldNull){
         $.ajax({
           url: '/addAddress', // replace with the URL of your server-side script
           type: 'POST', // use POST method
@@ -229,6 +248,35 @@
 
           }
         })
+     }   })
+
+
+     function validate(deleteId) {
+      Swal.fire({
+          title: 'Are you sure?',
+          text: "You wan't to unlist this Address!",
+          icon: 'warning',
+          showCancelButton: true,
+          confirmButtonColor: '#3085d6',
+          cancelButtonColor: '#d33',
+          confirmButtonText: 'yes, deleted!'
+      }).then((result) => {
+             if (result.isConfirmed) {
+                          $.ajax({
+                              url: '/removeAddress/' + deleteId,
+                              method: 'get',
+                              success: (response) => {
+                                  Swal.fire({
+                                      title: 'unlisted!',
+                                      text: 'Your are deleted this address',
+                                      icon: 'success',
+                                      showConfirmButton: false
+                                  })
+                                  $('#address').load('/address #address')
+                              }
+                          })
+                      }
       })
+  }
     </script>
     <%- include("../layouts/user/footer.ejs") %>

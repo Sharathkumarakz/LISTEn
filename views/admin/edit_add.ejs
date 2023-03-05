@@ -1,7 +1,9 @@
 
 <%- include("../layouts/admin/header.ejs") %>
 <%- include("../layouts/admin/navbar.ejs") %>
-
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.1/dist/sweetalert2.all.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.3.js"
+  integrity="sha256-nQLuAZGRRcILA+6dMBOvcRh5Pe310sBpanc6+QBmyVM=" crossorigin="anonymous"></script>
   <div class="page-wrapper">
 
     <div class="container-fluid">
@@ -23,9 +25,14 @@
           <div class="card-body">
           
             <form action="/admin/editAdd/<%= element._id%>" class="form-horizontal form-material" method="post"
-              enctype="multipart/form-data">
+              enctype="multipart/form-data" id="editBanner">
               <div class="form-group">
-                
+                <div id="alertpasswordUser1" class="alert alert-danger" role="alert" style="display: none;">
+
+                </div>
+                <div id="alertpasswordUser" class="alert alert-success" role="alert" style="display: none;">
+
+                </div>
                 <label class="col-md-12">Name</label>
                 <div class="col-md-12">
                   <input type="text" name="name" class="form-control form-control-line" value=" <%= element.name %>">
@@ -88,6 +95,34 @@
         document.getElementById('imgView2').src = URL.createObjectURL(event.target.files[2]  )
         document.getElementById('imgView3').src = URL.createObjectURL(event.target.files[3]  )
     }
+
+</script>
+
+
+<script>
+  const form=document.querySelector('form');
+  $('#editBanner').submit(function (e) {
+    e.preventDefault();
+    var formData = $(this).serialize();
+    const inputs = document.querySelectorAll('form input')
+    let inputFieldNull = false
+    for (let i = 0; i < inputs.length; i++) {
+      if (inputs[i].value.trim() == "") {
+        inputFieldNull = true
+        $('#alertpasswordUser1').attr({ style: "display: block" }).html("All fields Required")
+        setTimeout(() => {
+          $('#alertpasswordUser1').hide()
+        }, 3000)
+      } 
+    }if (!inputFieldNull) {
+      inputFieldNull = true
+        $('#alertpasswordUser').attr({ style: "display: block" }).html("Saved")
+        setTimeout(() => {
+          $('#alertpasswordUser1').hide()
+        }, 3000)
+        form.submit()
+      }
+  })
 
 </script>
 

@@ -86,6 +86,8 @@ user_route.get('/logout',auth.islogout,userController.userLogout);
 user_route.post('/changePassword',userController.changePassword);
 
 
+
+
 //user profile
 user_route.get('/user',userController.userProfile);
 

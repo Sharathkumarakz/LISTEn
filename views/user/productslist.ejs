@@ -65,34 +65,38 @@
 
     </section>
     <script>
-        function addToCart(proId){
-          console.log(proId);
-          $.ajax({
-                url: '/addcart/'+proId, // replace with the URL of your server-side script
-                type: 'get', // use POST method
-                
-                success: (response) => {
-                  console.log(response);
-                  if(response.done){
-                      Swal.fire(
-                                      'Good job!',
-                                      'added to Cart',
-                                      'success'
-                                  )
-                  }else if(response.exist){
-                      Swal.fire(
-                                      'Good job!',
-                                      'already in Cart',
-                                      'success'
-                                  )
-                  }else{
-                      location.href = '/login'
-                  }
-      
-        }})}
-      
-      
-        function addtoWishlist(proId){
+     function addToCart(proId) {
+      console.log(proId);
+      $.ajax({
+        url: '/addcart/' + proId, // replace with the URL of your server-side script
+        type: 'get', // use POST method
+
+        success: (response) => {
+          console.log(response);
+          if (response.done) {
+            Swal.fire({
+              position: 'top-end',
+              icon: 'success',
+              title: 'Added to Cart',
+              showConfirmButton: false,
+              timer: 1500
+            })
+          } else if (response.exist) {
+            Swal.fire({
+              position: 'top-end',
+              
+              title: 'Already in Cart',
+              showConfirmButton: false,
+              timer: 1500
+            })
+          } else {
+            location.href = '/login'
+          }
+
+        }
+      })
+    }
+    function addtoWishlist(proId){
           console.log(proId);
           $.ajax({
                 url: '/addtoWishlist/'+proId, // replace with the URL of your server-side script
@@ -101,17 +105,21 @@
                 success: (response) => {
                   console.log(response);
                   if(response.done){
-                      Swal.fire(
-                                      'Good job!',
-                                      'added to wishlist',
-                                      'success'
-                                  )
+                    Swal.fire({
+              position: 'top-end',
+              icon: 'success',
+              title: 'Added to Whishlist',
+              showConfirmButton: false,
+              timer: 1500
+            })
                   }else if(response.exist){
-                      Swal.fire(
-                                      'Good job!',
-                                      'already in wishlist',
-                                      'success'
-                                  )
+                    Swal.fire({
+              position: 'top-end',
+             
+              title: 'Already in Wishlist',
+              showConfirmButton: false,
+              timer: 1500
+            })
                   }else{
                       location.href = '/login'
                   }

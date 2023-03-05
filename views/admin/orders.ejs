@@ -30,7 +30,7 @@
                         <th>Order Id</th>
                         <th>Product Name</th>
                         <th>User</th>
-                        <th>Address</th>
+                        <!-- <th>Address</th> -->
                         <th>Quantity</th>
                         <th>Payment</th>
                         <th>Price</th>
@@ -62,9 +62,9 @@
                               <%=orderDetails[i].userId.firstname %>
                                 <%=orderDetails[i].userId.lastname %>
                             </td>
-                            <td>
+                            <!-- <td>
                               <%=orderDetails[i].deliveryAddress%>
-                            </td>
+                            </td> -->
                             <td>
                               
                                 <% orderDetails[i].product.forEach((element)=>{ %>
@@ -150,6 +150,9 @@
                               </span>
                              
                             </td>
+                          <td>
+                            <a class="btn btn-primary" href="/admin/viewOrderDetails/<%=orderDetails[i].orderId%>">View Details</a>
+                          </td>
 
                             <!-- <td><button>Details</button></td> -->
                           </tr>
@@ -173,6 +176,11 @@
       </div>
 
     </div>
+
+
+
+     
+</section>
     <script>
 
       $(document).ready(function () {

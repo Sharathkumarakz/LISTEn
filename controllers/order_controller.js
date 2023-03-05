@@ -303,7 +303,7 @@ const viewOrders = async (req, res, next) => {
 
       const orderDetails = await Order.find({})
 
-      const order = await Order.find({ userId: userdetails._id }).populate('product.productId')
+      const order = await Order.find({ userId: userdetails._id }).populate('product.productId').sort({date:-1})
 
       // console.log("llllllllllllllllllllllll" + order);
       res.render('order',
@@ -438,6 +438,18 @@ const orderConfirmation =async(req,res,next)=>{
   }
 }
 
+//view order-admin
+const loadViewOrder=async (req,res,next)=>{
+  try {
+    const orderId=req.params.id
+    const orderDetails=await Order.findOne({orderId:orderId}).populate('product.productId').populate('userId')
+    
+    res.render('view_order',{orderDetails:orderDetails,moment:moment})
+    
+  } catch (error) {
+    next(error);
+  }
+}
 
 module.exports = {
   viewCheckout,
@@ -447,6 +459,7 @@ module.exports = {
   cancelOrder,
   addAddressToCheckout,
   orderConfirmation,
-  PaymentVerified
+  PaymentVerified,
+  loadViewOrder
 
 }
