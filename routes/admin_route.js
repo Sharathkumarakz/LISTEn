@@ -90,6 +90,10 @@ admin_route.get('/deleteadd/:id',auth.islogin,adsController.deleteAdd);
 admin_route.get('/editCategory/:id',auth.islogin,categoryController.EditCategory);
 admin_route.post('/editCategory/:id',categoryController.editedCategory);
 
+//sales report
+admin_route.get('/salesReport',auth.islogin,adminController.salesReport);
+
+
 //logout
 admin_route.get('/logout',auth.islogin,adminController.logOut);
 

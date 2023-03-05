@@ -1,9 +1,7 @@
 <%- include("../layouts/user/header.ejs") %>
 
   <%- include("../layouts/user/headers.ejs") %>
-  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.1/dist/sweetalert2.all.min.js"></script>
-<script src="https://code.jquery.com/jquery-3.6.3.js" integrity="sha256-nQLuAZGRRcILA+6dMBOvcRh5Pe310sBpanc6+QBmyVM="
-    crossorigin="anonymous"></script>
+
     <section style="background-color: #ffffff;" id="address">
       <div class="container py-5">
         <div class="row">
@@ -50,7 +48,9 @@
 
       <div class="col-lg-8 container-fluid">
         <!-- <button type="button" class="btn btn-outline-primary ms-1"><a href="/addAddress">Add Address</a></button> -->
-        <button type="button" class="mb-5" style="border-radius: 5px;  background-color:   rgb(226, 227, 225); color:#000000" data-toggle="modal" data-target=".bd-example-modal-lg">Add
+        <button type="button" class="mb-5"
+          style="border-radius: 5px;  background-color:   rgb(226, 227, 225); color:#000000" data-toggle="modal"
+          data-target=".bd-example-modal-lg">Add
           Address</button>
 
         <div class="card mb-4 pt-5">
@@ -83,7 +83,7 @@
                   <button type="button" class="btn btn-danger" onclick="validate('<%= element._id %>')">
                     delete
                   </button>
-          
+
                 </div>
                 <div class="col-sm-1">
                   <a style="color: blue;" href="/editAddress/<%=element._id %>">Edit</a>
@@ -124,7 +124,7 @@
                           </div>
                           <div class="form-outline ">
                             <label class="form-label">House Name</label>
-                            <input type="text" name="hname" class="form-control form-control-lg"  />
+                            <input type="text" name="hname" class="form-control form-control-lg" />
 
                           </div>
 
@@ -134,7 +134,7 @@
 
                           <div class="form-outline">
                             <label class="form-label">Street</label>
-                            <input type="text" name="street" class="form-control form-control-lg"/>
+                            <input type="text" name="street" class="form-control form-control-lg" />
 
                           </div>
 
@@ -155,8 +155,7 @@
 
                           <div class="form-outline datepicker w-100">
                             <label class="form-label">State</label>
-                            <input type="text" name="state" class="form-control form-control-lg" id="birthdayDate"
-                              />
+                            <input type="text" name="state" class="form-control form-control-lg" id="birthdayDate" />
 
                           </div>
 
@@ -166,7 +165,7 @@
 
                           <div class="form-outline">
                             <label class="form-label">Country</label>
-                            <input type="text" name="country" class="form-control form-control-lg"/>
+                            <input type="text" name="country" class="form-control form-control-lg" />
 
                           </div>
 
@@ -179,8 +178,8 @@
 
                           <div class="form-outline">
                             <label class="form-label">pincode</label>
-                            <input type="Number" id="emailAddress" name="pincode" class="form-control form-control-lg"
-                               />
+                            <input type="Number" id="emailAddress" name="pincode"
+                              class="form-control form-control-lg" />
 
                           </div>
 
@@ -189,7 +188,7 @@
 
                           <div class="form-outline">
                             <label class="form-label">Phone Number</label>
-                            <input type="Number" name="number" class="form-control form-control-lg"  />
+                            <input type="Number" name="number" class="form-control form-control-lg" />
 
                           </div>
 
@@ -217,42 +216,43 @@
       $('#addAddress').submit(function (e) {
         e.preventDefault();
         var formData = $(this).serialize();
-        const inputs=document.querySelectorAll('form input')
-        let inputFieldNull=false
-        for(let i=0;i<inputs.length;i++){
-    if(inputs[i].value.trim()==""){
-      inputFieldNull=true
-      $('#alertpasswordUser').attr({ style: "display: block" }).html("All fields Required")
-              setTimeout(() => {
-                $('#alertpasswordUser').hide()
-              }, 3000)
-    }
-        }
-        if(!inputFieldNull){
-        $.ajax({
-          url: '/addAddress', // replace with the URL of your server-side script
-          type: 'POST', // use POST method
-          data: formData,
-          success: (response) => {
-            // handle the response from the server
-            console.log("yes")
-            console.log(response);
-            if (response.status) {
-              $('#alertpasswordUser1').attr({ style: "display: block" }).html("Saved")
-              setTimeout(() => {
-                $('#alertpasswordUser1').hide()
-              }, 3000)
-              location.href = '/address'
-            }
-
-
+        const inputs = document.querySelectorAll('form input')
+        let inputFieldNull = false
+        for (let i = 0; i < inputs.length; i++) {
+          if (inputs[i].value.trim() == "") {
+            inputFieldNull = true
+            $('#alertpasswordUser').attr({ style: "display: block" }).html("All fields Required")
+            setTimeout(() => {
+              $('#alertpasswordUser').hide()
+            }, 3000)
           }
-        })
-     }   })
+        }
+        if (!inputFieldNull) {
+          $.ajax({
+            url: '/addAddress', // replace with the URL of your server-side script
+            type: 'POST', // use POST method
+            data: formData,
+            success: (response) => {
+              // handle the response from the server
+              console.log("yes")
+              console.log(response);
+              if (response.status) {
+                $('#alertpasswordUser1').attr({ style: "display: block" }).html("Saved")
+                setTimeout(() => {
+                  $('#alertpasswordUser1').hide()
+                }, 3000)
+                location.href = '/address'
+              }
 
 
-     function validate(deleteId) {
-      Swal.fire({
+            }
+          })
+        }
+      })
+
+
+      function validate(deleteId) {
+        Swal.fire({
           title: 'Are you sure?',
           text: "You wan't to unlist this Address!",
           icon: 'warning',
@@ -260,23 +260,23 @@
           confirmButtonColor: '#3085d6',
           cancelButtonColor: '#d33',
           confirmButtonText: 'yes, deleted!'
-      }).then((result) => {
-             if (result.isConfirmed) {
-                          $.ajax({
-                              url: '/removeAddress/' + deleteId,
-                              method: 'get',
-                              success: (response) => {
-                                  Swal.fire({
-                                      title: 'unlisted!',
-                                      text: 'Your are deleted this address',
-                                      icon: 'success',
-                                      showConfirmButton: false
-                                  })
-                                  $('#address').load('/address #address')
-                              }
-                          })
-                      }
-      })
-  }
+        }).then((result) => {
+          if (result.isConfirmed) {
+            $.ajax({
+              url: '/removeAddress/' + deleteId,
+              method: 'get',
+              success: (response) => {
+                Swal.fire({
+                  title: 'unlisted!',
+                  text: 'Your are deleted this address',
+                  icon: 'success',
+                  showConfirmButton: false
+                })
+                $('#address').load('/address #address')
+              }
+            })
+          }
+        })
+      }
     </script>
     <%- include("../layouts/user/footer.ejs") %>

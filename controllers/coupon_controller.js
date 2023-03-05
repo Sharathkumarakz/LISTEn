@@ -2,14 +2,14 @@ const Category = require('../model/category_data');
 const Product = require('../model/products_data');
 const User = require('../model/user_data');
 const Order = require('../model/order_data');
-
+const moment=require('moment');
 const Coupon =require('../model/coupon_data');
 
 //view coupon
 const loadCoupons=async (req,res,next)=>{
     try {
         const coupons=await Coupon.find({})
-        res.render('coupons',{coupons:coupons})
+        res.render('coupons',{coupons:coupons,moment:moment})
     } catch (error) {
         next(error);
     }

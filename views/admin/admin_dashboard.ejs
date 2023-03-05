@@ -19,8 +19,53 @@
             
                   </div>
                   <a style="text-align:right;" class="waves-effect waves-dark p-4" href="/admin/dashboard" aria-expanded="false"></i><span class="hide-menu">Refresh</span></a>
+                  <div class="row ml-3 mb-4">
+        
+
+                
+                  
+                    <div style="background-color: rgb(163, 228, 150); color: black; border-radius: 18px;" class="card pl-5 pr-5 mb-1 m-1 ml-5" style="max-width: 18rem;">
+                    
+                      <div class="card-body">
+                        <h5 class="card-title">Total Sales</h5>
+                        <b> <%=salesCount %></b>
+                      </div>
+                    </div>
+                                
+                            
+                    <div style="background-color: rgb(135, 221, 231); color: black; border-radius: 18px;" class="card   ml-4  m-1" style="max-width: 18rem;">
+                 
+                      <div class="card-body">
+                        <h5 class="card-title">Revenue Of the Week</h5>
+                        <b> <%=weeklyRevenue[0].totalAmount %></b>
+                      </div>
+                    </div>
+          
+                                    
+                            
+                    <div  style="background-color: rgb(240, 139, 113); color: black; border-radius: 18px;" class="card pl-3 pr-3 ml-4 m-1" style="max-width: 18rem;">
+                  
+                      <div class="card-body ">
+                        <h5 class="card-title">Cancelled Orders</h5>
+                        <b> <%=cancelledOrdersCount[0].count %></b>
+                      </div>
+                    </div>
+                          
+                            
+                    <div style="background-color: rgb(206, 147, 224); color: black; border-radius: 18px;" class="card pl-3 pr-3 ml-4 m-1" style="max-width: 18rem;">
+                      
+                      <div class="card-body">
+                        <h5 class="card-title">Total Customers</h5>
+                        <b> <%=toatalCustomers%></b>
+                      </div>
+                    </div>
+          
+          
+                 
+          </div>
+          
                   <!--djlkjlkajlkjkldajkkjslj-->
-<div class="row">
+<div class="row ml-5"  >
         
 
                 <% for(let i=0;i<categoryData.length;i++){ %>
@@ -48,6 +93,8 @@
                
         </div>
 
+    
+</div>  
     </div>
 
 

@@ -48,7 +48,9 @@
                       <td><%=index+1 %></td>
                       <td> <%=element.code %></td>
                  
-                      <td> <%=element.expirationDate %></td>
+                      <td>  <% const date=element.date %>
+                        <%= moment().format('MMMM Do YYYY, h:mm:ss a') %>
+                       </td>
                       <td> <%=element.maxDiscount %></td>
                       <td> <%=element.MinPurchaceAmount %></td>
                       <td> <%=element.percentageOff %></td>

@@ -57,7 +57,41 @@ const dashboard = async (req, res, next) => {
     const categoryData=await Category.find({})
    const productData=await Product.find({}).populate('category').exec()
    console.log(productData);
-    res.render('admin_dashboard',{categoryData:categoryData,productData:productData})
+   const salesCount=await Order.find({}).count()
+  
+   const weeklyRevenue =await Order.aggregate([
+    {
+      $match: {
+        date: {
+          $gte: new Date(new Date().setDate(new Date().getDate()-7))
+        }
+      }
+    },
+    {
+      $group: {
+        _id: null,
+        totalAmount: { $sum: "$total" }
+      }
+    }
+  ])
+ 
+
+  const cancelledOrdersCount=await Order.aggregate([
+    {
+      $match: { status: "cancelled" }
+    },
+    {
+      $group: {
+        _id: null,
+        count: { $sum: 1 }
+      }
+    }
+  ])
+
+  const toatalCustomers=await User.find({}).count()
+
+  console.log(toatalCustomers);
+    res.render('admin_dashboard',{categoryData:categoryData,productData:productData,salesCount,weeklyRevenue,cancelledOrdersCount,toatalCustomers})
   } catch (error) {
     next(error);
   }
@@ -169,6 +203,50 @@ const unBlockUser = async (req, res, next) => {
 }
 
 
+//sales report
+
+const salesReport= async (req, res, next) => {
+  try {
+    const orders = await Order.find().populate({
+      path: "product.productId",
+      select: "name price",
+    });
+    const salesByMonthAndProduct = {};
+    //sales for each product by month
+    orders.forEach((order) => {
+      const orderDate = new Date(order.date);
+      const month = orderDate.toLocaleString("default", { month: "long" });
+    
+      order.product.forEach((product) => {
+        const productName = product.productId.name;
+        const productSalesTotal = product.quantity * product.productId.price;
+console.log(productName);
+        if (!(month in salesByMonthAndProduct)) {
+          salesByMonthAndProduct[month] = {};
+        }
+
+        if (productName in salesByMonthAndProduct[month]) {
+          salesByMonthAndProduct[month][productName].quantitySold += product.quantity;
+          salesByMonthAndProduct[month][productName].totalSales += productSalesTotal;
+        } else {
+          salesByMonthAndProduct[month][productName] = {
+            quantitySold: product.quantity,
+            totalSales: productSalesTotal,
+          };
+        }
+      });
+    });
+
+    res.render("sales_report", {
+      salesByMonthAndProduct,
+    });
+
+  } catch (error) {
+    next(error);
+  }
+}
+
+
 //logout
 const logOut = async (req, res, next) => {
   try {
@@ -188,6 +266,7 @@ module.exports = {
   blockUser,
   logOut,
   viewOrder,
-  dropdown
+  dropdown,
+  salesReport
 }
 

@@ -1,0 +1,100 @@
+<%- include("../layouts/admin/header.ejs") %>
+
+        <div class="container py-5">
+            <div class="row">
+                <div class="col">
+                    <nav aria-label="breadcrumb" class=" ">
+                        <ol class="breadcrumb mb-0">
+
+                        </ol>
+                    </nav>
+                </div>
+            </div>
+            <div class="card ml-1">
+                <div class="card-body">
+                    <div class="container mb-5 mt-3">
+
+
+                        <div class="container ml-3">
+                            <div class="col-md-12">
+                                <div class="text-center">
+                                    <i class="fab fa-mdb fa-4x ms-0" style="color:#5d9fc5 ;"></i>
+                                    <p class="pt-0">Sales Report</p>
+                                </div>
+
+                            </div>
+                            
+                                <div class="col-xl-2">
+                                <a class="btn btn-primary mb-2" href="/admin/dashboard">Dashboard</a>
+                                </div>
+                       
+
+                                <div class="col-xl-2">
+                                    <a style="border: black;" class="btn btn-light" onclick="window.print('#salesReport')" >Print Report</a>
+                                    </div>
+                        
+
+                            <div class="row my-2 mx-1 justify-content-center">
+                                <table class="table table-striped table-borderless">
+                                    <thead style="background-color:#84B0CA ;" class="text-white">
+                                
+                                        <tr>
+
+                                            <th scope="col">#</th>
+
+                                            <th scope="col">Month</th>
+                                            <th scope="col">Product Name</th>
+                                            <th scope="col">Qty</th>
+                                            <th scope="col">Total Amount</th>
+                                            <th scope="col">change in sales</th>
+                                            
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                    
+                                        <% let prevMonthTotalSales = 0 %>
+                                        <% Object.entries(salesByMonthAndProduct).forEach(([month, products], index) => { %>
+                                          <% let monthTotalSales = 0 %>
+                                          <% let j=1 %>
+                                          <% Object.entries(products).forEach(([productName, { quantitySold, totalSales }]) => { %>
+                                            <% monthTotalSales += totalSales %>
+                                         
+                                        <tr>
+                                            <th scope="row"><%=j%></th>
+
+                                            <td><%= month %></td>
+                                            <td><%= productName %></td>
+                                            <td><%= quantitySold %></td>
+                                            <td> <%= totalSales %></td>
+                                            <td class="<%= index === 0 ? '' : (monthTotalSales - prevMonthTotalSales) < 0 ? 'text-danger' : 'text-success' %>">
+                                                <%= index === 0 ? 0 : (monthTotalSales - prevMonthTotalSales)/100 %>
+                                              </td>
+                                
+                                           
+                                        </tr>
+                                        <% j++ %>
+                                        <% }) %>
+                                        <% prevMonthTotalSales = monthTotalSales %>
+                                      
+                                      <% }) %>
+                              
+                                    </tbody>
+
+                                </table>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-xl-10">
+
+                                </div>
+
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+            <%- include("../layouts/admin/footer.ejs") %>
