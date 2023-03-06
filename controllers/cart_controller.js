@@ -50,7 +50,6 @@ const viewCart = async (req, res, next) => {
 
 const addCart = async (req, res, next) => {
   try {
-    console.log("ethhunno");
     const id = req.params.id
     const prodetails = await Product.findOne({ _id: id })
     if (req.session.user) {
@@ -71,16 +70,16 @@ const addCart = async (req, res, next) => {
         const username = req.session.user.username;
         const cartinserted = await User.updateOne({ username: username }, { $push: { cart: { product: id, quantity: 1, productTotalPrice: prodetails.price } } })
 
-        const categorydata = await Category.find({})
+      
         const cart = await User.findOne({ username: username }).populate('cart.product').exec()
-        let cartTotal = 0;
-        for (let i = 0; i < cart.cart.length; i++) {
+        // let cartTotal = 0;
+        // for (let i = 0; i < cart.cart.length; i++) {
 
-          cartTotal += cart.cart[i].productTotalPrice;
-        }
-        const add = await User.updateOne({ username: username }, {
-          $set: { cartTotalPrice: cartTotal }
-        })
+        //   cartTotal += cart.cart[i].productTotalPrice;
+        // }
+        // const add = await User.updateOne({ username: username }, {
+        //   $set: { cartTotalPrice: cartTotal }
+        // })
         const userdetails = await User.findOne({ username: username });
         const cartData = await User.findOne({ _id: userdetails._id }).populate('cart.product').exec()
 

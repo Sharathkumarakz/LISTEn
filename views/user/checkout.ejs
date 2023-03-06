@@ -1,8 +1,21 @@
 <%- include("../layouts/user/header.ejs") %>
 
     <%- include("../layouts/user/headers.ejs") %>
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+    <section style="background-color: #ffffff;" id="address">
+        <div class="container">
+          <div class="row">
+            <div class="col">
+              <nav aria-label="breadcrumb" class=" ">
+                <ol class="breadcrumb mb-0">
       
- <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+                </ol>
+              </nav>
+            </div>
+          </div>
+          </div>
+          </section>
+
         <div style="background: #000; height:20%;">
         </div>
         <div class=" container-fluid my-5 ">
@@ -74,11 +87,11 @@
                             </div> -->
                                             <div id="myDiv">
                                                 <label>Address</label>
-                                                <select
+                                                <select  name="address"
                                                     style="height: 50px; border-radius: 5px; border-color: rgb(202, 201, 201); color: rgb(140, 135, 135);"
-                                                    name="address">
+                                                  >
 
-
+<option selected>Select Address</option>
                                                     <% userData.address.forEach((element)=>{ %>
                                                         <option
                                                             value="<%=element.houseName %>,<%=element.street %>,<%=element.district %> <%=element.state %>,<%=element.country %> <%=element.pincode %>">
@@ -493,7 +506,14 @@
                                 title: 'Oops...',
                                 text: 'Select Payment Method.',
                             })
-                        } else if (response.viewRazorpay) {
+                        } else if (response.address) {
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Oops...',
+                                text: 'Select Address Or Add Address.',
+                            })
+                        }
+                         else if (response.viewRazorpay) {
                             razorpayPayment(response.order)
 
                         }

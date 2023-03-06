@@ -92,9 +92,12 @@ const successLoad = async (req, res, next) => {
   try {
 
     if (req.session.user) {
-
+   console.log("address")
+   console.log(req.body);
       let method = req.body.test
-
+if(req.body.address=="Select Address"){
+res.json({address:true})
+}else{
 
       if (method == "COD") {
       //  console.log('success');
@@ -245,7 +248,7 @@ const successLoad = async (req, res, next) => {
       res.json({radio:true})
       }
 
-    } else {
+ }   } else {
       res.redirect('/login')
     }
   } catch (error) {

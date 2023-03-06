@@ -2,7 +2,7 @@
 <%- include("../layouts/admin/navbar.ejs") %>
 
  
-
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
  
 
 
@@ -48,6 +48,7 @@
                   
                       <div class="card-body ">
                         <h5 class="card-title">Cancelled Orders</h5>
+                      
                         <b> <%=cancelledOrdersCount[0].count %></b>
                       </div>
                     </div>
@@ -93,7 +94,25 @@
               <%  } %>
                
         </div>
-    
+      <section>
+        <div class="row">
+          <h1>Sales</h1>
+          <div class="col-lg-12">
+        <canvas id="myChartsales" style="width:100%;max-width:600px"></canvas>
+      </div>
+     
+      </div>
+      </section>
+<section>
+  <div class="row">
+    <div class="col-lg-8 mt-5 mb-4">
+  <canvas id="myChart" style="width:100%;max-width:600px"></canvas>
+</div>
+<div class="col-lg-4 mb-3 ">
+  <canvas id="myChartpie" style="width:100%;max-width:600px"></canvas>
+</div>
+</div>
+  </section>
       <div class="row">
                     <!-- Column -->
                     <div class="col-lg-6">
@@ -215,6 +234,75 @@
 
 
 
-    
+  
+<script>
+console.log(); 
+  var xValues = ["confirmed","delivered","shipped","cancelled"];
+var yValues =["<%=confirmed%>","<%=delivered%>","<%=shipped%>","<%=cancelled%>"];
+var barColors = ["orange", "green","blue","red",];
 
+new Chart("myChart", {
+  type: "bar",
+  data: {
+    labels: xValues,
+    datasets: [{
+      backgroundColor: barColors,
+      data: yValues
+    }]
+  },
+  options: {
+    legend: {display: false},
+    title: {
+      display: true,
+      text: "Order Status"
+    }
+  }
+});
+</script>
+<!-- pie -->
+<script>
+  var xValues = ["Online payment", "Cash on Deliver"];
+  var yValues = ["<%=UPI%>", "<%=COD%>"];
+  var barColors = [
+  "#2b5797",
+    "#00aba9",
+   
+  ];
+  
+  new Chart("myChartpie", {
+    type: "pie",
+    data: {
+      labels: xValues,
+      datasets: [{
+        backgroundColor: barColors,
+        data: yValues
+      }]
+    },
+    options: {
+      title: {
+        display: true,
+        text: "Revenue"
+      }
+    }
+  });
+  </script>
+
+<script>
+  var xValues = ["<%=date[0]%>","<%=date[1]%>","<%=date[2]%>","<%=date[3]%>","<%=date[4]%>","<%=date[5]%>","<%=date[6]%>"];
+  
+  new Chart("myChartsales", {
+    type: "line",
+    data: {
+      labels: xValues,
+      datasets: [ { 
+        data: ["<%=sales[0]%>","<%=sales[1]%>","<%=sales[2]%>","<%=sales[3]%>","<%=sales[4]%>","<%=sales[5]%>","<%=sales[6]%>"],
+        borderColor: "green",
+        fill: false
+      }]
+    },
+    options: {
+      legend: {display: false}
+    }
+  });
+  </script>
     <%- include("../layouts/admin/footer.ejs") %>

@@ -106,7 +106,56 @@ const lessQuantityProducts=await Product.find({stock:{$lt:50}})
 
  const ativeCoupons=await Coupon.find({expirationDate:{$gt:new Date() }})
 
-    res.render('admin_dashboard',{categoryData:categoryData,productData:productData,salesCount,weeklyRevenue,cancelledOrdersCount,toatalCustomers,usersForTheLastWeek,lessQuantityProducts,ativeCoupons,moment:moment})
+ const salesChart = await Order.aggregate([
+  {
+      $group: {
+          _id: { $dateToString: { format: "%Y-%m-%d", date: "$date" } },
+          sales: { $sum: "$total" },
+      }
+  },
+  {
+      $sort:{_id: 1}
+  },
+  {
+      $limit: 7
+  }
+])
+
+const date=salesChart.map((item)=>{
+  return item._id;
+})
+
+const sales=salesChart.map((item)=>{
+  return item.sales;
+})
+
+console.log("salessssss");
+console.log(salesChart);
+
+
+
+
+
+
+
+
+
+
+
+const confirmed=await Order.find({status:"confirmed"}).count()
+const delivered=await Order.find({status:"delivered"}).count()
+const shipped=await Order.find({status:"shipped"}).count()
+const cancelled=await Order.find({status:"cancelled"}).count()
+const UPI=await Order.find({paymentType:"UPI"}).count()
+const COD=await Order.find({paymentType:"COD"}).count()
+    res.render('admin_dashboard',{categoryData:categoryData,
+      productData:productData,
+      salesCount,weeklyRevenue,
+      cancelledOrdersCount,toatalCustomers,
+      usersForTheLastWeek,lessQuantityProducts,
+      ativeCoupons,confirmed,delivered,shipped,cancelled,UPI,COD,sales,date,
+      
+      moment:moment})
   } catch (error) {
     next(error);
   }
@@ -200,7 +249,7 @@ const dropdown= async (req,res,next)=>{
     next(error);
   }
 
-}
+}   
 
 
 //unblock user
