@@ -1,0 +1,144 @@
+<%- include("../layouts/admin/header.ejs") %>
+<%- include("../layouts/admin/navbar.ejs") %>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.1/dist/sweetalert2.all.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.3.js"
+  integrity="sha256-nQLuAZGRRcILA+6dMBOvcRh5Pe310sBpanc6+QBmyVM=" crossorigin="anonymous"></script>
+  <div class="page-wrapper">
+
+    <div class="container-fluid">
+
+      <div class="row page-titles">
+        <div class="col-md-5 align-self-center">
+          <h3 class="text-themecolor">Edit Coupons</h3>
+
+        </div>
+
+      </div>
+
+
+      <!--djlkjlkajlkjkldajkkjslj-->
+      <% if(typeof message !=='undefined' ){ %>
+        <h5 style="color: rgb(206, 47, 47);">
+            <%= message %>
+        </h5>
+        <% } %>
+      <div class="col-lg-12 col-xlg-12 col-md-12">
+        <div class="card">
+          <!-- Tab panes -->
+          <div class="card-body">
+            <form action="/admin/EditCoupon/<%=coupondata._id%>" class="form-horizontal form-material" method="post"
+           id="addCoupon"  >
+           <div id="alertpasswordUser1" class="alert alert-danger" role="alert" style="display: none;">
+
+           </div>
+           <div id="alertpasswordUser" class="alert alert-success" role="alert" style="display: none;">
+
+           </div>
+              <div class="form-group">
+                <label class="col-md-8">Coupon Code</label>
+                <div class="col-md-8">
+                  <input type="text" name="code" class="form-control form-control-line" value="<%=coupondata.code%>">
+                </div>
+              </div>
+             
+              <div class="form-group">
+                <label class="col-md-12">Expire Date</label>
+                <div class="col-md-8">
+                    <input type="date" name="expirationDate" class="form-control form-control-line" name="example-email"
+                     value="<%=coupondata.expirationDate.toISOString().slice(0,10)%>" id="example-email">
+                  </div>
+              </div>
+              <div class="form-group">
+                <label class="col-md-12">Maximum Discount</label>
+                <div class="col-md-8">
+                    <input type="number" name="maxDiscount" class="form-control form-control-line" name="example-email"
+                      id="example-email"  value="<%=coupondata.maxDiscount%>">
+                  </div>
+              </div>
+              <div class="form-group">
+                <label class="col-md-8">Minimum Purchase Amount</label>
+                <div class="col-md-8">
+                    <input type="Number" name="MinPurchaceAmount" class="form-control form-control-line" name="example-email"
+                      id="example-email" value="<%=coupondata.MinPurchaceAmount%>">
+                  </div>
+              </div>
+              <div class="form-group">
+                <label class="col-md-12">Percentage Off</label>
+                <div class="col-md-8">
+                    <input type="Number" max="100" name="percentageOff" class="form-control form-control-line" name="example-email"
+                      id="example-email" value="<%=coupondata.percentageOff%>">
+                  </div>
+              </div>
+              <!-- <div class="form-group">
+                <label class="col-md-12">Image</label>
+                <div class="col-md-12">
+                  <input type="file" multiple name="image" class="form-control form-control-line">
+                </div>
+              </div> -->
+              <!-- <div class="form-group">
+                <label class="col-md-12">Description</label>
+                <div class="col-md-12">
+                  <textarea rows="10" name="description" class="form-control form-control-line"></textarea>
+                </div>
+              </div> -->
+              <div class="form-group">
+                <div class="col-sm-12">
+                  <button type='submit' class="btn btn-success">Submit</button>
+                </div>
+              </div>
+            </form>
+           
+          </div>
+        </div>
+      </div>
+      <!-- Column -->
+    </div>
+    <!-- Row -->
+    <!-- ============================================================== -->
+    <!-- End PAge Content -->
+    <!-- ============================================================== -->
+  </div>
+
+
+
+
+  <script>
+    const form=document.querySelector('form');
+    $('#addCoupon').submit(function (e) {
+      e.preventDefault();
+      var formData = $(this).serialize();
+      const inputs = document.querySelectorAll('form input')
+      let inputFieldNull = false
+      for (let i = 0; i < inputs.length; i++) {
+        if (inputs[i].value.trim() == "") {
+          inputFieldNull = true
+          $('#alertpasswordUser1').attr({ style: "display: block" }).html("All fields Required")
+          setTimeout(() => {
+            $('#alertpasswordUser1').hide()
+          }, 3000)
+        } 
+      }if (!inputFieldNull) {
+        inputFieldNull = true
+          $('#alertpasswordUser').attr({ style: "display: block" }).html("Saved")
+          setTimeout(() => {
+            $('#alertpasswordUser1').hide()
+          }, 3000)
+          form.submit()
+        }
+    })
+
+  </script>
+  
+
+
+
+
+
+
+
+
+  <!-- End Feeds -->
+
+
+
+  <%- include("../layouts/admin/footer.ejs") %>

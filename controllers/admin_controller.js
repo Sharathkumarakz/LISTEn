@@ -3,8 +3,11 @@ const Order=require("../model/order_data");
 const User = require('../model/user_data');
 const Category = require('../model/category_data');
 const Product = require('../model/products_data');
+const Coupon=require('../model/coupon_data');
 const { ObjectId } = require('mongodb');
 const moment = require('moment');
+
+
 
 //admin login page
 const loadsignin = async (req, res, next) => {
@@ -56,7 +59,7 @@ const dashboard = async (req, res, next) => {
   try {
     const categoryData=await Category.find({})
    const productData=await Product.find({}).populate('category').exec()
-   console.log(productData);
+   
    const salesCount=await Order.find({}).count()
   
    const weeklyRevenue =await Order.aggregate([
@@ -90,8 +93,20 @@ const dashboard = async (req, res, next) => {
 
   const toatalCustomers=await User.find({}).count()
 
-  console.log(toatalCustomers);
-    res.render('admin_dashboard',{categoryData:categoryData,productData:productData,salesCount,weeklyRevenue,cancelledOrdersCount,toatalCustomers})
+
+  
+const lastWeek = new Date();
+lastWeek.setDate(lastWeek.getDate() - 7);
+
+const usersForTheLastWeek=await User.find({ date: { $gte: lastWeek }})
+  
+
+
+const lessQuantityProducts=await Product.find({stock:{$lt:50}})
+
+ const ativeCoupons=await Coupon.find({expirationDate:{$gt:new Date() }})
+
+    res.render('admin_dashboard',{categoryData:categoryData,productData:productData,salesCount,weeklyRevenue,cancelledOrdersCount,toatalCustomers,usersForTheLastWeek,lessQuantityProducts,ativeCoupons,moment:moment})
   } catch (error) {
     next(error);
   }

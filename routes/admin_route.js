@@ -94,6 +94,8 @@ admin_route.post('/editCategory/:id',categoryController.editedCategory);
 admin_route.get('/salesReport',auth.islogin,adminController.salesReport);
 
 
+
+
 //logout
 admin_route.get('/logout',auth.islogin,adminController.logOut);
 
@@ -114,6 +116,9 @@ admin_route.get('/coupons',auth.islogin,couponController.loadCoupons)
 admin_route.get('/addCoupons',auth.islogin,couponController.loadAddCoupon)
 admin_route.post('/addCoupons',couponController.insertCoupon)
 admin_route.get('/deleteCoupon/:id',auth.islogin,couponController.deleteCoupon)
+//get edit coupon
+admin_route.get('/EditCoupon/:id',auth.islogin,couponController.EditCoupon);
+admin_route.post('/EditCoupon/:id',auth.islogin,couponController.SaveCoupon);
 
 //edit Ads
 admin_route.get('/ads',auth.islogin,adsController.loadAds);

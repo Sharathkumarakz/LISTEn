@@ -110,6 +110,40 @@ const deleteCoupon=async (req,res,next)=>{
 }
 
 
+//edit coupon
+const EditCoupon=async(req,res,next)=>{
+    try {
+        const id=req.params.id
+    const couponDta=await Coupon.findOne({_id:id})
+    console.log("cccccccccccccc"+couponDta);
+        res.render('edit_coupon',{coupondata:couponDta})
+    } catch (error) {
+        next(error)
+    }
+}
+
+//save coupon
+const SaveCoupon=async(req,res,next)=>{
+    try {
+        const id=req.params.id
+        console.log(req.body);
+
+  
+    const couponDta=await Coupon.updateOne({_id:id},{$set:{
+        code:req.body.code,
+        expirationDate:req.body.expirationDate,
+        maxDiscount:req.body.maxDiscount,
+        MinPurchaceAmount:req.body.minPurchaceAmount,
+        percentageOff:req.body.percentageOff
+    }})
+   
+       res.redirect('/admin/coupons')
+    } catch (error) {
+        next(error)
+    }
+}
+
+
 
 
 module.exports ={
@@ -117,5 +151,7 @@ module.exports ={
     loadAddCoupon,
     insertCoupon,
     applyCoupon,
-    deleteCoupon
+    deleteCoupon,
+    EditCoupon,
+    SaveCoupon
 }

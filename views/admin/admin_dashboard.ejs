@@ -18,13 +18,14 @@
                     </div>
             
                   </div>
+                 
                   <a style="text-align:right;" class="waves-effect waves-dark p-4" href="/admin/dashboard" aria-expanded="false"></i><span class="hide-menu">Refresh</span></a>
                   <div class="row ml-3 mb-4">
         
 
                 
                   
-                    <div style="background-color: rgb(163, 228, 150); color: black; border-radius: 18px;" class="card pl-5 pr-5 mb-1 m-1 ml-5" style="max-width: 18rem;">
+                    <div style="background-color: rgb(163, 228, 150); color: black; border-radius: 18px; text-align: center;" class="card pl-5 pr-5 mb-1 m-1 ml-5" style="max-width: 18rem; ">
                     
                       <div class="card-body">
                         <h5 class="card-title">Total Sales</h5>
@@ -33,7 +34,7 @@
                     </div>
                                 
                             
-                    <div style="background-color: rgb(135, 221, 231); color: black; border-radius: 18px;" class="card   ml-4  m-1" style="max-width: 18rem;">
+                    <div style=" text-align: center; background-color: rgb(135, 221, 231); color: black; border-radius: 18px;" class="card   ml-4  m-1" style="max-width: 18rem;">
                  
                       <div class="card-body">
                         <h5 class="card-title">Revenue Of the Week</h5>
@@ -43,7 +44,7 @@
           
                                     
                             
-                    <div  style="background-color: rgb(240, 139, 113); color: black; border-radius: 18px;" class="card pl-3 pr-3 ml-4 m-1" style="max-width: 18rem;">
+                    <div  style="background-color: rgb(240, 139, 113); color: black; border-radius: 18px;  text-align: center;" class="card pl-3 pr-3 ml-4 m-1" style="max-width: 18rem;">
                   
                       <div class="card-body ">
                         <h5 class="card-title">Cancelled Orders</h5>
@@ -52,7 +53,7 @@
                     </div>
                           
                             
-                    <div style="background-color: rgb(206, 147, 224); color: black; border-radius: 18px;" class="card pl-3 pr-3 ml-4 m-1" style="max-width: 18rem;">
+                    <div style=" text-align: center; background-color: rgb(206, 147, 224); color: black; border-radius: 18px;" class="card pl-3 pr-3 ml-4 m-1" style="max-width: 18rem;">
                       
                       <div class="card-body">
                         <h5 class="card-title">Total Customers</h5>
@@ -81,7 +82,7 @@
                        <%   } %>
                  
               
-                  <div style="background-color: rgb(138, 202, 236); color: black;" class="card  mb-3 m-1" style="max-width: 18rem;">
+                  <div style="background-color: rgb(192, 225, 243); color: black; text-align: center;" class="card  mb-3 m-1" style="max-width: 18rem;">
                     <div class="card-header"><%=categoryData[i].categoryName%></div>
                     <div class="card-body">
                       <h5 class="card-title">Total Available Products</h5>
@@ -92,8 +93,120 @@
               <%  } %>
                
         </div>
-
     
+      <div class="row">
+                    <!-- Column -->
+                    <div class="col-lg-6">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="d-flex">
+                                    <div>
+                                        <h5 class="card-title">New customers of the week</h5>
+                                    </div>
+                                    <!-- <div class="ml-auto">
+                                        <select class="custom-select b-0">
+                                            <option selected="">January</option>
+                                            <option value="1">February</option>
+                                            <option value="2">March</option>
+                                            <option value="3">April</option>
+                                        </select> -->
+                                    </div>
+                                </div>
+                                <div class="table-responsive m-t-20 no-wrap">
+                                    <table class="table vm no-th-brd pro-of-month">
+                                        <thead>
+                                            <tr>
+                                                <th colspan="2"  style="color: blue;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;    Full Name</th>
+                                                <th style="color: blue;">Username</th>
+                                                <th  style="color: blue;">Email</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                              <% usersForTheLastWeek.forEach(element => {%>
+                                                
+                                            
+                                                <td style="width:20px;"></span></td>
+                                                <td>
+                                                    <h6><%=element.firstname%> <%=element.lastame%></h6><small class="text-muted">Customer</small></td>
+                                                <td><%=element.username%></td>
+                                                <td><%=element.email%></td>
+                                            </tr>
+                                            <% });%>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                 
+                    <!-- Column -->
+                    <!-- Column -->
+                 
+         
+                <!-- ============================================================== -->
+                <!-- End Projects of the Month -->
+                <!-- ============================================================== -->
+                <!-- ============================================================== -->
+                <!-- Notification And Feeds -->
+                <!-- ============================================================== -->
+             
+                    <!-- Start Notification -->
+                    <div class="col-lg-6 col-md-12">
+                        <div class="card card-body mailbox">
+                            <h5 class="card-title">Products (Quantity less Than 50pcs)</h5>
+                            <div class="message-center ps ps--theme_default ps--active-y" data-ps-id="a045fe3c-cb6e-028e-3a70-8d6ff0d7f6bd">
+                                <!-- Message -->
+                                <%lessQuantityProducts.forEach(elements => { %>
+                                    
+                                
+                                <a href="#">
+                                   
+                                    <div class="mail-contnet">
+                                        <h5 style="color: rgb(232, 82, 82);"> <%=elements.name%></h5> <span class="mail-desc"> <%=elements.stock%></span> <span class="time"><%=elements.brand%></span> </div>
+                                </a>
+                                <%});%>
+                                <!-- Message -->
+                                <!-- <a href="#">
+                                    <div class="btn btn-success btn-circle"><i class="fa fa-calendar-check-o"></i></div>
+                                    <div class="mail-contnet">
+                                        <h5>Event today</h5> <span class="mail-desc">Just a reminder that you have event</span> <span class="time">9:10 AM</span> </div>
+                                </a> -->
+                                <!-- Message -->
+                                <!-- <a href="#">
+                                    <div class="btn btn-info btn-circle"><i class="fa fa-cog"></i></div>
+                                    <div class="mail-contnet">
+                                        <h5>Settings</h5> <span class="mail-desc">You can customize this template as you want</span> <span class="time">9:08 AM</span> </div>
+                                </a> -->
+                                <!-- Message -->
+                                <!-- <a href="#">
+                                    <div class="btn btn-primary btn-circle"><i class="fa fa-user"></i></div>
+                                    <div class="mail-contnet">
+                                        <h5>Pavan kumar</h5> <span class="mail-desc">Just see the my admin!</span> <span class="time">9:02 AM</span> </div>
+                                </a> -->
+                            </div>
+                        </div>
+                    </div>
+                    </div>
+                    <!-- End Notification -->
+                    <!-- Start Feeds -->
+                    <div class="col-lg-6">
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title">Active Coupons</h5>
+                                <ul class="feeds" style="color: green;">
+                                    <% ativeCoupons.forEach(element=>{%>
+                                    <li>
+                                 <div class="bg-light-info"><i class="fa fa-coupon"></i></div><%=element.code%><span class="text-muted"><div  style="color: blue;">  <%=element.expirationDate.toLocaleDateString() %></div>
+                    
+</span></li>
+                                   
+        <%})%>                           
+                          </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- End Feeds -->
+                </div>
 </div>  
     </div>
 
