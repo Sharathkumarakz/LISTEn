@@ -59,6 +59,7 @@
                   <th scope="col">Client</th>
                   <th scope="col">Qty</th>
                   <th scope="col">Payment Method</th>
+                  <th scope="col">Single Price</th>
                   <th scope="col">Amount</th>
                   <th scope="col">Call</th>
                 </tr>
@@ -77,6 +78,9 @@
                     &#9679; <%= element.quantity %><br>
                       <%}) %></td>
                       <td>  <%= orderDetails.paymentType%></td>
+                      <td> <% orderDetails.product.forEach((element)=>{ %>
+                        &#9679; <%= element.singlePrice %><br>
+                          <%}) %></td>
                       <td>  <%= orderDetails.total %></td>
                       <td>   <%=orderDetails.userId.phone %></td>
                 </tr>

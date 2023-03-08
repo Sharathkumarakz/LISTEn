@@ -44,7 +44,7 @@
               <div class="form-group">
                 <label class="col-md-12">Expire Date</label>
                 <div class="col-md-8">
-                    <input type="date" name="expirationDate" class="form-control form-control-line" name="example-email"
+                    <input type="date" id="date-input" name="expirationDate" class="form-control form-control-line" name="example-email"
                      value="<%=coupondata.expirationDate.toISOString().slice(0,10)%>" id="example-email">
                   </div>
               </div>
@@ -129,7 +129,12 @@
 
   </script>
   
-
+  
+  <script>
+    const dateInput = document.getElementById('date-input');
+  const today = new Date().toISOString().split('T')[0];
+  dateInput.setAttribute('min', today);
+  </script>
 
 
 

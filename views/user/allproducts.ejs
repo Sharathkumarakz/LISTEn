@@ -25,12 +25,21 @@
                             </h2>
                             <span>
                                 Here all you needs
-                            </span>
-                         
+                            </span><br>
+                                                     <input type="text" id="search-box" placeholder="search" onkeyup="sendData(this)">
                     </div>
                 </div>
             </div>
         </div>
+
+<section id="searchResuls">
+
+</section>
+
+
+
+
+
         <div class="container">
             <div class="row">
                 <% products.forEach((element)=> { %>
@@ -140,5 +149,9 @@
       
       
          </script>
+
+
+
+
     <!-- ***** Footer Start ***** -->
     <%- include("../layouts/user/footer.ejs") %>

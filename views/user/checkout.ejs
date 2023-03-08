@@ -74,6 +74,7 @@
                                                     <hr class="mt-0">
                                                 </div>
                                             </div>
+                                            <% if(typeof userData!=='undefined'){%>
                                             <div class="form-group">
                                                 <label for="NAME" class="small text-muted mb-1">full Name</label>
                                                 <input type="text" class="form-control form-control-sm" id="NAME"
@@ -147,6 +148,8 @@
                                                                 width="62" height="62">
                                                             <input type="hidden" name="proId"
                                                                 value="<%= element.product._id %>">
+                                                                <input type="hidden" name="singlePrice"
+                                                                value="<%= element.product.price %>">
                                                             <div class="media-body  my-auto">
                                                                 <div class="row ">
                                                                     <div class="col-auto">
@@ -279,6 +282,237 @@
                 </div>
             </div>
         </div>
+<%}%>
+
+
+<% if(typeof productData!=='undefined'){%>
+    <div class="form-group">
+        <label for="NAME" class="small text-muted mb-1">full Name</label>
+        <input type="text" class="form-control form-control-sm" id="NAME"
+            aria-describedby="helpId"
+            value="<%= userdetails.firstname %> <%= userdetails.lastname %>">
+    </div>
+    <input type="hidden" name="userId" value="<%= userdetails._id %>">
+    <!-- <div class="form-group">
+<label for="NAME" class="small text-muted mb-1">Phone Number</label>
+<input type="text" class="form-control form-control-sm" name="NAME" id="NAME" aria-describedby="helpId" placeholder="BBBootstrap Team">
+</div> -->
+    <div id="myDiv">
+        <label>Address</label>
+        <select  name="address"
+            style="height: 50px; border-radius: 5px; border-color: rgb(202, 201, 201); color: rgb(140, 135, 135);"
+          >
+
+<option selected>Select Address</option>
+            <% userdetails.address.forEach((element)=>{ %>
+                <option
+                    value="<%=element.houseName %>,<%=element.street %>,<%=element.district %> <%=element.state %>,<%=element.country %> <%=element.pincode %>">
+                    <%=element.houseName %>,<%=element.street %>,
+                            <%=element.district %>,<%=element.state %>,
+                                    <%=element.country %>,
+                                        <%=element.pincode %>
+                </option>
+                <% }) %>
+        </select>
+    </div>
+    <div class="form-group">
+        <!-- <button class="mt-2"
+            style="color: rgb(195, 199, 199); border-radius: 5px;"><a
+                style="color: black;" href="/addAddressCheckout">Add
+                Address</a></button> -->
+        <!-- Button trigger modal -->
+        <button type="button" class="btn btn-primary mt-2" data-toggle="modal"
+            data-target="#exampleModalCenter">
+            Add Address
+        </button>
+    </div>
+    <div class="row no-gutters">
+        <div class="col-sm-4 pr-sm-2">
+            <div class="form-group">
+                <label for="NAME" class="small text-muted mb-1">Phone
+                    Number</label>
+                <input type="text" class="form-control form-control-sm"
+                    name="phone" id="NAME" aria-describedby="helpId"
+                    value="<%= userdetails.phone %>">
+            </div>
+        </div>
+
+    </div>
+
+</div>
+</div>
+</div>
+<div class="col-md-5">
+<div class="card border-0 ">
+<!-- <div class="card-header card-2">
+<p class="card-text text-muted mt-md-4  mb-2 space">YOUR ORDER <span class=" small text-muted ml-2 cursor-pointer"></span> </p>
+<hr class="my-2">
+</div> -->
+
+<div class="card-body pt-0">
+    <% productData.forEach((element)=>{ %>
+        <div class="row  justify-content-between">
+            <div class="col-auto col-md-7">
+                <div class="media flex-column flex-sm-row">
+                    <img style="width:50px" class=" img-fluid"
+                        src="/product_images/<%=element.image[0] %>"
+                        width="62" height="62">
+                    <input type="hidden" name="proId"
+                        value="<%= element._id %>">
+                        <input type="hidden" name="singlePrice"
+                        value="<%= element.price %>">
+                    <div class="media-body  my-auto">
+                        <div class="row ">
+                            <div class="col-auto">
+                                <p class="mb-0"><b>
+                                        <%=element.name %>
+                                    </b></p><small class="text-muted">
+
+                                </small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class=" pl-0 flex-sm-col col-auto  my-auto">
+                <p class="boxed-1">
+                    1
+                </p>
+                <input type="hidden" name="proQ"
+                    value="1">
+            </div>
+            <div class=" pl-0 flex-sm-col col-auto  my-auto ">
+                <p><b>RS.<%=element.price %></b></p>
+                <input type="hidden" name="qntyPrice"
+                    value="<%=element.price %>">
+            </div>
+        </div>
+        <hr class="my-2">
+        <% }) %>
+
+            <div class="row ">
+                <div class="col">
+                    <div class="row justify-content-between">
+                        <div class="col-4">
+                            <p class="mb-1"><b>Subtotal</b></p>
+                        </div>
+                        <div class="flex-sm-col col-auto">
+                            <p class="mb-1"><b>
+                                <% productData.forEach((element)=>{ %>
+                                    <%= element.price %>
+                                        <input type="hidden" name="total"
+                                            value=" <%= element.price %>">
+                                            <%})%>
+                                </b></p>
+                        </div>
+                    </div>
+                    <div class="row justify-content-between">
+                        <div class="col">
+                            <p class="mb-1"><b>Discount</b></p>
+                        </div>
+                        <div class="flex-sm-col col-auto">
+                            <p id="discount" class="mb-1"><b>0</b></p>
+                        </div>
+                        <input id="discount1" name="discount1" type="hidden"
+                            value="">
+                    </div>
+                    <div class="row justify-content-between">
+                        <div class="col-4">
+                            <p><b>Total</b></p>
+                        </div>
+                        <div class="flex-sm-col col-auto"> <% productData.forEach((element)=>{ %>
+                            <p id="total" class="mb-1"><b>RS. <%= element.price %>
+
+                                </b></p>
+                            <input id="total1" name="total1" type="hidden"
+                                value="<%= element.price %>">
+                                <%})%>
+                        </div>
+                    </div>
+                    <hr class="my-0">
+                </div>
+            </div>
+            <!-- <div class="row mb-5 mt-4 ">
+<div classrs
+="col-md-7 col-lg-6 mx-auto"><button type="button" class="btn btn-block btn-outline-primary btn-lg">ADD GIFT CODE</button></div>
+</div> -->
+            <form id="formCoupon">
+                <div class="col-sm-4">
+                    <div class="form-group">
+                        <label for="NAME" class="small text-muted mb-1">Coupon
+                            Code</label>
+                        <input type="text" form="formCoupon"
+                            class="form-control form-control-sm" name="code"
+                            id="NAMEcode" name="code" aria-describedby="helpId">
+
+                    </div>
+                    <% productData.forEach((element)=>{ %>
+                    <button
+                        style="background-color: aquamarine; color: black; border-radius: 5px;"
+                        onclick="applyCoupon(' <%= element.price %>', $('#NAMEcode').val())"
+                        form="formCoupon">Redeem Now</button>
+<%})%>
+                </div>
+                <div class="col-sm-4">
+                    <div class="form-group">
+
+                    </div>
+
+                </div>
+            </form>
+
+            <input type="hidden" name="code" id="code" value=''>
+
+
+            <label for="NAME" class="small text-muted mb-1">Payment
+                Method</label><br><br>
+            <div class="form-group">
+                <input type="radio" name="test" value="COD"> Cash on
+                delivery<br><br>
+            </div>
+            <div class="form-group">
+                <input type="radio" name="test" value="UPI">UPI<br><br>
+            </div>
+
+            <% if(typeof message !=='undefined' ){ %>
+                <h5 style="color: rgb(224, 86, 86);">
+                    <%= message %>
+                </h5>
+                <% } %>
+                    <div class="row mb-md-5">
+                        <div class="col">
+                            <button type="submit"
+                                class="btn  btn-lg btn-block ">PURCHASE
+                                NOW</button>
+
+                        </div>
+                    </div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</form>
+</div>
+</div>
+</div>
+<%}%>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
         <section>
             <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog"
@@ -506,7 +740,9 @@
                                 title: 'Oops...',
                                 text: 'Select Payment Method.',
                             })
-                        } else if (response.address) {
+                        
+                        }
+                        else if (response.address) {
                             Swal.fire({
                                 icon: 'error',
                                 title: 'Oops...',

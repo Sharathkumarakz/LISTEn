@@ -9,215 +9,187 @@ const moment = require('moment');
 
 
 
-//admin login page
+//admin login page-------------------------------
 const loadsignin = async (req, res, next) => {
+
   try {
+
     res.render('admin_login');
 
   } catch (error) {
+
     next(error);
 
   }
+
 }
 
 
-
-//admin verify
+//admin verify-------------------------------------
 const adminverify = async (req, res, next) => {
+
   try {
+
     const password = req.body.password;
     const username = req.body.username;
-
     const adminData = await Admin.findOne({ username: username });
-    // console.log(adminData)
     if (adminData) {
+
       if (adminData.password === password) {
         req.session.admin_id = adminData._id
 
         res.redirect('/admin/dashboard')
-      } else {
-        res.render('admin_login', { message: "password is wrong" });
-      }
 
+      } else {
+
+        res.render('admin_login', { message: "password is wrong" });
+      
+      }
     } else if (req.body.username === "" && req.body.password == "") {
+
       res.render('admin_login', { message: "username and password required" });
+
     } else {
+
       res.render('admin_login', { message: "username and password wrong" });
 
     }
-
-
   } catch (error) {
+
     next(error);
+
   }
 }
 
 
-//get dashboard
-
+//get dashboard-----------------
 const dashboard = async (req, res, next) => {
   try {
+    
     const categoryData=await Category.find({})
-   const productData=await Product.find({}).populate('category').exec()
-   
-   const salesCount=await Order.find({}).count()
-  
-   const weeklyRevenue =await Order.aggregate([
-    {
-      $match: {
-        date: {
-          $gte: new Date(new Date().setDate(new Date().getDate()-7))
+    const productData=await Product.find({}).populate('category').exec()
+    const salesCount=await Order.find({status:"delivered"}).count()
+    const weeklyRevenue =await Order.aggregate([
+      {
+        $match: {
+          date: {
+            $gte: new Date(new Date().setDate(new Date().getDate()-7))
+          },status:{
+            $eq: "delivered"
+          }
+        }
+      },
+      {
+        $group: {
+          _id: null,
+          totalAmount: { $sum: "$total" }
         }
       }
-    },
-    {
-      $group: {
-        _id: null,
-        totalAmount: { $sum: "$total" }
+    ])
+   
+    const cancelledOrdersCount=await Order.aggregate([
+      {
+        $match: { status: "cancelled" }
+      },
+      {
+        $group: {
+          _id: null,
+          count: { $sum: 1 }
+        }
       }
-    }
-  ])
- 
-
-  const cancelledOrdersCount=await Order.aggregate([
-    {
-      $match: { status: "cancelled" }
-    },
-    {
-      $group: {
-        _id: null,
-        count: { $sum: 1 }
-      }
-    }
-  ])
-
-  const toatalCustomers=await User.find({}).count()
-
-
+    ])
   
-const lastWeek = new Date();
-lastWeek.setDate(lastWeek.getDate() - 7);
-
-const usersForTheLastWeek=await User.find({ date: { $gte: lastWeek }})
-  
-
-
-const lessQuantityProducts=await Product.find({stock:{$lt:50}})
-
- const ativeCoupons=await Coupon.find({expirationDate:{$gt:new Date() }})
-
- const salesChart = await Order.aggregate([
-  {
-      $group: {
+    const toatalCustomers=await User.find({}).count()
+    const lastWeek = new Date();
+    lastWeek.setDate(lastWeek.getDate() - 7);
+    const usersForTheLastWeek=await User.find({ date: { $gte: lastWeek }})
+    const lessQuantityProducts=await Product.find({stock:{$lt:50}})
+    const ativeCoupons=await Coupon.find({expirationDate:{$gt:new Date() }})
+    const salesChart = await Order.aggregate([
+      {
+        $match: {
+          status:{
+            $eq: "delivered"
+          }
+        }
+      },
+      {
+        $group: {
           _id: { $dateToString: { format: "%Y-%m-%d", date: "$date" } },
           sales: { $sum: "$total" },
+        }
+      },
+      {
+        $sort:{_id: 1}
+      },
+      {
+        $limit: 7
       }
-  },
-  {
-      $sort:{_id: 1}
-  },
-  {
-      $limit: 7
-  }
-])
+    ])
+    const date=salesChart.map((item)=>{
+      return item._id;
+    })
+    const sales=salesChart.map((item)=>{
+      return item.sales;
+    })
+    const confirmed=await Order.find({status:"confirmed"}).count()
+    const delivered=await Order.find({status:"delivered"}).count()
+    const shipped=await Order.find({status:"shipped"}).count()
+    const cancelled=await Order.find({status:"cancelled"}).count()
+    const UPI=await Order.find({paymentType:"UPI",status:"delivered"}).count()
+    const COD=await Order.find({paymentType:"COD",status:"delivered"}).count()
 
-const date=salesChart.map((item)=>{
-  return item._id;
-})
-
-const sales=salesChart.map((item)=>{
-  return item.sales;
-})
-
-console.log("salessssss");
-console.log(salesChart);
-
-
-
-
-
-
-
-
-
-
-
-const confirmed=await Order.find({status:"confirmed"}).count()
-const delivered=await Order.find({status:"delivered"}).count()
-const shipped=await Order.find({status:"shipped"}).count()
-const cancelled=await Order.find({status:"cancelled"}).count()
-const UPI=await Order.find({paymentType:"UPI"}).count()
-const COD=await Order.find({paymentType:"COD"}).count()
     res.render('admin_dashboard',{categoryData:categoryData,
-      productData:productData,
-      salesCount,weeklyRevenue,
+      productData:productData,salesCount,weeklyRevenue,
       cancelledOrdersCount,toatalCustomers,
       usersForTheLastWeek,lessQuantityProducts,
-      ativeCoupons,confirmed,delivered,shipped,cancelled,UPI,COD,sales,date,
-      
+      ativeCoupons,confirmed,delivered,shipped,cancelled,
+      UPI,COD,sales,date,
       moment:moment})
-  } catch (error) {
-    next(error);
+
+    } catch (error) {
+
+      next(error);
+
+    }
   }
-}
 
 
-
-
-
-
-
-//view user
+  
+//view user--------------------
 const viewUser = async (req, res, next) => {
   try {
+
     const user = await User.find({})
 
     res.render('user_management', { user: user, moment: moment })
+
   } catch (error) {
+
     next(error);
+
   }
 }
 
 
-//view order
+
+//view order------------------
 const viewOrder=async(req,res,next)=>{
   try {
    
     const orderDetails=await Order.find({}).populate('product.productId').populate('userId')
     
-    // const order=[];
-    // if(orderDetails.length>0){
-    //   for(let i=0;i<orderDetails.length;i++){
-    //     order.push(await Order.findOne({}).populate('product.productId'))
-    //   }
-    // }
-    // console.log("ooooooooooooooooooooooooooooooooooo"+order);
-
-  
-      
-    // const user=[];
-    // if(orderDetails.length > 0) {
-    //   for(let i=0;i<orderDetails.length;i++){
-    //      user.push(await Order.findOne({}).populate('userId'))
-    //   }
-    // }
-    // console.log("uuuuuuuuuuuuuuuuuuuuuuuuuuu"+user);
-    // user:user,order:order,
     res.render('orders',{orderDetails:orderDetails})
 
   } catch (error) {
+
     next(error)
+    
   }
 }
 
 
-
-
-
-
-
-
-//block user
+//block user------------------
 const blockUser = async (req, res, next) => {
   try {
 
@@ -226,33 +198,40 @@ const blockUser = async (req, res, next) => {
     await User.updateOne({ _id: id }, { $set: { status: false } })
 
     res.redirect('/admin/users');
+
   } catch (error) {
+
     next(error);
+
   }
 }
 
-
-
+  
 const dropdown= async (req,res,next)=>{
   console.log(req.body)
   try {
-     console.log(req.body);
+
      const orderId=req.body.orderId
      const Status=req.body.status
      const change = await Order.updateOne({orderId:orderId }, {
       $set: { status: Status}
      })
+
      if(change){
+
       res.json({ success: true,Status})
+
      }
   } catch (error) {
+
     next(error);
+
   }
 
 }   
 
-
-//unblock user
+  
+//unblock user------------------
 const unBlockUser = async (req, res, next) => {
   try {
 
@@ -261,41 +240,54 @@ const unBlockUser = async (req, res, next) => {
     await User.updateOne({ _id: id }, { $set: { status: true } })
 
     res.redirect('/admin/users');
+
   } catch (error) {
+
     next(error);
+
   }
 }
 
 
-//sales report
+//sales report--------------------------
 
 const salesReport= async (req, res, next) => {
   try {
+
     const orders = await Order.find().populate({
       path: "product.productId",
       select: "name price",
     });
+
     const salesByMonthAndProduct = {};
-    //sales for each product by month
-    orders.forEach((order) => {
+ 
+      orders.forEach((order) => {
+
       const orderDate = new Date(order.date);
       const month = orderDate.toLocaleString("default", { month: "long" });
     
       order.product.forEach((product) => {
+
         const productName = product.productId.name;
         const productSalesTotal = product.quantity * product.productId.price;
-console.log(productName);
+
         if (!(month in salesByMonthAndProduct)) {
+
           salesByMonthAndProduct[month] = {};
+
         }
 
         if (productName in salesByMonthAndProduct[month]) {
+
           salesByMonthAndProduct[month][productName].quantitySold += product.quantity;
           salesByMonthAndProduct[month][productName].totalSales += productSalesTotal;
+
         } else {
+
           salesByMonthAndProduct[month][productName] = {
             quantitySold: product.quantity,
             totalSales: productSalesTotal,
+
           };
         }
       });
@@ -311,16 +303,25 @@ console.log(productName);
 }
 
 
-//logout
+//logout----------------
+
 const logOut = async (req, res, next) => {
   try {
+
     req.session.destroy();
+
     res.redirect('/admin')
+
   } catch (error) {
+
     next(error);
+
   }
 
 }
+
+//Exporting--------------
+
 module.exports = {
   loadsignin,
   adminverify,
@@ -333,4 +334,47 @@ module.exports = {
   dropdown,
   salesReport
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+     
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 

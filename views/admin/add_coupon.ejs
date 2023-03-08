@@ -44,7 +44,7 @@
               <div class="form-group">
                 <label class="col-md-12">Expire Date</label>
                 <div class="col-md-8">
-                    <input type="date" name="expirationDate" class="form-control form-control-line" name="example-email"
+                    <input type="date" name="expirationDate"  id="date-input" class="form-control form-control-line" name="example-email"
                       id="example-email">
                   </div>
               </div>
@@ -129,8 +129,11 @@
 
   </script>
   
-
-
+<script>
+  const dateInput = document.getElementById('date-input');
+const today = new Date().toISOString().split('T')[0];
+dateInput.setAttribute('min', today);
+</script>
 
 
 

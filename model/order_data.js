@@ -38,6 +38,9 @@ const orderData = new mongoose.Schema({
       singleTotal:{
         type:Number,
         required:true
+    },singlePrice:{
+      type:Number,
+      required:true
     }
   }
   ],
@@ -55,6 +58,9 @@ const orderData = new mongoose.Schema({
    status:{
     type:String,
     default:"confirmed"
+   },
+   coupon:{
+    type:String,
    }
 });
 

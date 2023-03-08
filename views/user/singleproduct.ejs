@@ -132,7 +132,11 @@
               </div>
               <div class="quantity-content">
                 <div class="left-content">
-                  <h6>No. of Orders</h6>
+                  <% if(element.stock<=0){%>
+                  <h6 style="color: red;">Out of stock</h6>
+                  <%}else{%>
+                    <h6 style="color: darkolivegreen;" >In Stock</h6>
+                    <%}%> 
                 </div>
                 <div class="right-content">
                   <!-- <div class="quantity buttons_added">
@@ -150,19 +154,29 @@
                   <% }else{ %>
                     <div class="main-border-button pb-2" onclick="addToCart('<%= element._id %>')"><a>Add to Cart</a>
                     </div>
-
+                     <!-- <button onclick="addToCart('<%= element._id %>')">Add to Cart</button> -->
                     <% } %>
                       <h4>Total:<%=element.price %>
                       </h4>
-                      <!-- <div class="main-border-button"><a href="#">Buy Now </a></div> -->
+                      <div id="alertpasswordUser" class="alert alert-danger" role="alert" style="display: none;">
 
+                      </div>
+                     <div class="ml-5">
+                      <form action="/checkoutSingle" method="post" id="check">
+                      <input  name="id" type="hidden" value="<%=element._id %>">
+                      <input  name="stocks" type="hidden" value="<%=element.stock %>">
+                      <button  style="margin-left: 90px; width: 90px; height: 55px;" class="main-border-button ml-5" type="submit">Buy Now</button>
+                    </form>
+               
+                     
+                   </div> 
               </div>
             </div>
           </div>
         </div>
       </div>
       <% }) %>
-
+  </section>
   </section>
   <script>
     function addToCart(proId) {
@@ -223,8 +237,32 @@
 
     })
 
-
   </script>
-
+<script>
+  const form=document.getElementById('check')
+$('#check').submit(function (e) {
+  e.preventDefault();
+  var formData = $(this).serialize();
+  const inputs = document.querySelectorAll('form input');
+  let inputFieldNull = false;
+  console.log("not");
+  for (let i = 0; i < inputs.length; i++) {
+    if (inputs[i].value.trim() === '0') {
+      inputFieldNull = true;
+      Swal.fire({
+                            position: 'top-end',
+                            icon: 'error',
+                            title: 'Out of Stock',
+                            showConfirmButton: false,
+                            timer: 1500
+                        })
+    }
+  }
+  
+  if (!inputFieldNull) {
+    form.submit();
+  }
+});
+</script>
 
   <%- include("../layouts/user/footer.ejs") %>

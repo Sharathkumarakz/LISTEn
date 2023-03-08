@@ -125,7 +125,8 @@ const deleteCart = async (req, res, next) => {
 const changeQuantity = async (req, res, next) => {
   try {
     if (req.session.user) {
-
+      
+ 
       const price1 = req.body.ptotal
       const prodId = req.body.product
       const productdetails = await Product.findOne({ _id: prodId })
@@ -134,8 +135,30 @@ const changeQuantity = async (req, res, next) => {
       const user = await User.findOne({ username: req.session.user.username })
       const inc = await User.updateOne({ username: req.session.user.username, "cart.product": prodId }, {
         $inc: { 'cart.$.quantity': count }
-
       })
+      // const cartQnty=await User.findOne({username:req.session.user.username,"cart.product": prodId},{"cart.quantity.$":1,_id:0})
+      // const Qnty=cartQnty.quantity.cart[0].quantity
+      // console.log("cccccccccccccccctttt"+cartQnty);
+      // console.log("qqqqqqqqqqqqqqqqqqqqq"+Qnty);
+      // const qntity=(await Product.findOne({_id:prodId},{_id:0,stock:1})).stock
+
+      // if (Qnty>qntity){
+      //   var stockStatus="Out of Stock"
+      // }else{
+      //   var stockStatus="In stock"
+      // }
+      const cartqty = await User.findOne({_id: user._id, "cart.product": prodId},{"cart.quantity.$":1,_id:0})
+          
+      const qqq = cartqty.cart[0].quantity;
+      
+      const qty = (await Product.findOne({_id: prodId},{_id:0,stock:1})).stock
+      // console.log(qty);
+      if(qqq > qty) {
+        var stockStatus = "OutOf Stock"       
+      }else{
+        var stockStatus =  "In Stock"
+      }
+
       const qnty = await User.findOne({ username: req.session.user.username, "cart.product": prodId }, { "cart.$": 1 })
       const productprice = productdetails.price * qnty.cart[0].quantity
 
@@ -154,7 +177,7 @@ const changeQuantity = async (req, res, next) => {
         $set: { cartTotalPrice: cartTotal }
       })
 
-      res.json({ success: true, productprice, cartTotal })
+      res.json({ success: true, productprice, cartTotal,stockStatus})
 
 
     } else {
@@ -172,5 +195,5 @@ module.exports = {
   addCart,
   deleteCart,
   changeQuantity,
-
+ 
 }

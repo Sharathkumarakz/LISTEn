@@ -65,6 +65,7 @@ user_route.get('/addtoWishlist/:id',wishlistController.addToWishlist)
 user_route.get('/removeWishlist/:id',wishlistController.removeWishlist)
 
 
+user_route.post('/checkoutSingle',orderController.checkoutSingle)
 //show checkout
 
 user_route.get('/checkout',orderController.viewCheckout)

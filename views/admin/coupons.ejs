@@ -35,8 +35,10 @@
                       <th>MaxDiscount</th>
                       <th>MinPurchaceAmount</th>
                       <th>percentageOff</th>
+                      <th>Status</th>
                       <th>Action</th>
                     <th>Edit</th>
+
                     </tr>
                   </thead>
                   <tbody>
@@ -46,14 +48,20 @@
                   
                     <tr>
                       <td><%=index+1 %></td>
-                      <td> <%=element.code %></td>
+                      <td><b><%=element.code %></b> </td>
                  
-                      <td>  <%=element.expirationDate.toLocaleDateString() %>
+                      <td> <b> <%=element.expirationDate.toLocaleDateString()%></b>
                        
                        </td>
-                      <td> <%=element.maxDiscount %></td>
-                      <td> <%=element.MinPurchaceAmount %></td>
-                      <td> <%=element.percentageOff %></td>
+                      <td> <b><%=element.maxDiscount %></b></td>
+                      <td> <b><%=element.MinPurchaceAmount %></b></td>
+                      <td><b> <%=element.percentageOff %></b></td>
+                      <% date=new Date()%>
+                      <% if(element.expirationDate>=date){%>
+                        <td style="color: green;"><b>Active</b></td>
+                      <%}else{%>
+                        <td style="color: red;"><b>Expired</b></td> 
+                      <%}%>
                       <td> <button style="background-color: rgb(205, 34, 34);color: rgb(255, 253, 253); border-radius:5px;" onclick="deleteCoupon('<%=element._id %>')">Delete</button> </td>
                       <td> <a style="height: 30px;" class="btn btn-primary" href="EditCoupon/<%=element._id %>">Edit </a></td>
                       
