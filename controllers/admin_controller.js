@@ -294,6 +294,16 @@ const unBlockUser = async (req, res, next) => {
 
 const salesReport= async (req, res, next) => {
   try {
+// create a new date object with the existing date
+const existingDate = new Date(req.body.to);
+
+// add one day to the existing date
+const newDate = new Date(existingDate);
+newDate.setDate(existingDate.getDate() + 1);
+
+
+
+
 
    console.log(req.body);
    const ee=await Order.find({status:"delivered"})
@@ -304,7 +314,7 @@ const salesReport= async (req, res, next) => {
 
    const ss=await Order.find({status:"delivered", date: {
     $gte:new Date(req.body.from),
-    $lte:new Date( req.body.to) 
+    $lte:new Date( newDate) 
   }}).populate("product.productId")
 
 console.log("ithaaanu");

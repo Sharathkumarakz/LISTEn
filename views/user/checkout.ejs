@@ -795,6 +795,17 @@
                     },
                     "theme": {
                         "color": "#3399cc"
+                    },
+                    "modal":{
+                        escape:false,
+                        onDismiss:()=>{
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Oops...',
+                                text: 'Payment failed.',
+                            })
+                          
+                        }
                     }
                 };
                 var rzp1 = new Razorpay(options);

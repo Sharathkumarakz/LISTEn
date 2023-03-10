@@ -32,7 +32,12 @@
                                                     </form><a href="/allProducts">refresh</a> -->
                                                     <form action="/search-product" method="post">
                                                       <div class="input-group">
+                                                        <% if(typeof search !== 'undefined'){ %>
+                                                          <input type="text" name="search" class="form-control" placeholder="Search by name" value="<%=search%>">
+
+                                                             <% }else{ %>
                                                           <input type="text" name="search" class="form-control" placeholder="Search by name">
+                                                          <%}%>
                                                           <div class="input-group-append">
                                                              <button  style="border: none;" type="submit"> 
                                                                <span class="input-group-text bg-transparent text-primary">

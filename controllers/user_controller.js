@@ -38,7 +38,6 @@ const userLoad = async (req, res, next) => {
 
       const banners = await ads.find({})
 
-      const tws = await Product.find({ category: "63ef09c21eff86b6deb89ed7", status: 1 })
       const productData = await Product.find({ status: 1 }).populate('category').exec()
       res.render('home', {
 
