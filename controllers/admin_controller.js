@@ -247,7 +247,7 @@ const today = new Date();
 const dateAfter3Days = new Date(today);
 
 
-dateAfter3Days.setDate(today.getDate() + 3);
+dateAfter3Days.setDate(today.getDate() + 7);
 
       const change = await Order.updateOne({orderId:orderId }, {
         $set: { status: Status,deliveryDate:today,returnDate:dateAfter3Days}})
