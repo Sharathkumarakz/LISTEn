@@ -99,7 +99,8 @@ admin_route.get('/ads',auth.islogin,adsController.loadAds);
 
 
 //Sales---------
-admin_route.get('/salesReport',auth.islogin,adminController.salesReport);
+admin_route.post('/salesReports',auth.islogin,adminController.salesReport);
+admin_route.get('/salesReports',auth.islogin,adminController.salesReports);
 
 
 //Coupons-------

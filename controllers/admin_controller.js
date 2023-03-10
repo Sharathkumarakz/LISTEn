@@ -82,7 +82,7 @@ const dashboard = async (req, res, next) => {
       {
         $group: {
           _id: null,
-          totalAmount: { $sum: "$total" }
+          totalAmount: { $sum: "$total" }  
         }
       }
     ])
@@ -213,15 +213,56 @@ const dropdown= async (req,res,next)=>{
 
      const orderId=req.body.orderId
      const Status=req.body.status
+
+     
+     const change = await Order.updateOne({orderId:orderId }, {
+      $set: { status: Status}})
+
+    if(Status=="Returned"){
+
+     let orderdetails=await Order.findOne({orderId:orderId}).populate('userId').populate('product.productId')
+
+     let totalamount=orderdetails.total
+     let userId=orderdetails.userId._id
+     console.log(totalamount);
+     console.log(userId);
+    let addWallet=await User.updateOne({_id:userId},{$inc:{wallet:totalamount}})
+    for(let i=0;i<orderdetails.product.length;i++){   
+      await Product.updateOne({_id:orderdetails.product[i].productId},{$inc:{stock:orderdetails.product[i].quantity}})
+            
+     }
+     res.json({ success: true,Status})
+    }else{
+
+
+
      const change = await Order.updateOne({orderId:orderId }, {
       $set: { status: Status}
      })
+     if(Status=="delivered"){
+      
+const today = new Date();
 
+
+const dateAfter3Days = new Date(today);
+
+
+dateAfter3Days.setDate(today.getDate() + 3);
+
+      const change = await Order.updateOne({orderId:orderId }, {
+        $set: { status: Status,deliveryDate:today,returnDate:dateAfter3Days}})
+        console.log(today.toISOString().slice(0, 10))
+        console.log( dateAfter3Days.toISOString().slice(0, 10))
+
+       }
+
+     
+     
      if(change){
 
       res.json({ success: true,Status})
 
-     }
+     }}
   } catch (error) {
 
     next(error);
@@ -254,49 +295,35 @@ const unBlockUser = async (req, res, next) => {
 const salesReport= async (req, res, next) => {
   try {
 
-    const orders = await Order.find().populate({
-      path: "product.productId",
-      select: "name price",
-    });
+   console.log(req.body);
+   const ee=await Order.find({status:"delivered"})
+   console.log(ee);
+   if(req.body.from==""||req.body.to==""){
+    res.render('sales',{message:'all fields are equired'})
+   }else{
 
-    const salesByMonthAndProduct = {};
- 
-      orders.forEach((order) => {
+   const ss=await Order.find({status:"delivered", date: {
+    $gte:new Date(req.body.from),
+    $lte:new Date( req.body.to) 
+  }}).populate("product.productId")
 
-      const orderDate = new Date(order.date);
-      const month = orderDate.toLocaleString("default", { month: "long" });
-    
-      order.product.forEach((product) => {
-
-        const productName = product.productId.name;
-        const productSalesTotal = product.quantity * product.productId.price;
-
-        if (!(month in salesByMonthAndProduct)) {
-
-          salesByMonthAndProduct[month] = {};
-
-        }
-
-        if (productName in salesByMonthAndProduct[month]) {
-
-          salesByMonthAndProduct[month][productName].quantitySold += product.quantity;
-          salesByMonthAndProduct[month][productName].totalSales += productSalesTotal;
-
-        } else {
-
-          salesByMonthAndProduct[month][productName] = {
-            quantitySold: product.quantity,
-            totalSales: productSalesTotal,
-
-          };
-        }
-      });
-    });
+console.log("ithaaanu");
+console.log(ss);   
 
     res.render("sales_report", {
-      salesByMonthAndProduct,
+    ss
     });
 
+  }} catch (error) {
+    next(error);
+  }
+}
+
+
+const salesReports= async (req, res, next) => {
+  try {
+res.render('sales')
+  
   } catch (error) {
     next(error);
   }
@@ -332,7 +359,8 @@ module.exports = {
   logOut,
   viewOrder,
   dropdown,
-  salesReport
+  salesReport,
+  salesReports
 }
 
 

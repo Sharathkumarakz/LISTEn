@@ -26,19 +26,38 @@
                             <span>
                                 Here all you needs
                             </span><br>
-                                                     <input type="text" id="search-box" placeholder="search" onkeyup="sendData(this)">
+                            <form action="/getProduct" method="post">
+                                                     <!-- <input type="text" name="search" placeholder="search">
+<button type="submit">search</button>  
+                                                    </form><a href="/allProducts">refresh</a> -->
+                                                    <form action="/search-product" method="post">
+                                                      <div class="input-group">
+                                                          <input type="text" name="search" class="form-control" placeholder="Search by name">
+                                                          <div class="input-group-append">
+                                                             <button  style="border: none;" type="submit"> 
+                                                               <span class="input-group-text bg-transparent text-primary">
+                                                                  <i class="fa fa-search"></i>
+                                                              </span>
+                                                          </button>
+                                                            <% if(typeof search !== 'undefined'){ %>
+                                                           <button>  <a href="/allProducts">clear</a> </button>
+                                                              <% } %>
+                                                            
+                                                          </div>
+                                                      </div>
+                                                  </form>
                     </div>
                 </div>
             </div>
         </div>
 
-<section id="searchResuls">
-
-</section>
 
 
 
 
+
+     
+      
 
         <div class="container">
             <div class="row">
@@ -80,7 +99,7 @@
                 <% }) %>
             </div>
         </div>
-
+     
     </section>
     <script>
        function addToCart(proId) {

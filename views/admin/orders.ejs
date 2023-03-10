@@ -145,6 +145,19 @@
                                 </div>
                               </div>
                               <%}%>
+                              <% if(orderDetails[i].status==="Return pending" ) {%>
+                                <div class="dropdown-menu">
+                                  <div class="dropdown-item"><span style="color: rgb(0, 0, 0);"><%=orderDetails[i].returnReason%></span></div>
+                                  <div class="dropdown-divider"></div>
+                                  <div class="dropdown-item"
+                                  onclick="dropdown('<%= orderDetails[i].orderId %>','Returned')"><span style="color: green;">Accept</span></div>
+                                <div class="dropdown-divider"></div>
+                                <div class="dropdown-item"
+                                onclick="dropdown('<%= orderDetails[i].orderId %>','return declined')"><span style="color: rgb(202, 17, 17);">Decline</span></div>
+                              <div class="dropdown-divider"></div>
+                                </div>
+                              </div>
+                              <%}%>
                               <span  style="color: blue;" id="<%=orderDetails[i].orderId%>">
                                 <%=orderDetails[i].status%>
                               </span>

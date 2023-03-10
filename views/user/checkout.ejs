@@ -253,13 +253,16 @@
                                                     <label for="NAME" class="small text-muted mb-1">Payment
                                                         Method</label><br><br>
                                                     <div class="form-group">
-                                                        <input type="radio" name="test" value="COD"> Cash on
+                                                        <input type="radio" name="test" value="COD">  Cash on
                                                         delivery<br><br>
                                                     </div>
+                                                 
                                                     <div class="form-group">
-                                                        <input type="radio" name="test" value="UPI">UPI<br><br>
+                                                        <input type="radio" name="test" value="UPI">  Online Payment<br><br>
                                                     </div>
-
+                                                    <div class="form-group">
+                                                        <input type="radio" name="test" value="wallet">  Use Wallet <br><br>
+                                                    </div>
                                                     <% if(typeof message !=='undefined' ){ %>
                                                         <h5 style="color: rgb(224, 86, 86);">
                                                             <%= message %>
@@ -467,13 +470,15 @@
             <label for="NAME" class="small text-muted mb-1">Payment
                 Method</label><br><br>
             <div class="form-group">
-                <input type="radio" name="test" value="COD"> Cash on
+                <input type="radio" name="test" value="COD">  Cash on
                 delivery<br><br>
             </div>
             <div class="form-group">
-                <input type="radio" name="test" value="UPI">UPI<br><br>
+                <input type="radio" name="test" value="UPI">  Online Payment<br><br>
             </div>
-
+            <div class="form-group">
+                <input type="radio" name="test" value="wallet">  Use Wallet <br><br>
+            </div>
             <% if(typeof message !=='undefined' ){ %>
                 <h5 style="color: rgb(224, 86, 86);">
                     <%= message %>
@@ -739,6 +744,13 @@
                                 icon: 'error',
                                 title: 'Oops...',
                                 text: 'Select Payment Method.',
+                            })
+                        
+                        } else if (response.insufficiant) {
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Oops...',
+                                text: 'Insufficiant Wallet Amount.',
                             })
                         
                         }

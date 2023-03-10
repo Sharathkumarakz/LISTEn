@@ -61,6 +61,15 @@ const orderData = new mongoose.Schema({
    },
    coupon:{
     type:String,
+   },
+   deliveryDate:{
+    type: Date,
+   },
+   returnDate:{
+    type: Date,
+   },
+   returnReason:{
+    type:String,
    }
 });
 

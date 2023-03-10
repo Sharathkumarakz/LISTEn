@@ -28,6 +28,7 @@ var instance = new Razorpay({
 const moment = require('moment');
 const { truncateSync } = require('fs');
 const { truncate } = require('fs/promises');
+const { findOne } = require('../model/category_data');
 
 
 
@@ -132,8 +133,7 @@ const successLoad = async (req, res, next) => {
   try {
 
     if (req.session.user) {
-   console.log("address")
-   console.log(req.body);
+  
       let method = req.body.test
 if(req.body.address=="Select Address"){
 res.json({address:true})
@@ -189,39 +189,13 @@ res.json({address:true})
         })
         const saveData = await ordersave.save()
             await Coupon.updateOne({code:req.body.code},{$push:{userUsed:username._id}})  
-        
-
-        const removing = await User.updateOne({ username: req.session.user.username }, {
-          $pull: {
-            cart: { product: { $in: productId } }
-
-          }
-        }) 
-
-        // const orderdetail=await Order.findOne({userId:id})
-        // const orderId=orderdetail._id
-        
-      //   const latestOrder = await Order
-      //   .findOne({})
-      //   .sort({ date: -1 })
-      //   .lean();
-      // console.log(latestOrder);
-     
-      //   const order = await Order.findOne({ _id:latestOrder._id}).populate('product.productId')
-      //   console.log("ayega");  
-      //   console.log("order");
-      //   const categorydata = await Category.find({});
-         
-      //   const userdetails = await User.findOne({ username: req.session.user.username })
-      //   console.log(userdetails);
-      //   res.render('success', { categorydata: categorydata, userdetails: userdetails, order: order, moment: moment })
   
        res.json({status:true})
 
       } else if (method == "UPI") {
         const username = await User.findOne({ username: req.session.user.username })
         const id = username._id
-        console.log("ethunnu");
+      
         console.log(req.body);
      
         const orders = req.body
@@ -251,8 +225,7 @@ res.json({address:true})
           const singlePrice =orders.singlePrice[i]
           orderDetails.push({ productId: productId, quantity: quantity, singleTotal: singleTotal,singlePrice:singlePrice})
           
-          // const reduceStock=await Product.updateOne({_id:productId},{$inc:{quantity:100}})
-   
+       
         }
         const ordersave = new Order({
           userId: id,
@@ -268,14 +241,7 @@ res.json({address:true})
         })
         const saveData = await ordersave.save()
             await Coupon.updateOne({code:req.body.code},{$push:{userUsed:username._id}})  
-        
-
-        const removing = await User.updateOne({ username: req.session.user.username }, {
-          $pull: {
-            cart: { product: { $in: productId } }
-
-          }
-        }) 
+       
         const latestOrder = await Order
         .findOne({})
         .sort({ date: -1 })
@@ -295,7 +261,67 @@ res.json({address:true})
         })
 
  
-      } else {
+      } else if(method == "wallet"){
+        
+  console.log(req.body);
+   let userdata=await User.findOne({_id:req.body.userId})
+  
+   if(req.body.total<=userdata.wallet){
+    const username = await User.findOne({ username: req.session.user.username })
+        const id = username._id
+        console.log("sssssssssssssssssssss");
+        console.log(req.body);
+        const orders = req.body
+        const orderDetails = [];
+        const productId = req.body.proId
+        orders.product = orderDetails;
+        if (!Array.isArray(orders.proId)) {
+          orders.proId = [orders.proId]
+        }
+        if (!Array.isArray(orders.singlePrice)) {
+          orders.singlePrice = [orders.singlePrice]
+        }
+
+        if (!Array.isArray(orders.proQ)) {
+          orders.proQ = [orders.proQ]
+        }
+
+        if (!Array.isArray(orders.qntyPrice)) {
+          orders.qntyPrice = [orders.qntyPrice]
+        }
+
+        for (let i = 0; i < orders.proId.length; i++) {
+
+          const productId = orders.proId[i]
+          const quantity = orders.proQ[i]
+          const singleTotal = orders.qntyPrice[i]
+          const singlePrice =orders.singlePrice[i]
+          orderDetails.push({ productId: productId, quantity: quantity, singleTotal: singleTotal,singlePrice:singlePrice })
+
+       
+        }
+        const ordersave = new Order({
+          userId: id,
+          product: orders.product,
+          total:req.body.total1,
+          orderId:`order_id_${uuidv4()}`, 
+          deliveryAddress: orders.address,
+          paymentType: orders.test,
+          date:Date.now(),
+          discount:req.body.discount1,
+          coupon:req.body.code
+        })
+        const saveData = await ordersave.save()
+            await Coupon.updateOne({code:req.body.code},{$push:{userUsed:username._id}})  
+     const walletMinus=await User.updateOne({username: req.session.user.username},{$inc:{wallet:-req.body.total1}})
+       res.json({status:true})
+
+   }else{
+    console.log("allla");
+    res.json({insufficiant:true})
+   }
+    
+      } else{
 
       res.json({radio:true})
       }
@@ -414,17 +440,26 @@ const cancelOrder = async (req, res, next) => {
     if (req.session.user) {
       const orderId = req.body.orderId
       const status = req.body.value
+      console.log("yyyyyyyeyyyyyyyyyyyyyyyyyyyyyyyyys");
+     
+    
+     
       const change = await Order.updateOne({ _id: orderId }, {
         $set: {
           status: status
         }
       })
-      const order=await Order.findOne({_id:orderId})
-
+      const order=await Order.findOne({_id:orderId}).populate('userId').populate('product.productId')
+        
       for(let i=0;i<order.product.length;i++){   
         await Product.updateOne({_id:order.product[i].productId},{$inc:{stock:order.product[i].quantity}})
               
        }
+      if(order.paymentType=="wallet" || order.paymentType=="UPI"){
+        console.log("donee");
+        await User.updateOne({_id:order.userId},{$inc:{wallet:order.total}})
+      }
+     
       if (change) {
        
         res.json({ success: true, status })
@@ -473,6 +508,12 @@ const orderConfirmation =async(req,res,next)=>{
       const categorydata = await Category.find({});
       const userdetails = await User.findOne({ username: req.session.user.username })
 
+      const removing = await User.updateOne({ username: req.session.user.username }, {
+        $set: {
+          cart:[]
+
+        }
+      }) 
       const latestOrder = await Order
       .findOne({})
       .sort({ date: -1 })
@@ -511,6 +552,30 @@ const loadViewOrder=async (req,res,next)=>{
   }
 }
 
+
+const returnOrder= async (req,res,next)=>{
+  try {
+    if(req.session.user){
+      console.log(req.body);
+      if(req.body.one==undefined){
+        res.json({error:true})
+      }else{
+      
+      const updateOrder=await Order.updateOne({_id:req.body.order},{$set:{
+        returnReason:req.body.one,status:"Return pending"
+      }})
+      
+      res.json({status:true})
+    }}else{
+      res.redirect('/login')
+    }
+  } catch (error) {
+    next(error);
+  }
+}
+
+
+
 module.exports = {
   viewCheckout,
   successLoad,
@@ -521,6 +586,6 @@ module.exports = {
   orderConfirmation,
   PaymentVerified,
   loadViewOrder,
-  checkoutSingle
-
+  checkoutSingle,
+  returnOrder
 }

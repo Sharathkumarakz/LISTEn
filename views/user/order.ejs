@@ -21,10 +21,10 @@
       </div>
 
     <section style="background-color: #ffffff;">
-  <div class="container py-5">
+  <div class="container py-5" >
     <div class="row justify-content-center mb-3">
       <div class="col-md-12 col-xl-10">
-        <div class="card shadow-0 border rounded-3">
+        <div class="card shadow-0 border rounded-3"  id="orderpage">
           <div class="card-body">
             <% order.forEach((element)=>{%>
             
@@ -73,114 +73,116 @@
                   <span class="text-danger"><s><%=element.discount %></s></span>
                 </div>
                 <h6 class="text-success">Free shipping</h6>
+                <h6 class="text-info"><span id="<%=element._id %>"  ><%= element.status%></span></h6>
                 <div class="d-flex flex-column mt-4">
                   <button class="btn btn-outline-primary btn-sm mb-2" type="button"><a href="/viewOrders/<%=element._id %>">
                     View Order</a>
                    
                   </button>
-                  <button class="btn btn-primary btn-sm" type="button"><span id="<%=element._id %>"  ><%= element.status%></span></button>
-                  <button class="btn btn-outline-danger btn-sm mt-2"  onclick="validate('<%=element._id %>','cancelled')" type="button">
-                    Cancel Order
-                  </button>
+                  <!-- <button class="btn btn-primary btn-sm" type="button"><span id="<%=element._id %>"  ><%= element.status%></span></button> -->
+                 
+                  <% if (element.status=="delivered"){%>
+                    <% let checkDate=Date.now()%>
+                    <% if(checkDate>=element.deliveryDate){%>
+                      
+                    <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#exampleModalCenter">
+                      Return Order
+                    </button>
+                    <%}%>
+                  <%}else if(element.status!=="Payment Failed" && element.status!=="cancelled" && element.status!=="Return pending" && element.status!=="Returned" && element.status!=="return declined"){%>
+                    <button class="btn btn-outline-danger btn-sm mt-2"  onclick="validate('<%=element._id %>','cancelled')" type="button">
+                      Cancel Order
+                    </button>
+                    <%}%>
+
                 </div>
               </div>
             </div>
           <hr><hr>
-  <%}) %>  
-          </div>
+
+     
+
+
+<!-- //modal return -->
+<section>
+  <div class="modal " id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <form action="" id="returning">
+       
+      <div  class="modal-content">
+        <div class="modal-header">
+          
+          <h5 class="modal-title" id="exampleModalLongTitle">Reason for Return</h5>
+          
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div id="alertpasswordUser" class="alert alert-danger" role="alert" style="display: none;">
+
+        </div>
+        <div class="modal-body" style="width: 500px;">
+          <div class="form-group">
+            <input type="radio" name="one" value="Wrong Product">Wrong Product<br><br>
+        </div>
+        <div class="form-group">
+            <input type="radio" name="one" value="Not Good">Not Good<br><br>
+        </div>
+        <div class="form-group">
+          <input type="radio" name="one" value="Damaged">Damaged<br><br>
+      </div>
+      <div class="form-group">
+        <input type="radio" name="one" value="Changed my mind">Changed my mind<br><br>
+    </div>
+        </div>
+        <input type='hidden' id="orders" name="order" value='<%=element._id%>'>
+
+        <div class="modal-footer">
+          <a class="btn btn-secondary" href="/orders">Close</a>
+          <button type="submit"  class="btn btn-primary">Submit</button>
         </div>
       </div>
+    </form>
     </div>
-   
-  </div>
   </div>
 </section>
+<%}) %>  
+</div>
+</div>
+</div>
+</div>
 
+</div>
+</div>
+</section>
 <% }%>
-
-
-
-
-
 <script>
+  
+     //main form submit for success
+     $('#returning').submit(function (e) {
+                e.preventDefault();
+                var formData = $(this).serialize();
+                $.ajax({
+                    url: '/returnOrder', // replace with the URL of your server-side script
+                    type: 'POST', // use POST method
+                    data: formData,
+                    success: (response) => {
+                        // handle the response from the server
+                        console.log("yes")
+                        console.log(response);
+                        if (response.error) {
+                          Swal.fire({
+                                icon: 'error',
+                                title: 'Oops...',
+                                text: 'Select a Reason.',
+                            })
+                        } else if (response.status){
+                         location.reload()
+                        }
+                    },
 
-  // function cancelOrder(orderId,status) {
-  //   console.log(orderId)
-  //   $.ajax({
-
-  //     url: '/cancelOrder',
-  //     data:{
-  //       orderId: orderId,
-  //       status:status
-  //     },
-  //     method: "post",
-  //     success: (response) => {
-  //       console.log(response);
-  //       document.getElementById(orderId).innerHTML = response.status
-
-  //     }
-  //   })
-  // }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+                });
+            });
 
 
 

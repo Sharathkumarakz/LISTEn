@@ -15,6 +15,7 @@ const cartController=require("../controllers/cart_controller");
 const wishlistController=require("../controllers/wishlist_controller");
 const orderController=require("../controllers/order_controller");
 const couponController=require("../controllers/coupon_controller");
+const productController=require("../controllers/product_controller")
 const { compileFunction } = require("vm");
 
 //get home
@@ -86,7 +87,7 @@ user_route.get('/logout',auth.islogout,userController.userLogout);
 // user_route.get('/changePassword',userController.loadChangePassword);
 user_route.post('/changePassword',userController.changePassword);
 
-
+user_route.post('/returnOrder',orderController.returnOrder)
 
 
 //user profile
@@ -124,7 +125,7 @@ user_route.post('/editAddress/:id',userController.editedAddress)
 
 
 //change product quantity
-user_route.post ('/change-Product-Quantity',cartController.changeQuantity)
+user_route.post ('/chechange-Product-Quantity',cartController.changeQuantity)
 
 // view Orders
 user_route.get ('/viewOrders/:id',orderController.DetailOrderView)
@@ -134,10 +135,10 @@ user_route.post('/applycoupon',couponController.applyCoupon)
 
 user_route.post('/checkoutAddAddress',orderController.addAddressToCheckout)
 
-
-
+user_route.post('/getProduct',productController.getProduct)
+user_route.get('/getProduct',userController.viewAllProducts)
 user_route.use(function(req, res) {
-  res.render('error').end('error');
+  res.render('error')
 });
 
 module.exports=user_route;

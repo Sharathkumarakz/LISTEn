@@ -214,6 +214,39 @@ const deleteProductImage = async (req, res, next) => {
   }
 }
 
+
+const getProduct=async(req,res,next)=>{
+  try {
+   
+    if(req.body.user){
+      const userdetails = req.session.user
+        const search = req.body.search
+      const ss = new RegExp(search, 'i')
+      const products = await Product.find({ name: ss,status:1 })
+  
+
+      const categorydata = await Category.find({})
+      res.render('allproducts', { categorydata: categorydata, products: products, userdetails: userdetails,search:true })
+    }else{
+  
+      const search = req.body.search
+      const ss = new RegExp(search, 'i')
+      const products = await Product.find({ name: ss,status:1 })
+  
+
+      const categorydata = await Category.find({})
+      res.render('allproducts', { categorydata: categorydata, products: products,search:true })
+    }
+ 
+  
+      res.render('allproducts', { data, cata ,search:true})        
+    
+  } catch (error) {
+    next(error);
+  }
+}
+
+
 module.exports = {
 
   viewProduct,
@@ -225,5 +258,6 @@ module.exports = {
   loadEditProduct,
   editProduct,
   loadEditImage,
-  deleteProductImage
+  deleteProductImage,
+  getProduct
 }

@@ -54,6 +54,9 @@ const userData = new mongoose.Schema({
     type: Number,
 
   },
+  wallet:{
+   type:Number,
+  },
   address: [
     {
       houseName: {

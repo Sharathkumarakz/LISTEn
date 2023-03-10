@@ -34,7 +34,14 @@
                 <li class="text-muted"><i class="fas fa-circle" style="color:#8f8061 ;"></i> <span
                     class="fw-bold">ID:</span><%=order.orderId %></li>
                 <li class="text-muted"><i class="fas fa-circle" style="color:#8f8061 ;"></i> <span
-                    class="fw-bold">Creation Date: </span><% const date=order.date %>   <%=moment().format("MMM Do YY");    %></li>
+                    class="fw-bold">Creation Date: </span><% const date=order.date %>   <%=moment(date).format("MMM Do YY");   %></li>
+<% if (order.status=="delivered"){%>
+   <% if(order.deliveryDate!=null){%>
+
+                    <li class="text-muted"><i class="fas fa-circle" style="color:#8f8061 ;"></i> <span
+                      class="fw-bold">Delivery Date: </span><%=order.deliveryDate.toLocaleDateString()%></li>
+                      <%}%>
+                      <%}%>
                 <li class="text-muted"><i class="fas fa-circle" style="color:#8f8061;"></i> <span
                     class="me-1 fw-bold">Status:</span><span class="badge bg-warning text-black fw-bold">
                       <%=order.status %></span></li>
