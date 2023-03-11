@@ -1,36 +1,34 @@
 <%- include("../layouts/header.ejs") %>
   <div class="container">
     <div class="row">
-      <div class="col-md-6">
-        <div class="card" >
-
-          <form action="" class="box" method="post">
-            <h1>LISTEn Login</h1>
+      <div class="col-md-6 mx-auto  " style="margin-top: 100px;">
+        <div class="card">
+          <form class="form" method="post">
             <% if(typeof message !=='undefined' ){ %>
-              <h5 style="color: rgb(224, 86, 86);">
+              <h6 style="color: rgb(224, 86, 86);">
                 <%= message %>
-              </h5>
+              </h6>
               <% } %>
-                <p class="text-muted"> Please enter your username and password!</p>
-                <input type="text" name="username" placeholder="Username">
-                <input type="password" name="password" placeholder="Password">
-                
-                <input type="submit" value="Login">
-                <div class="col-md-12">
-                  <ul class="social-network social-circle">
-                    <!-- <li><a href="#" class="icoFacebook" title="Facebook"><i class="fab fa-facebook-f">
+                <p>LISTEn Login</p>
 
-                    </i></a></li>
-                    <li><a href="#" class="icoTwitter" title="Twitter"><i class="fab fa-twitter"></i></a></li>
-                    <li><a href="#" class="icoGoogle" title="Google +"> -->
-                        <i class="fab fa-google-plus"></i></a></li>
-                  </ul>
+                <div class="group">
+                  <input style="width: 300px;" class="main-input" name="username" type="text" >
+                  <span class="highlight-span"></span>
+                  <label class="lebal-email">Username</label>
                 </div>
-                  
-          <li><a href="/signup" class="icoTwitter" title="Twitter" >Don't have account? signup!</a></li>
- 
+                <div class="container-1">
+                  <div class="group">
+                    <input style="width: 300px;" class="main-input" type="password" name="password">
+                    <span class="highlight-span"></span>
+                    <label class="lebal-email">password</label>
+                  </div>
+                </div>
+                <button class="submit">submit</button>
+                <li><a href="/signup" class="icoTwitter" title="Twitter">Don't have account? signup!</a></li>
+
           </form>
-               </div>
+
+        </div>
       </div>
     </div>
   </div>

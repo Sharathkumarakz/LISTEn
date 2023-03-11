@@ -2,24 +2,6 @@
 
   <%- include("../layouts/user/headers.ejs") %>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-      
-
-
-
-
 <section>
   <section class="h-100 gradient-custom" id="cart">
     <div class="container py-5">
@@ -63,6 +45,7 @@
                   <p><strong><%=element.product.name%></strong></p>
                   <!-- <p><%=element.product.description%></p> -->
                   <p>Price: <%=element.product.price%></p>
+                  <input type="hidden" class="<%= element.product._id %>" value="<%= element.product.stock %>">
                   <p><span class="<%= element.product._id %>">In Stock</span></p>
                  
                   <button  onclick="validate('<%= element.product._id %>')"  type="button" class="btn btn-danger btn-sm mb-2" data-mdb-toggle="tooltip"
@@ -187,13 +170,14 @@
 
 
 
-
-
     <script>
 
       function changeQuantity(proId, count, ptotal) {
+        let stock=parseInt(document.getElementsByClassName(proId)[0].value)
         let quantity = parseInt(document.getElementById(proId).innerHTML)
         count = parseInt(count)
+        console.log(stock);
+    
        if(quantity<=1 && count==-1){
         Swal.fire({
   icon: 'error',
@@ -201,23 +185,37 @@
   text: 'Minimum quatity is One',
   
 })
-       }else{
+       }else if(quantity==stock && count==1){
+          Swal.fire({
+  icon: 'error',
+  title: 'Oops...',
+  text: 'Product at its maximum quantity',
+  
+})  
+        }else if(stock==0){
+          Swal.fire({
+  icon: 'error',
+  title: 'Oops...',
+  text: 'Product not available',
+  
+})  
+        }else{
+       
         $.ajax({
-
           url: '/change-Product-Quantity',
           data: {
             product: proId,
             count: count,
-            ptotal: ptotal
+            ptotal: ptotal,
           },
           method: "post",
           success: (response) => {
             console.log(response);
             document.getElementById(proId).innerHTML = quantity + count
-            document.getElementsByClassName(proId)[1].innerHTML ='₹'+ response.productprice
+            document.getElementsByClassName(proId)[2].innerHTML ='₹'+ response.productprice
             document.getElementById('total').innerHTML='₹'+response.cartTotal
             document.getElementById('totals').innerHTML=response.cartTotal
-            document.getElementsByClassName(proId)[0].innerHTML=response.stockStatus
+            document.getElementsByClassName(proId)[1].innerHTML=response.stockStatus
           }
         })
       }

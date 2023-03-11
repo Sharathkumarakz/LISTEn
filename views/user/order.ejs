@@ -85,7 +85,7 @@
                     <% let checkDate=Date.now()%>
                     <% if(checkDate<=element.returnDate){%>
                       
-                    <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#exampleModalCenter">
+                    <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#ss<%=element._id %>">
                       Return Order
                     </button>
                     <%}%>
@@ -99,21 +99,21 @@
               </div>
             </div>
           <hr><hr>
-
+       
      
 
 
 <!-- //modal return -->
 <section>
-  <div class="modal " id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal " id="ss<%=element._id %>" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
-      <form action="" id="returning">
-       
+      <form action="/returnOrder" method="post" id="returning">
+      
       <div  class="modal-content">
         <div class="modal-header">
           
           <h5 class="modal-title" id="exampleModalLongTitle">Reason for Return</h5>
-          
+          <h5><%=element.total %></h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
@@ -122,16 +122,17 @@
 
         </div>
         <div class="modal-body" style="width: 500px;">
-          <div class="form-group">
+          <div >
             <input type="radio" name="one" value="Wrong Product">Wrong Product<br><br>
         </div>
-        <div class="form-group">
+        <div>
             <input type="radio" name="one" value="Not Good">Not Good<br><br>
+            
         </div>
-        <div class="form-group">
+        <div >
           <input type="radio" name="one" value="Damaged">Damaged<br><br>
       </div>
-      <div class="form-group">
+      <div >
         <input type="radio" name="one" value="Changed my mind">Changed my mind<br><br>
     </div>
         </div>
@@ -157,35 +158,33 @@
 </section>
 <% }%>
 <script>
-  
-     //main form submit for success
-     $('#returning').submit(function (e) {
-                e.preventDefault();
-                var formData = $(this).serialize();
-                $.ajax({
-                    url: '/returnOrder', // replace with the URL of your server-side script
-                    type: 'POST', // use POST method
-                    data: formData,
-                    success: (response) => {
-                        // handle the response from the server
-                        console.log("yes")
-                        console.log(response);
-                        if (response.error) {
-                          Swal.fire({
-                                icon: 'error',
-                                title: 'Oops...',
-                                text: 'Select a Reason.',
-                            })
-                        } else if (response.status){
-                         location.reload()
-                        }
-                    },
-
-                });
-            });
+  const form=document.getElementById('returning')
+$('#returning').submit(function (e) {
+        e.preventDefault();
+        console.log("pas");
+        let formData = $(this).serialize();
+        let pairs = formData.split('&');
 
 
+// Loop through the array to find the values you need
+let one= '';
 
+for (var i = 0; i < pairs.length; i++) {
+  var pair = pairs[i].split('=');
+  if (pair[0] === 'one') {
+    one = decodeURIComponent(pair[1].replace(/\+/g, ' '));
+  } 
+}
+      if(one==''){
+        $('#alertpasswordUser').attr({ style: "display: block" }).html("selct reason")
+          setTimeout(() => {
+            $('#alertpasswordUser').hide()
+          }, 3000)
+      }else{
+        form.submit()
+      }
+    
+      })
 
     function validate(orderId,value) {
         value = value

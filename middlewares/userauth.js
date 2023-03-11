@@ -9,7 +9,7 @@ const islogin = async (req, res, next) => {
     }
     next()
   } catch (error) {
-    console.log(error.message);
+   next(error);
   }
 
 }
@@ -21,13 +21,13 @@ const islogout = async (req, res, next) => {
 
   try {
     if (req.session.user) {
-      res.redirect('/')
+      return res.redirect('/')
     }
 
     next()
 
   } catch (error) {
-    console.log(error.message);
+    next(error)
   }
 
 }

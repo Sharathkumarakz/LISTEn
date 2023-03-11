@@ -125,7 +125,7 @@ user_route.post('/editAddress/:id',userController.editedAddress)
 
 
 //change product quantity
-user_route.post ('/chechange-Product-Quantity',cartController.changeQuantity)
+user_route.post ('/change-Product-Quantity',cartController.changeQuantity)
 
 // view Orders
 user_route.get ('/viewOrders/:id',orderController.DetailOrderView)
@@ -137,6 +137,7 @@ user_route.post('/checkoutAddAddress',orderController.addAddressToCheckout)
 
 user_route.post('/getProduct',productController.getProduct)
 user_route.get('/getProduct',userController.viewAllProducts)
+
 user_route.use(function(req, res) {
   res.render('error')
 });

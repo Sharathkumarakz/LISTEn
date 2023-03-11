@@ -28,8 +28,7 @@ const loadAddCoupon=async (req,res,next)=>{
 //insert coupon to database
 const insertCoupon=async (req,res,next)=>{
     try {
-        console.log("idhuthanne");
-       console.log(req.body);
+       
        const coupon=new Coupon({
         code:req.body.code,
         discount:req.body.discount, 
@@ -40,8 +39,11 @@ const insertCoupon=async (req,res,next)=>{
        })
        const saving=await coupon.save()
        res.redirect('/admin/coupons')
+
     } catch (error) {
+
         next(error);
+
     }
 }
 
@@ -50,14 +52,12 @@ const insertCoupon=async (req,res,next)=>{
 const applyCoupon=async (req,res,next)=>{
     try {
 
-       console.log(req.body);
       const couponDetails=await Coupon.findOne({code:req.body.code})
       if(couponDetails){
       const user=await User.findOne({username: req.session.user.username})
       
       const found=await Coupon.findOne({code:req.body.code,userUsed: { $in: [user._id] } })
       const code=couponDetails.code
-      console.log(couponDetails);
       const datenow=Date.now()
     if(found){
         res.json({used:true})
@@ -65,47 +65,55 @@ const applyCoupon=async (req,res,next)=>{
       if(datenow<=couponDetails.expirationDate){
            if(couponDetails.MinPurchaceAmount<=req.body.total){
             let discountAmount=req.body.total*couponDetails.percentageOff/100
-           
-          
             if(discountAmount<=couponDetails.maxDiscount){
-               let  discountValue= discountAmount
-             let  value=req.body.total-discountValue
 
-                res.json({amountokay:true,value,discountValue,code})
+               let  discountValue= discountAmount
+               let  value=req.body.total-discountValue
+               res.json({amountokay:true,value,discountValue,code})
             
             }else{
+
                 let  discountValue=couponDetails.maxDiscount
                 let  value=req.body.total-discountValue
                 res.json({amountokay:true,value,discountValue,code})
-                // await Coupon.updateOne({code:req.body.code},{$push:{userUsed:user._id}})
+
             }
       
            }else{
     
             res.json({amountnokay:true})
+
            }
 
         
       }else{
    
          res.json({datefailed:true})
+
       }}}else{
+
         res.json({invalid:true})
+
       }
     } catch (error) {
+
        next(error)
+       
     }
   }
   
 //delete coupon
 const deleteCoupon=async (req,res,next)=>{
     try {
+
       const id=req.params.id
-      console.log(id);
       await Coupon.deleteOne({_id:id})
       res.redirect('/coupons')
+
     } catch (error) {
+
         next(error)
+
     }
 }
 
@@ -113,33 +121,36 @@ const deleteCoupon=async (req,res,next)=>{
 //edit coupon
 const EditCoupon=async(req,res,next)=>{
     try {
+
         const id=req.params.id
-    const couponDta=await Coupon.findOne({_id:id})
-    console.log("cccccccccccccc"+couponDta);
+        const couponDta=await Coupon.findOne({_id:id})
         res.render('edit_coupon',{coupondata:couponDta})
+
     } catch (error) {
+
         next(error)
+
     }
 }
 
 //save coupon
 const SaveCoupon=async(req,res,next)=>{
     try {
-        const id=req.params.id
-        console.log(req.body);
 
-  
-    const couponDta=await Coupon.updateOne({_id:id},{$set:{
+        const id=req.params.id
+        await Coupon.updateOne({_id:id},{$set:{
         code:req.body.code,
         expirationDate:req.body.expirationDate,
         maxDiscount:req.body.maxDiscount,
         MinPurchaceAmount:req.body.minPurchaceAmount,
         percentageOff:req.body.percentageOff
     }})
-   
        res.redirect('/admin/coupons')
+
     } catch (error) {
+
         next(error)
+        
     }
 }
 

@@ -72,7 +72,7 @@
                   <p class="text-muted mb-0">
                     <%=element.houseName %>,
                       <%=element.street %>,
-                        <%=element.disrtrict %>,
+                        <%=element.district %>,
                           <%=element.state %>,
                             <%=element.country %>,
                               <%=element.pincode %>,
@@ -85,11 +85,126 @@
                   </button>
 
                 </div>
-                <div class="col-sm-1">
-                  <a style="color: blue;" href="/editAddress/<%=element._id %>">Edit</a>
-                </div>
+             
+                <button type="button" style="width: 50px;" class="btn btn-primary" data-toggle="modal" data-target="#sss<%=element._id %>">
+                  Edit
+                </button>
               </div>
               <hr>
+
+              <div class="modal fade" id="sss<%=element._id %>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title" id="exampleModalLabel">Edit Address</h5>
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
+                    <div class="modal-body">
+                     
+                        <form action="/editAddress/<%=element._id %>" method="post" id="editAddress">
+                          <div class="row">
+                            <div class="col-md-12 mb-4">
+                              <div class="form-outline">
+                                <div id="alertpasswordUser33" class="alert alert-danger" role="alert" style="display: none;">
+
+                                </div>
+                                <div id="alertpasswordUser44" class="alert alert-success" role="alert" style="display: none;">
+      
+                                </div>
+                                <label class="form-label">House Name</label>
+                                <input type="text" name="houseName" value="<%=element.houseName %>"
+                                  class="form-control form-control-lg" />
+      
+                              </div>
+      
+                            </div>
+      
+                            <div class="col-md-6 mb-4">
+      
+                              <div class="form-outline">
+                                <label class="form-label">Street</label>
+                                <input type="text" name="street" value="<%=element.street %>"
+                                  class="form-control form-control-lg" />
+      
+                              </div>
+                              <input type="hidden" name="id" value="<%=element._id %>">
+                            </div>
+                            <div class="col-md-6 mb-4">
+      
+                              <div class="form-outline">
+                                <label class="form-label">District</label>
+                                <input type="text" value="<%=element.district %>" name="district"
+                                  class="form-control form-control-lg" />
+      
+                              </div>
+      
+                            </div>
+                          </div>
+      
+                          <div class="row">
+                            <div class="col-md-6 mb-4 d-flex align-items-center">
+      
+                              <div class="form-outline datepicker w-100">
+                                <label class="form-label">State</label>
+                                <input type="text" value="<%=element.state %>" name="state"
+                                  class="form-control form-control-lg"  />
+      
+                              </div>
+      
+                            </div>
+      
+                            <div class="col-md-6 mb-4 pb-2">
+      
+                              <div class="form-outline">
+                                <label class="form-label">Country</label>
+                                <input type="text" value="<%=element.country %>" name="country"
+                                  class="form-control form-control-lg" />
+      
+                              </div>
+      
+                            </div>
+                          </div>
+      
+      
+                          <div class="row">
+                            <div class="col-md-6 mb-4 pb-2">
+      
+                              <div class="form-outline">
+                                <label class="form-label">pincode</label>
+                                <input type="Number" value="<%=element.pincode %>" id="emailAddress" name="pincode"
+                                  class="form-control form-control-lg" />
+      
+                              </div>
+      
+                            </div>
+                            <div class="col-md-6 mb-4 pb-2">
+      
+                              <div class="form-outline">
+                                <label class="form-label">Phone Number</label>
+                                <input type="Number" value="<%=element.phone %>" name="phone"
+                                  class="form-control form-control-lg" />
+      
+                              </div>
+      
+                            </div>
+                          </div>
+      
+                       
+      
+                            <div class="mt-4 pt-2">
+      
+                              <button class=" btn-lg " type="submit">Submit</button>
+                            </div>
+      
+                        </form>
+                    </div>
+                 
+                  </div>
+                </div>
+              </div>
+
               <%}) %>
           </div>
         </div>
@@ -104,6 +219,22 @@
 
 
     </section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     <section>
 
       <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
@@ -194,7 +325,7 @@
 
                         </div>
                       </div>
-                      <div id="alertpasswordUser" class="alert alert-danger" role="alert" style="display: none;">
+                      <div id="alertpasswordUser22" class="alert alert-danger" role="alert" style="display: none;">
 
                       </div>
 
@@ -213,25 +344,69 @@
       </div>
     </section>
     <script>
-      $('#addAddress').submit(function (e) {
+
+const form1=document.querySelector('#editAddress')
+$('#editAddress').submit(function (e) {
         e.preventDefault();
-        var formData = $(this).serialize();
-        const inputs = document.querySelectorAll('form input')
+        
+         let formsData = $(this).serialize();
+        const inputss = document.querySelectorAll('#editAddress input')
         let inputFieldNull = false
-        for (let i = 0; i < inputs.length; i++) {
-          if (inputs[i].value.trim() == "") {
+        console.log(formsData);
+        for (let j = 0; j < inputss.length; j++) {
+          if (inputss[j].value.trim()=="") {
+           console.log(inputss.length); 
+            console.log(inputss[j]);
             inputFieldNull = true
-            $('#alertpasswordUser').attr({ style: "display: block" }).html("All fields Required")
+            console.log("yees");
+            $('#alertpasswordUser33').attr({ style: "display: block" }).html("All fields Required")
             setTimeout(() => {
-              $('#alertpasswordUser').hide()
+              $('#alertpasswordUser33').hide()
             }, 3000)
           }
         }
         if (!inputFieldNull) {
+          $('#alertpasswordUser44').attr({ style: "display: block" }).html("Saved")
+            setTimeout(() => {
+              $('#alertpasswordUser44').hide()
+            }, 3000)
+  form1.submit()
+        }})
+
+
+
+
+
+
+
+
+
+
+
+
+      $('#addAddress').submit(function (e) {
+        e.preventDefault();
+        
+         let formsData = $(this).serialize();
+        const inputs = document.querySelectorAll('#addAddress input')
+        let inputFieldNull = false
+        
+        for (let i = 0; i < inputs.length; i++) {
+          if (inputs[i].value.trim() == "") {
+            inputFieldNull = true
+            console.log("yees");
+            $('#alertpasswordUser22').attr({ style: "display: block" }).html("All fields Required")
+            setTimeout(() => {
+              $('#alertpasswordUser22').hide()
+            }, 3000)
+          }
+        }
+        if (!inputFieldNull) {
+    
           $.ajax({
             url: '/addAddress', // replace with the URL of your server-side script
             type: 'POST', // use POST method
-            data: formData,
+            data: formsData,
             success: (response) => {
               // handle the response from the server
               console.log("yes")

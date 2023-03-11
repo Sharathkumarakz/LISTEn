@@ -1,9 +1,9 @@
 const Admin = require('../model/admin_data');
-const Order=require("../model/order_data");
+const Order = require("../model/order_data");
 const User = require('../model/user_data');
 const Category = require('../model/category_data');
 const Product = require('../model/products_data');
-const Coupon=require('../model/coupon_data');
+const Coupon = require('../model/coupon_data');
 const { ObjectId } = require('mongodb');
 const moment = require('moment');
 
@@ -43,7 +43,7 @@ const adminverify = async (req, res, next) => {
       } else {
 
         res.render('admin_login', { message: "password is wrong" });
-      
+
       }
     } else if (req.body.username === "" && req.body.password == "") {
 
@@ -65,16 +65,16 @@ const adminverify = async (req, res, next) => {
 //get dashboard-----------------
 const dashboard = async (req, res, next) => {
   try {
-    
-    const categoryData=await Category.find({})
-    const productData=await Product.find({}).populate('category').exec()
-    const salesCount=await Order.find({status:"delivered"}).count()
-    const weeklyRevenue =await Order.aggregate([
+
+    const categoryData = await Category.find({})
+    const productData = await Product.find({}).populate('category').exec()
+    const salesCount = await Order.find({ status: "delivered" }).count()
+    const weeklyRevenue = await Order.aggregate([
       {
         $match: {
           date: {
-            $gte: new Date(new Date().setDate(new Date().getDate()-7))
-          },status:{
+            $gte: new Date(new Date().setDate(new Date().getDate() - 7))
+          }, status: {
             $eq: "delivered"
           }
         }
@@ -82,12 +82,12 @@ const dashboard = async (req, res, next) => {
       {
         $group: {
           _id: null,
-          totalAmount: { $sum: "$total" }  
+          totalAmount: { $sum: "$total" }
         }
       }
     ])
-   
-    const cancelledOrdersCount=await Order.aggregate([
+
+    const cancelledOrdersCount = await Order.aggregate([
       {
         $match: { status: "cancelled" }
       },
@@ -98,17 +98,17 @@ const dashboard = async (req, res, next) => {
         }
       }
     ])
-  
-    const toatalCustomers=await User.find({}).count()
+
+    const toatalCustomers = await User.find({}).count()
     const lastWeek = new Date();
     lastWeek.setDate(lastWeek.getDate() - 7);
-    const usersForTheLastWeek=await User.find({ date: { $gte: lastWeek }})
-    const lessQuantityProducts=await Product.find({stock:{$lt:50}})
-    const ativeCoupons=await Coupon.find({expirationDate:{$gt:new Date() }})
+    const usersForTheLastWeek = await User.find({ date: { $gte: lastWeek } })
+    const lessQuantityProducts = await Product.find({ stock: { $lt: 50 } })
+    const ativeCoupons = await Coupon.find({ expirationDate: { $gt: new Date() } })
     const salesChart = await Order.aggregate([
       {
         $match: {
-          status:{
+          status: {
             $eq: "delivered"
           }
         }
@@ -120,42 +120,44 @@ const dashboard = async (req, res, next) => {
         }
       },
       {
-        $sort:{_id: 1}
+        $sort: { _id: 1 }
       },
       {
         $limit: 7
       }
     ])
-    const date=salesChart.map((item)=>{
+    const date = salesChart.map((item) => {
       return item._id;
     })
-    const sales=salesChart.map((item)=>{
+    const sales = salesChart.map((item) => {
       return item.sales;
     })
-    const confirmed=await Order.find({status:"confirmed"}).count()
-    const delivered=await Order.find({status:"delivered"}).count()
-    const shipped=await Order.find({status:"shipped"}).count()
-    const cancelled=await Order.find({status:"cancelled"}).count()
-    const UPI=await Order.find({paymentType:"UPI",status:"delivered"}).count()
-    const COD=await Order.find({paymentType:"COD",status:"delivered"}).count()
+    const confirmed = await Order.find({ status: "confirmed" }).count()
+    const delivered = await Order.find({ status: "delivered" }).count()
+    const shipped = await Order.find({ status: "shipped" }).count()
+    const cancelled = await Order.find({ status: "cancelled" }).count()
+    const UPI = await Order.find({ paymentType: "UPI", status: "delivered" }).count()
+    const COD = await Order.find({ paymentType: "COD", status: "delivered" }).count()
 
-    res.render('admin_dashboard',{categoryData:categoryData,
-      productData:productData,salesCount,weeklyRevenue,
-      cancelledOrdersCount,toatalCustomers,
-      usersForTheLastWeek,lessQuantityProducts,
-      ativeCoupons,confirmed,delivered,shipped,cancelled,
-      UPI,COD,sales,date,
-      moment:moment})
+    res.render('admin_dashboard', {
+      categoryData: categoryData,
+      productData: productData, salesCount, weeklyRevenue,
+      cancelledOrdersCount, toatalCustomers,
+      usersForTheLastWeek, lessQuantityProducts,
+      ativeCoupons, confirmed, delivered, shipped, cancelled,
+      UPI, COD, sales, date,
+      moment: moment
+    })
 
-    } catch (error) {
+  } catch (error) {
 
-      next(error);
+    next(error);
 
-    }
   }
+}
 
 
-  
+
 //view user--------------------
 const viewUser = async (req, res, next) => {
   try {
@@ -174,17 +176,17 @@ const viewUser = async (req, res, next) => {
 
 
 //view order------------------
-const viewOrder=async(req,res,next)=>{
+const viewOrder = async (req, res, next) => {
   try {
-   
-    const orderDetails=await Order.find({}).populate('product.productId').populate('userId')
-    
-    res.render('orders',{orderDetails:orderDetails})
+
+    const orderDetails = await Order.find({}).populate('product.productId').populate('userId')
+
+    res.render('orders', { orderDetails: orderDetails })
 
   } catch (error) {
 
     next(error)
-    
+
   }
 }
 
@@ -194,7 +196,6 @@ const blockUser = async (req, res, next) => {
   try {
 
     const id = req.params.id;
-    console.log("id" + req.params.id);
     await User.updateOne({ _id: id }, { $set: { status: false } })
 
     res.redirect('/admin/users');
@@ -206,78 +207,78 @@ const blockUser = async (req, res, next) => {
   }
 }
 
-  
-const dropdown= async (req,res,next)=>{
-  console.log(req.body)
+
+const dropdown = async (req, res, next) => {
   try {
 
-     const orderId=req.body.orderId
-     const Status=req.body.status
+    const orderId = req.body.orderId
+    const Status = req.body.status
 
+
+    const change = await Order.updateOne({ orderId: orderId }, {
+      $set: { status: Status }
+    })
+
+    if (Status == "Returned") {
+
+      let orderdetails = await Order.findOne({ orderId: orderId }).populate('userId').populate('product.productId')
+
+      let totalamount = orderdetails.total
+      let userId = orderdetails.userId._id
      
-     const change = await Order.updateOne({orderId:orderId }, {
-      $set: { status: Status}})
+      let addWallet = await User.updateOne({ _id: userId }, { $inc: { wallet: totalamount } })
+      for (let i = 0; i < orderdetails.product.length; i++) {
+        await Product.updateOne({ _id: orderdetails.product[i].productId }, { $inc: { stock: orderdetails.product[i].quantity } })
 
-    if(Status=="Returned"){
-
-     let orderdetails=await Order.findOne({orderId:orderId}).populate('userId').populate('product.productId')
-
-     let totalamount=orderdetails.total
-     let userId=orderdetails.userId._id
-     console.log(totalamount);
-     console.log(userId);
-    let addWallet=await User.updateOne({_id:userId},{$inc:{wallet:totalamount}})
-    for(let i=0;i<orderdetails.product.length;i++){   
-      await Product.updateOne({_id:orderdetails.product[i].productId},{$inc:{stock:orderdetails.product[i].quantity}})
-            
-     }
-     res.json({ success: true,Status})
-    }else{
+      }
+      res.json({ success: true, Status })
+    } else {
 
 
 
-     const change = await Order.updateOne({orderId:orderId }, {
-      $set: { status: Status}
-     })
-     if(Status=="delivered"){
-      
-const today = new Date();
+      const change = await Order.updateOne({ orderId: orderId }, {
+        $set: { status: Status }
+      })
+      if (Status == "delivered") {
+
+        const today = new Date();
 
 
-const dateAfter3Days = new Date(today);
+        const dateAfter3Days = new Date(today);
 
 
-dateAfter3Days.setDate(today.getDate() + 7);
+        dateAfter3Days.setDate(today.getDate() + 7);
 
-      const change = await Order.updateOne({orderId:orderId }, {
-        $set: { status: Status,deliveryDate:today,returnDate:dateAfter3Days}})
-        console.log(today.toISOString().slice(0, 10))
-        console.log( dateAfter3Days.toISOString().slice(0, 10))
+        const change = await Order.updateOne({ orderId: orderId }, {
+          $set: { status: Status, deliveryDate: today, returnDate: dateAfter3Days }
+        })
 
-       }
 
-     
-     
-     if(change){
+      }
 
-      res.json({ success: true,Status})
 
-     }}
+
+      if (change) {
+
+        res.json({ success: true, Status })
+
+      }
+    }
   } catch (error) {
 
     next(error);
 
   }
 
-}   
+}
 
-  
+
 //unblock user------------------
 const unBlockUser = async (req, res, next) => {
   try {
 
     const id = req.params.id;
-    console.log("id" + req.query.id);
+   
     await User.updateOne({ _id: id }, { $set: { status: true } })
 
     res.redirect('/admin/users');
@@ -292,48 +293,43 @@ const unBlockUser = async (req, res, next) => {
 
 //sales report--------------------------
 
-const salesReport= async (req, res, next) => {
+const salesReport = async (req, res, next) => {
   try {
-// create a new date object with the existing date
-const existingDate = new Date(req.body.to);
+    // create a new date object with the existing date
+    const existingDate = new Date(req.body.to);
 
-// add one day to the existing date
-const newDate = new Date(existingDate);
-newDate.setDate(existingDate.getDate() + 1);
-
-
+    // add one day to the existing date
+    const newDate = new Date(existingDate);
+    newDate.setDate(existingDate.getDate() + 1);
 
 
 
-   console.log(req.body);
-   const ee=await Order.find({status:"delivered"})
-   console.log(ee);
-   if(req.body.from==""||req.body.to==""){
-    res.render('sales',{message:'all fields are equired'})
-   }else{
 
-   const ss=await Order.find({status:"delivered", date: {
-    $gte:new Date(req.body.from),
-    $lte:new Date( newDate) 
-  }}).populate("product.productId")
 
-console.log("ithaaanu");
-console.log(ss);   
+ 
+    if (req.body.from == "" || req.body.to == "") {
+      res.render('sales', { message: 'all fields are equired' })
+    } else {
 
-    res.render("sales_report", {
-    ss
-    });
+      const ss = await Order.find({
+        status: "delivered", date: {
+          $gte: new Date(req.body.from),
+          $lte: new Date(newDate)
+        }
+      }).populate("product.productId")
+      res.render("sales_report", {ss});
 
-  }} catch (error) {
+    }
+  } catch (error) {
     next(error);
   }
 }
 
 
-const salesReports= async (req, res, next) => {
+const salesReports = async (req, res, next) => {
   try {
-res.render('sales')
-  
+    res.render('sales')
+
   } catch (error) {
     next(error);
   }
@@ -388,7 +384,7 @@ module.exports = {
 
 
 
-     
+
 
 
 

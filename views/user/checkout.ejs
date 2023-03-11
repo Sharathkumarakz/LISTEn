@@ -99,7 +99,7 @@
                                                             <%=element.houseName %>,<%=element.street %>,
                                                                     <%=element.district %>,<%=element.state %>,
                                                                             <%=element.country %>,
-                                                                                <%=element.pincode %>
+                                                                                <%=element.pincode %>,phone:<%=element.phone%>
                                                         </option>
                                                         <% }) %>
                                                 </select>
@@ -144,7 +144,7 @@
                                                     <div class="col-auto col-md-7">
                                                         <div class="media flex-column flex-sm-row">
                                                             <img style="width:50px" class=" img-fluid"
-                                                                src="/product_images/<%=element.product.image[0] %>"
+                                                                src="/product_images/<%=element.product.image[2] %>"
                                                                 width="62" height="62">
                                                             <input type="hidden" name="proId"
                                                                 value="<%= element.product._id %>">
@@ -313,7 +313,7 @@
                     <%=element.houseName %>,<%=element.street %>,
                             <%=element.district %>,<%=element.state %>,
                                     <%=element.country %>,
-                                        <%=element.pincode %>
+                                        <%=element.pincode %>,phone:,<%=element.phone%>
                 </option>
                 <% }) %>
         </select>
@@ -358,7 +358,7 @@
             <div class="col-auto col-md-7">
                 <div class="media flex-column flex-sm-row">
                     <img style="width:50px" class=" img-fluid"
-                        src="/product_images/<%=element.image[0] %>"
+                        src="/product_images/<%=element.image[2] %>"
                         width="62" height="62">
                     <input type="hidden" name="proId"
                         value="<%= element._id %>">

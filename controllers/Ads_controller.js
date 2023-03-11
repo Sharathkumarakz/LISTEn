@@ -3,8 +3,10 @@ const Category = require('../model/category_data');
 
 const loadAds = async (req, res, next) => {
   try {
+
     const add = await Ads.find({})
     res.render('add_ads', { add: add })
+
   } catch (error) {
     next(error);
   }
@@ -12,16 +14,21 @@ const loadAds = async (req, res, next) => {
 
 const addAdds = async (req, res, next) => {
   try {
+
     const categoryData = await Category.find({})
     res.render('add_view', { categoryData: categoryData })
+
   } catch (error) {
+
     next(error);
+
   }
 }
 
 
 const insertAdds = async (req, res, next) => {
   try {
+
     const images = [];
     for (file of req.files) {
       images.push(file.filename);
@@ -43,8 +50,11 @@ const insertAdds = async (req, res, next) => {
       res.render('add_view', { message: "action failed" });
 
     }
+
   } catch (error) {
+
     next(error);
+
   }
 }
 
@@ -53,21 +63,23 @@ const insertAdds = async (req, res, next) => {
 
 const loadEditBanner = async (req, res, next) => {
   try {
+
     id = req.params.id
     const details = await Ads.find({ _id: id })
     res.render('edit_add', { details: details })
+
   } catch (error) {
+
     next(error);
+
   }
 }
 
 
 const saveEditBanner = async (req, res, next) => {
   try {
+
     const id = req.params.id;
-    console.log(req.body);
-    console.log(id);
-    console.log(req.files);
     const images = [];
     for (file of req.files) {
       images.push(file.filename);
@@ -82,8 +94,11 @@ const saveEditBanner = async (req, res, next) => {
       }
     })
     res.redirect('/admin/ads');
+
   } catch (error) {
+
     next(error);
+
   }
 }
 
@@ -91,13 +106,15 @@ const saveEditBanner = async (req, res, next) => {
 
 const deleteAdd = async (req, res, next) => {
   try {
+
     const id = req.params.id;
-    console.log("id" + req.query.id);
     await Ads.deleteOne({ _id: id })
     res.redirect('/admin/ads');
 
   } catch (error) {
+
     next(error);
+
   }
 }
 module.exports = {

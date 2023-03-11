@@ -10,7 +10,7 @@ else{
 }
 next()
 } catch (error) {
-  console.log(error.message);
+  next(error);
 }
 
 }
@@ -21,13 +21,13 @@ const islogout=async(req,res,next)=>{
 
   try {
     if(req.session.admin_id){
-      res.redirect('/admin/dashboard')
+      return res.redirect('/admin/dashboard')
     }  
     
     next()
     
   } catch (error) {
-    console.log(error.message);
+   next(error)
   }
   
   }
