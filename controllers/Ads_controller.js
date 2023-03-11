@@ -84,6 +84,21 @@ const saveEditBanner = async (req, res, next) => {
     for (file of req.files) {
       images.push(file.filename);
     }
+    if(req.files==0){
+      const id = req.params.id;
+    console.log("varnnn");
+    await Ads.updateOne({ _id: id }, {
+      $set: {
+        name: req.body.name,
+        description: req.body.description,
+        url: req.body.url 
+      }
+      
+    })
+    res.redirect('/admin/ads');
+  }
+   
+  else{
     await Ads.updateOne({ _id: id }, {
       $set: {
         name: req.body.head,
@@ -94,8 +109,7 @@ const saveEditBanner = async (req, res, next) => {
       }
     })
     res.redirect('/admin/ads');
-
-  } catch (error) {
+  }} catch (error) {
 
     next(error);
 

@@ -28,6 +28,13 @@ const loadAddCoupon=async (req,res,next)=>{
 //insert coupon to database
 const insertCoupon=async (req,res,next)=>{
     try {
+        const name = req.body.code
+        const regex = new RegExp(name, "i");
+        const data = await Coupon.find({ code: { $regex: regex } })
+        datalen = data.length
+    if(datalen==1){
+        res.render('add_coupon',{message:'coupon already exists'})
+    }else{
        
        const coupon=new Coupon({
         code:req.body.code,
@@ -40,7 +47,7 @@ const insertCoupon=async (req,res,next)=>{
        const saving=await coupon.save()
        res.redirect('/admin/coupons')
 
-    } catch (error) {
+  }  } catch (error) {
 
         next(error);
 

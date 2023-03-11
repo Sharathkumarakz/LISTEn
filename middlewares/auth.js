@@ -4,13 +4,15 @@
 const islogin=async(req,res,next)=>{
 
 try {
-  if(req.session.admin_id){}
+  if(req.session.admin_id){
+
+  }
 else{
   res.redirect('/admin');
 }
 next()
 } catch (error) {
-  next(error);
+  console.log(error)
 }
 
 }
@@ -27,7 +29,7 @@ const islogout=async(req,res,next)=>{
     next()
     
   } catch (error) {
-   next(error)
+   console.log(error)
   }
   
   }
