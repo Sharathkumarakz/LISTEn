@@ -644,23 +644,19 @@
                     method: "post",
                     success: (response) => {
                         if (response.datefailed) {
-                            console.log("failed to match");
                             Swal.fire({
                                 icon: 'error',
                                 title: 'Oops...',
                                 text: 'Coupon Expired.',
                             })
                         } else if (response.amountnokay) {
-                            console.log("pattilla");
                             Swal.fire({
                                 icon: 'error',
                                 title: 'Oops...',
-                                text: 'To access this coupen buy something more.',
+                                text: 'To access this coupon buy something more.',
 
                             })
                         } else if (response.amountokay) {
-                            console.log("vangaam")
-                            console.log("ooookayyy");
                             document.getElementById('code').value = response.code
                             document.getElementById('discount').innerHTML = response.discountValue
                             document.getElementById('discount1').value = response.discountValue
@@ -668,12 +664,10 @@
                             document.getElementById('total1').value = response.value
                             Swal.fire(
                                 'Good job!',
-                                'Coupen granted!',
+                                'Coupon granted!',
                                 'success'
                             )
-                            console.log("ttttt" + response.value);
-                            console.log("dissss" + response.discountValue);
-
+                         
                         } else if (response.used) {
                             Swal.fire({
                                 icon: 'error',

@@ -225,13 +225,23 @@ const deleteProductImage = async (req, res, next) => {
 
 const getProduct=async(req,res,next)=>{
   try {
+    let page=1
+     page=req.query.page;
+  
    
     if(req.body.user){
-
       const userdetails = req.session.user
         const search = req.body.search
       const ss = new RegExp(search, 'i')
+      const product = await Product.find({ name: ss,status:1 })
+      let limit=product.length;
       const products = await Product.find({ name: ss,status:1 })
+      .limit(limit*1)
+      .skip((page-1 )* limit)
+      .exec()
+      // .skip((page-1)*perPage)
+      // .limit(perPage)
+      const countproducts =1
       const categorydata = await Category.find({})
       res.render('allproducts', { categorydata: categorydata, products: products, userdetails: userdetails,search:search })
 
@@ -239,7 +249,15 @@ const getProduct=async(req,res,next)=>{
   
       const search = req.body.search
       const ss = new RegExp(search, 'i')
+      const product = await Product.find({ name: ss,status:1 })
+      let limit=product.length;
       const products = await Product.find({ name: ss,status:1 })
+      .limit(limit*1)
+      .skip((page-1 )* limit)
+      .exec()
+      // .skip((page-1)*perPage)
+       // .limit(perPage)
+      const countproducts =1
       const categorydata = await Category.find({})
       res.render('allproducts', { categorydata: categorydata, products: products,search:search})
 

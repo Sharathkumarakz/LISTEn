@@ -47,14 +47,30 @@
                                                             <% if(typeof search !== 'undefined'){ %>
                                                            <button>  <a href="/allProducts">clear</a> </button>
                                                               <% } %>
-                                                       
-                                 
+                                                              <!-- <span style="color: #000000; font-size: 14px;" class="mt-2 ml-3"> Filter </span><span id="boot-icon" class="bi bi-three-dots-vertical dropdown-toggle mt-2"
+                                                              style="font-size: 15px; color: rgb(255, 0, 0); -webkit-text-stroke-width: 0.9px; opacity: 1;"
+                                                              data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></span>
+                            
+                                                              <div class="dropdown-menu">
+                                                                <div class="dropdown-item"
+                                                          ><span style="color: rgb(71, 151, 201);"><a href="/rrr">1000</a> </span></div>
+                                                                <div class="dropdown-item"
+                                                                  onclick="filter(1000,2000)"><span style="color: green;">1000-2000</span></div>
+                                                                <div class="dropdown-item"
+                                                                onclick="filter('above 2000')"><span style="color: green;">above 2000</span></div>
+                                                              <div class="dropdown-divider"></div>
+                                                              </div>
+                                                            </div> -->
+                                                             
+                                                               
+                                                            
                                                               </div>
                                                             </div>
                                                           </div>
                                                       </div>
                                                   </form>
-
+                                     
+                                         
                                        
                     </div>
                 </div>
@@ -107,9 +123,24 @@
                 </div>
 
                 <% }) %>
+                
+            </div> 
+            <% if(typeof countproducts!=='undefined'){%>
+                  <div  style="align-content: end;">
+              <nav aria-label="Page navigation example">
+                <ul class="pagination">
+                  <li class="page-item"><a class="page-link" href="/allproducts">Previous</a></li>
+                  <% for(let i=1;i<=countproducts;i++){ %>
+
+                  <li class="page-item"><a class="page-link" href="?page=<%=i %>"><%=i %></a></li>
+                  <% } %>
+                  <li class="page-item"><a class="page-link" href="/allproducts">Next</a></li>
+                </ul>
+              </nav>
             </div>
+            <%}%>
         </div>
-     
+ 
     </section>
     <script>
        function addToCart(proId) {
@@ -182,11 +213,22 @@
       
         }})}
           
+
+        
+
+  // const dropdown = document.getElementById("dropdown");
+  // dropdown.addEventListener("change", function() {
+  //   const selectedValue = dropdown.value;
+  //   $.ajax({
+  //               url: '/getProduct', 
+  //               type: 'post', 
+  //               data:selectedValue,
+  //               success: (response) => {
+  // }});
+  // })
       
       
          </script>
-
-
 
 
     <!-- ***** Footer Start ***** -->

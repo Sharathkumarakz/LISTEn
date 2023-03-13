@@ -21,7 +21,7 @@ const islogout = async (req, res, next) => {
 
   try {
     if (req.session.user) {
-      return res.redirect('/')
+     res.redirect('/')
     }
 
     next()

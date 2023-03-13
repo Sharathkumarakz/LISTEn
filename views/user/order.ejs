@@ -33,7 +33,7 @@
               <div class="col-md-12 col-lg-3 col-xl-3 mb-4 mb-lg-0">
                 <div class="bg-image hover-zoom ripple rounded ripple-surface ml-5">
                   <% element.product.forEach((element1)=>{ %>
-                  <img src="/product_images/<%=element1.productId.image[0] %> "
+                  <img src="/product_images/<%=element1.productId.image[2] %> "
                   style="width: 100px;" />
                     <%  }) %>
                   <a href="#!">
@@ -70,7 +70,9 @@
               <div class="col-md-6 col-lg-3 col-xl-3 border-sm-start-none border-start">
                 <div class="d-flex flex-row align-items-center mb-1">
                   <h4 class="mb-1 me-1">₹ <%=element.total %></h4>
-                  <span class="text-danger"><s><%=element.discount %></s></span>
+                <% if(element.discount ){%>
+                  <span>Discount</span><span class="text-danger"><s><%=element.discount %></s></span>
+                  <%}%>
                 </div>
                 <h6 class="text-success">Free shipping</h6>
                 <h6 class="text-info"><span id="<%=element._id %>"  ><%= element.status%></span></h6>

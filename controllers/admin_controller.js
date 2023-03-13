@@ -69,7 +69,7 @@ const dashboard = async (req, res, next) => {
     const categoryData = await Category.find({})
     const productData = await Product.find({}).populate('category').exec()
     const salesCount = await Order.find({ status: "delivered" }).count()
-    const weeklyRevenue = await Order.aggregate([
+    const revenueOfTheWeekly = await Order.aggregate([
       {
         $match: {
           date: {
@@ -86,6 +86,9 @@ const dashboard = async (req, res, next) => {
         }
       }
     ])
+    const weeklyRevenue = revenueOfTheWeekly.map((item) => {
+      return item.totalAmount;
+    })
 
     const cancelledOrdersCount = await Order.aggregate([
       {
@@ -98,7 +101,9 @@ const dashboard = async (req, res, next) => {
         }
       }
     ])
-
+    const cancelledOrders = cancelledOrdersCount.map((item) => {
+      return item.count;
+    })
     const toatalCustomers = await User.find({}).count()
     const lastWeek = new Date();
     lastWeek.setDate(lastWeek.getDate() - 7);
@@ -115,7 +120,7 @@ const dashboard = async (req, res, next) => {
       },
       {
         $group: {
-          _id: { $dateToString: { format: "%Y-%m-%d", date: "$date" } },
+          _id: { $dateToString: { format: "%Y-%m-%d", date: "$deliveryDate" } },
           sales: { $sum: "$total" },
         }
       },
@@ -142,7 +147,7 @@ const dashboard = async (req, res, next) => {
     res.render('admin_dashboard', {
       categoryData: categoryData,
       productData: productData, salesCount, weeklyRevenue,
-      cancelledOrdersCount, toatalCustomers,
+      cancelledOrders, toatalCustomers,
       usersForTheLastWeek, lessQuantityProducts,
       ativeCoupons, confirmed, delivered, shipped, cancelled,
       UPI, COD, sales, date,

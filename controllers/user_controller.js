@@ -8,6 +8,7 @@ let session;
 require('dotenv').config();
 const accountsid = process.env.TWILIO_ACCOUNT_SID;
 const authtoken = process.env.TWILIO_AUTH_TOKEN;
+const serviceId=process.env.TWILIO_SERVICE_SID
 const client = require("twilio")(accountsid, authtoken);
 const bcrypt = require("bcrypt");
 const { ObjectId } = require('mongodb');
@@ -180,7 +181,7 @@ const verifySignup = async (req, res, next) => {
     try {
 
       const otpResponse = await client.verify.v2
-        .services('VA3814afa129f17fe65c4ad63df60b09d3')
+        .services(serviceId)
         .verifications.create({
           to: `+91${phonenumber}`,
           channel: 'sms',
@@ -290,19 +291,46 @@ const loadProducts = async (req, res, next) => {
 const viewAllProducts = async (req, res, next) => {
   try {
 
+    let page=1
+     page=req.query.page;
+    let limit=9;
+    
+console.log();
     if (req.session.user) {
+      
       const userdetails = req.session.user
       const products = await Product.find({ status: 1 })
+      .limit(limit*1)
+      .skip((page-1 )* limit)
+      .exec()
+      // .skip((page-1)*perPage)
+      // .limit(perPage)
+      const countproducts = await Product.find({ status: 1 })
+      .countDocuments()
+      let countdata=Math.ceil(countproducts/limit)
       const categorydata = await Category.find({})
-      res.render('allproducts', { categorydata: categorydata, products: products, userdetails: userdetails })
+      res.render('allproducts', { categorydata: categorydata, products: products, userdetails: userdetails,countproducts:countdata})
 
     } else {
 
-      const products = await Product.find({ status: 1 })
-      const categorydata = await Category.find({})
-      res.render('allproducts', { categorydata: categorydata, products: products, })
+   
 
-    }
+
+       const products = await Product.find({ status: 1 })
+       .limit(limit*1)
+       .skip((page-1) * limit)
+       .exec()
+       // .skip((page-1)*perPage)
+       // .limit(perPage)
+       const countproducts = await Product.find({ status: 1 })
+       .countDocuments()
+       let countdata=Math.ceil(countproducts/limit)
+ 
+       const categorydata = await Category.find({})
+       res.render('allproducts', { categorydata: categorydata, products: products,countproducts:countdata })
+ 
+     }
+    
   } catch (error) {
 
     next(error);
