@@ -41,7 +41,7 @@
                 <ul>
                   <li><a href="/allproducts">All Products</a></li>
                   <% categoryData.forEach((element)=> { %>
-                    <li><a href="/products/<%= element._id %>">
+                    <li><a href="/category/<%= element._id %>">
                         <%= element.categoryName %>
                       </a></li>
                     <% }); %>
@@ -101,9 +101,6 @@
 
             </div>
             <div class="left-images">
-
-
-
               <img class="small_img" style="width: 100px;" src="/product_images/<%=element.image[1] %>" alt="">
               <img class="small_img" style="width: 100px;" src="/product_images/<%=element.image[3] %>" alt="">
               <img class="small_img" style="width: 100px;" src="/product_images/<%=element.image[0] %>" alt="">
@@ -139,12 +136,6 @@
                     <%}%> 
                 </div>
                 <div class="right-content">
-                  <!-- <div class="quantity buttons_added">
-                    <input type="button" value="-" class="minus"><input type="number" step="1" min="1" max=""
-                      name="quantity" value="1" title="Qty" class="input-text qty text" size="4" pattern=""
-                      inputmode=""><input type="button" value="+" class="plus">
-                  </div> -->
-
                 </div>
               </div>
               <div class="total">
@@ -154,9 +145,8 @@
                   <% }else{ %>
                     <div class="main-border-button pb-2" onclick="addToCart('<%= element._id %>')"><a>Add to Cart</a>
                     </div>
-                     <!-- <button onclick="addToCart('<%= element._id %>')">Add to Cart</button> -->
                     <% } %>
-                      <h4>Total:<%=element.price %>
+                      <h4> Total:₹ <%=element.price %>
                       </h4>
                       <div id="alertpasswordUser" class="alert alert-danger" role="alert" style="display: none;">
 
@@ -231,9 +221,6 @@
     })
 
   </script>
-
-  <!-- <script src="/zoomsingle/zoomsl.js" type="text/javascript"></script>
-  <script src="/zoomsingle/zoomsl.min.js" type="text/javascript"></script> -->
 
 
   <script type="text/javascript">

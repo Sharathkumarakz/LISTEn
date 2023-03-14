@@ -32,7 +32,7 @@ user_route.post('/signup',userController.verifySignup)
 user_route.post('/verifyotp',userController.verifyOtp)
 
 //vie products page
-user_route.get('/products/:id',userController.loadProducts);
+user_route.get('/category/:id',userController.loadProducts);
 
 //single product
 user_route.get('/singleproduct/:id',userController.userSingleProductLoad);

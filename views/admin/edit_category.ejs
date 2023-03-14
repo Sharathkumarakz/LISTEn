@@ -1,5 +1,5 @@
 <%- include("../layouts/admin/header.ejs") %>
-<%- include("../layouts/admin/navbar.ejs") %>
+    <%- include("../layouts/admin/navbar.ejs") %>
 
         <div class="page-wrapper">
 
@@ -12,83 +12,79 @@
                     </div>
 
                 </div>
-
-                <!--djlkjlkajlkjkldajkkjslj-->
                 <% details.forEach(element=> { %>
 
-                <div class="col-lg-12 col-xlg-12 col-md-12">
-                    <div class="card">
-                        <!-- Tab panes -->
-                        <div class="card-body">
-                            <form action="/admin/editCategory/<%= element._id %>" class="form-horizontal form-material" method="post" id="editCategory">
-                                <div class="form-group">
-                                    <div id="alertpasswordUser1" class="alert alert-danger" role="alert" style="display: none;">
+                    <div class="col-lg-12 col-xlg-12 col-md-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <form action="/admin/editCategory/<%= element._id %>"
+                                    class="form-horizontal form-material" method="post" id="editCategory">
+                                    <div class="form-group">
+                                        <div id="alertpasswordUser1" class="alert alert-danger" role="alert"
+                                            style="display: none;">
 
-                                    </div>
-                                    <div id="alertpasswordUser" class="alert alert-success" role="alert" style="display: none;">
-                    
-                                    </div>
-                                    <label class="col-md-12">Category Name</label>
-                                    <div class="col-md-12">
-                                        <input type="text" name="name" class="form-control form-control-line" value="<%=element.categoryName %>">
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="col-md-12">Description</label>
-                                    <div class="col-md-12">
-                                        <input type="text" name="description" class="form-control form-control-line" value="<%=element.description %>">
-                                    </div>
-                                </div>
+                                        </div>
+                                        <div id="alertpasswordUser" class="alert alert-success" role="alert"
+                                            style="display: none;">
 
-                                <div class="form-group">
-                                    <div class="col-sm-12">
-                                        <button type='submit' class="btn btn-success">Submit</button>
+                                        </div>
+                                        <label class="col-md-12">Category Name</label>
+                                        <div class="col-md-12">
+                                            <input type="text" name="name" class="form-control form-control-line"
+                                                value="<%=element.categoryName %>">
+                                        </div>
                                     </div>
-                                </div>
-                                <% }); %>
-                            </form>
-                            <% if(typeof message !=='undefined' ){ %>
-                                <h5 style="color: rgb(47, 134, 206);">
-                                    <%= message %>
-                                </h5>
-                                <% } %>
-                                
+                                    <div class="form-group">
+                                        <label class="col-md-12">Description</label>
+                                        <div class="col-md-12">
+                                            <input type="text" name="description" class="form-control form-control-line"
+                                                value="<%=element.description %>">
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <div class="col-sm-12">
+                                            <button type='submit' class="btn btn-success">Submit</button>
+                                        </div>
+                                    </div>
+                                    <% }); %>
+                                </form>
+                                <% if(typeof message !=='undefined' ){ %>
+                                    <h5 style="color: rgb(47, 134, 206);">
+                                        <%= message %>
+                                    </h5>
+                                    <% } %>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <!-- Column -->
             </div>
-            <!-- Row -->
-            <!-- ============================================================== -->
-            <!-- End PAge Content -->
-            <!-- ============================================================== -->
         </div>
 
         <script>
-            const form=document.querySelector('form');
+            const form = document.querySelector('form');
             $('#editCategory').submit(function (e) {
-              e.preventDefault();
-              var formData = $(this).serialize();
-              const inputs = document.querySelectorAll('form input')
-              let inputFieldNull = false
-              for (let i = 0; i < inputs.length; i++) {
-                if (inputs[i].value.trim() == "") {
-                  inputFieldNull = true
-                  $('#alertpasswordUser1').attr({ style: "display: block" }).html("All fields Required")
-                  setTimeout(() => {
-                    $('#alertpasswordUser1').hide()
-                  }, 3000)
-                } 
-              }if (!inputFieldNull) {
-                inputFieldNull = true
-                  $('#alertpasswordUser').attr({ style: "display: block" }).html("Saved")
-                  setTimeout(() => {
-                    $('#alertpasswordUser1').hide()
-                  }, 3000)
-                  form.submit()
+                e.preventDefault();
+                var formData = $(this).serialize();
+                const inputs = document.querySelectorAll('form input')
+                let inputFieldNull = false
+                for (let i = 0; i < inputs.length; i++) {
+                    if (inputs[i].value.trim() == "") {
+                        inputFieldNull = true
+                        $('#alertpasswordUser1').attr({ style: "display: block" }).html("All fields Required")
+                        setTimeout(() => {
+                            $('#alertpasswordUser1').hide()
+                        }, 3000)
+                    }
+                } if (!inputFieldNull) {
+                    inputFieldNull = true
+                    $('#alertpasswordUser').attr({ style: "display: block" }).html("Saved")
+                    setTimeout(() => {
+                        $('#alertpasswordUser1').hide()
+                    }, 3000)
+                    form.submit()
                 }
             })
-          
-          </script>
-          
-    <%- include("../layouts/admin/footer.ejs") %>
+
+        </script>
+
+        <%- include("../layouts/admin/footer.ejs") %>

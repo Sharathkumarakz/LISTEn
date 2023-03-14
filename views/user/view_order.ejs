@@ -80,12 +80,12 @@
                 <span class="text-muted me-2">Quantity:</span><span> <%=element.quantity %> </span>
               </p>
               <p>
-                <span class="text-muted me-2">Price:</span><span> <%=element.singlePrice %> </span>
+                <span class="text-muted me-2">Price:₹</span><span> <%=element.singlePrice %> </span>
               </p>
             </div>
             <div class="col-md-3 mb-4 mb-md-0">
               <h5 class="mb-2">
-                <s class="text-muted me-2 small align-middle"></s><span class="align-middle"><%=element.singleTotal %></span>
+                <s class="text-muted me-2 small align-middle"></s><span class="align-middle">₹<%=element.singleTotal %></span>
               </h5>
               <p class="text-danger"><small></small></p>
             </div>
@@ -98,19 +98,19 @@
             </div>
             <div class="col-xl-3">
               <ul class="list-unstyled">
-                <li class="text-muted ms-3"><span class="text-black me-4">subtotal</span> <%=order.total %></li>
+                <li class="text-muted ms-3"><span class="text-black me-4">subtotal</span> ₹<%=order.total %></li>
 
                 <li class="text-muted ms-3"><span class="text-black me-4">Coupon Used :-</span> <%=order.coupon %></li>
                 
                 <% if(order.discount>0){%>
-                <li class="text-muted ms-3"><span class="text-black me-4">Discount</span> <%=order.discount %></li>
+                <li class="text-muted ms-3"><span class="text-black me-4">Discount</span> ₹<%=order.discount %></li>
                 <%}else{%>
                 <li class="text-muted ms-3"><span class="text-black me-4">Discount</span><span class="pl-3">0</span></li>
              <%}%>
                 <li class="text-muted ms-3 mt-2"><span class="text-black me-4">Shipping</span><span class="pl-3">0</span></li>
               </ul>
               <p class="text-black float-start"><span class="text-black me-3"> Total Amount</span><span
-                  style="font-size: 25px;">  ₹ <%=order.total %></span></p>
+                  style="font-size: 25px;">  ₹<%=order.total %></span></p>
             </div>
           </div>
         </div>

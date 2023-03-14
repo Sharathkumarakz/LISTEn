@@ -13,12 +13,10 @@
 
       </div>
 
-
-      <!--djlkjlkajlkjkldajkkjslj-->
      
       <div class="col-lg-12 col-xlg-12 col-md-12">
         <div class="card">
-          <!-- Tab panes -->
+
           <div class="card-body">
           
             <form action="/admin/editProduct/<%= details._id%>" class="form-horizontal form-material" method="post"
@@ -73,7 +71,6 @@
                 <label class="col-md-12">Image</label>
                 <div class="col-md-12">
                   <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo">Edit Image</button>
-                  <!-- <input type="file" multiple name="image" class="form-control form-control-line"  onchange="viewImage(event)"> -->
                   <div class="row">
                   <div><img id="imgView" style="width:100px;" src="/product_images/<%=details.image[0] %>" alt=""></div>
                   <div><img id="imgView1"  style="width:100px;" src="/product_images/<%=details.image[1] %>" alt=""></div>
@@ -97,20 +94,6 @@
               
             </form>
 
-            <!-- <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".bd-example-modal-lg">Edit Image</button> -->
-
-            <!-- <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-              <div class="modal-dialog modal-lg">
-                <div class="modal-content">
-                  <form action="/admin/editImage/" method="post">
-                    <input type="file" multiple name="image" class="form-control form-control-line"  onchange="viewImage(event)">
-                    <button type='submit'  class="btn btn-success">Submit</button>
-                  </form>
-                </div>
-              </div>
-            </div> -->
-
-
             <% if(typeof message !=='undefined' ){ %>
               <h5 style="color: rgb(224, 86, 86);">
                 <%= message %>
@@ -119,15 +102,11 @@
           </div>
         </div>
       </div>
-      <!-- Column -->
+
     </div>
-    <!-- Row -->
-    <!-- ============================================================== -->
-    <!-- End PAge Content -->
-    <!-- ============================================================== -->
   </div>
 
-<!-- modal -->
+
 
 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" >
   <div class="modal-dialog" role="document">
@@ -152,8 +131,7 @@
 
         <form action="/admin/editImage/<%=details._id %>" method="post" enctype="multipart/form-data">
           <div class="form-group">
-            <!-- <label for="recipient-name" class="col-form-label">Recipient:</label>
-            <input type="text" class="form-control" id="recipient-name"> -->
+        
           </div>
           <div class="form-group">
      <input type="file" multiple name="image" class="form-control form-control-line"  onchange="viewImage(event)"> 
@@ -190,8 +168,6 @@
 
 
 
-
-  <!-- End Feeds -->
 
 
 

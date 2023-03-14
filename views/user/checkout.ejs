@@ -1,20 +1,20 @@
 <%- include("../layouts/user/header.ejs") %>
 
     <%- include("../layouts/user/headers.ejs") %>
-    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
-    <section style="background-color: #ffffff;" id="address">
-        <div class="container">
-          <div class="row">
-            <div class="col">
-              <nav aria-label="breadcrumb" class=" ">
-                <ol class="breadcrumb mb-0">
-      
-                </ol>
-              </nav>
+        <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+        <section style="background-color: #ffffff;" id="address">
+            <div class="container">
+                <div class="row">
+                    <div class="col">
+                        <nav aria-label="breadcrumb" class=" ">
+                            <ol class="breadcrumb mb-0">
+
+                            </ol>
+                        </nav>
+                    </div>
+                </div>
             </div>
-          </div>
-          </div>
-          </section>
+        </section>
 
         <div style="background: #000; height:20%;">
         </div>
@@ -30,23 +30,12 @@
                                 </div>
                                 <div class="col">
                                     <div class="row justify-content-start ">
-                                        <!-- <div class="col">
-                                <img class="irc_mi img-fluid cursor-pointer " src="https://i.imgur.com/jFQo2lD.png"  width="70" height="70" >
-                            </div> -->
                                     </div>
                                 </div>
-                                <!-- <div class="col-auto">
-                        <img class="irc_mi img-fluid bell" src="https://i.imgur.com/uSHMClk.jpg" width="30" height="30"  >
-                    </div> -->
                             </div>
                             <div class="row  mx-auto justify-content-center text-center">
                                 <div class="col-12 mt-3 ">
                                     <nav aria-label="breadcrumb" class="second ">
-                                        <!-- <ol class="breadcrumb indigo lighten-6 first  ">
-                                <li class="breadcrumb-item font-weight-bold "><a class="black-text text-uppercase " href="#"><span class="mr-md-3 mr-1">BACK TO SHOP</span></a><i class="fa fa-angle-double-right " aria-hidden="true"></i></li>
-                                <li class="breadcrumb-item font-weight-bold"><a class="black-text text-uppercase" href="#"><span class="mr-md-3 mr-1">SHOPPING BAG</span></a><i class="fa fa-angle-double-right text-uppercase " aria-hidden="true"></i></li>
-                                <li class="breadcrumb-item font-weight-bold"><a class="black-text text-uppercase active-2" href="#"><span class="mr-md-3 mr-1">CHECKOUT</span></a></li>
-                            </ol> -->
                                     </nav>
                                 </div>
                             </div>
@@ -74,70 +63,57 @@
                                                     <hr class="mt-0">
                                                 </div>
                                             </div>
-                                            <% if(typeof userData!=='undefined'){%>
-                                            <div class="form-group">
-                                                <label for="NAME" class="small text-muted mb-1">full Name</label>
-                                                <input type="text" class="form-control form-control-sm" id="NAME"
-                                                    aria-describedby="helpId"
-                                                    value="<%= userData.firstname %> <%= userData.lastname %>">
-                                            </div>
-                                            <input type="hidden" name="userId" value="<%= userData._id %>">
-                                            <!-- <div class="form-group">
-                                <label for="NAME" class="small text-muted mb-1">Phone Number</label>
-                                <input type="text" class="form-control form-control-sm" name="NAME" id="NAME" aria-describedby="helpId" placeholder="BBBootstrap Team">
-                            </div> -->
-                                            <div id="myDiv">
-                                                <label>Address</label>
-                                                <select  name="address"
-                                                    style="height: 50px; border-radius: 5px; border-color: rgb(202, 201, 201); color: rgb(140, 135, 135);"
-                                                  >
-
-<option selected>Select Address</option>
-                                                    <% userData.address.forEach((element)=>{ %>
-                                                        <option
-                                                            value="<%=element.houseName %>,<%=element.street %>,<%=element.district %> <%=element.state %>,<%=element.country %> <%=element.pincode %>">
-                                                            <%=element.houseName %>,<%=element.street %>,
-                                                                    <%=element.district %>,<%=element.state %>,
-                                                                            <%=element.country %>,
-                                                                                <%=element.pincode %>,phone:<%=element.phone%>
-                                                        </option>
-                                                        <% }) %>
-                                                </select>
-                                            </div>
-                                            <div class="form-group">
-                                                <!-- <button class="mt-2"
-                                                    style="color: rgb(195, 199, 199); border-radius: 5px;"><a
-                                                        style="color: black;" href="/addAddressCheckout">Add
-                                                        Address</a></button> -->
-                                                <!-- Button trigger modal -->
-                                                <button type="button" class="btn btn-primary mt-2" data-toggle="modal"
-                                                    data-target="#exampleModalCenter">
-                                                    Add Address
-                                                </button>
-                                            </div>
-                                            <div class="row no-gutters">
-                                                <div class="col-sm-4 pr-sm-2">
-                                                    <div class="form-group">
-                                                        <label for="NAME" class="small text-muted mb-1">Phone
-                                                            Number</label>
-                                                        <input type="text" class="form-control form-control-sm"
-                                                            name="phone" id="NAME" aria-describedby="helpId"
-                                                            value="<%= userData.phone %>">
-                                                    </div>
+                                            <% if(typeof userData!=='undefined' ){%>
+                                                <div class="form-group">
+                                                    <label for="NAME" class="small text-muted mb-1">full Name</label>
+                                                    <input type="text" class="form-control form-control-sm" id="NAME"
+                                                        aria-describedby="helpId"
+                                                        value="<%= userData.firstname %> <%= userData.lastname %>">
                                                 </div>
+                                                <input type="hidden" name="userId" value="<%= userData._id %>">
 
-                                            </div>
+                                                <div id="myDiv">
+                                                    <label>Address</label>
+                                                    <select name="address"
+                                                        style="height: 50px; border-radius: 5px; border-color: rgb(202, 201, 201); color: rgb(140, 135, 135);">
+
+                                                        <option selected>Select Address</option>
+                                                        <% userData.address.forEach((element)=>{ %>
+                                                            <option
+                                                                value="<%=element.houseName %>,<%=element.street %>,<%=element.district %> <%=element.state %>,<%=element.country %> <%=element.pincode %>">
+                                                                <%=element.houseName %>,<%=element.street %>,
+                                                                        <%=element.district %>,<%=element.state %>,
+                                                                                <%=element.country %>,
+                                                                                    <%=element.pincode %>,phone:
+                                                                                        <%=element.phone%>
+                                                            </option>
+                                                            <% }) %>
+                                                    </select>
+                                                </div>
+                                                <div class="form-group">
+                                                    <button type="button" class="btn btn-primary mt-2"
+                                                        data-toggle="modal" data-target="#exampleModalCenter">
+                                                        Add Address
+                                                    </button>
+                                                </div>
+                                                <div class="row no-gutters">
+                                                    <div class="col-sm-4 pr-sm-2">
+                                                        <div class="form-group">
+                                                            <label for="NAME" class="small text-muted mb-1">Phone
+                                                                Number</label>
+                                                            <input type="text" class="form-control form-control-sm"
+                                                                name="phone" id="NAME" aria-describedby="helpId"
+                                                                value="<%= userData.phone %>">
+                                                        </div>
+                                                    </div>
+
+                                                </div>
 
                                         </div>
                                     </div>
                                 </div>
                                 <div class="col-md-5">
                                     <div class="card border-0 ">
-                                        <!-- <div class="card-header card-2">
-                                <p class="card-text text-muted mt-md-4  mb-2 space">YOUR ORDER <span class=" small text-muted ml-2 cursor-pointer"></span> </p>
-                                <hr class="my-2">
-                            </div> -->
-
                                         <div class="card-body pt-0">
                                             <% userData.cart.forEach((element)=>{ %>
                                                 <div class="row  justify-content-between">
@@ -148,7 +124,7 @@
                                                                 width="62" height="62">
                                                             <input type="hidden" name="proId"
                                                                 value="<%= element.product._id %>">
-                                                                <input type="hidden" name="singlePrice"
+                                                            <input type="hidden" name="singlePrice"
                                                                 value="<%= element.product.price %>">
                                                             <div class="media-body  my-auto">
                                                                 <div class="row ">
@@ -219,617 +195,621 @@
                                                             <hr class="my-0">
                                                         </div>
                                                     </div>
-                                                    <!-- <div class="row mb-5 mt-4 ">
-                                    <div classrs
-                                    ="col-md-7 col-lg-6 mx-auto"><button type="button" class="btn btn-block btn-outline-primary btn-lg">ADD GIFT CODE</button></div>
-                                </div> -->
-                                                    <form id="formCoupon">
-                                                        <div class="col-sm-4">
-                                                            <div class="form-group">
-                                                                <label for="NAME" class="small text-muted mb-1">Coupon
-                                                                    Code</label>
-                                                                <input type="text" form="formCoupon"
-                                                                    class="form-control form-control-sm" name="code"
-                                                                    id="NAMEcode" name="code" aria-describedby="helpId">
+                                                    <% if(typeof coupondetails!=='undefined' ){%>
+                                                        <div class="btn-group">
 
+                                                            <span id="boot-icon"
+                                                                class="bi bi-three-dots-vertical dropdown-toggle "
+                                                                style="font-size: 15px; color: rgb(12, 151, 148); -webkit-text-stroke-width: 0.9px; opacity: 1; margin-left:200px;"
+                                                                data-toggle="dropdown" aria-haspopup="true"
+                                                                aria-expanded="false">Available Coupons</span>
+
+                                                            <div class="dropdown-menu">
+                                                                <% if(coupondetails.length!==0){%>
+                                                                    <% coupondetails.forEach((x)=>{%>
+                                                                        <div class="dropdown-item"> <span
+                                                                                style="color: yellowgreen;">
+                                                                                <%=x.code%>
+                                                                            </span></div>
+
+
+                                                                        <%})%>
+                                                                            <%}else{%>
+                                                                                <div class="dropdown-item"> <span
+                                                                                        style="color: yellowgreen;">No
+                                                                                        coupon codes Available</span>
+                                                                                </div>
+                                                                                <%}%>
                                                             </div>
-                                                            <button
-                                                                style="background-color: aquamarine; color: black; border-radius: 5px;"
-                                                                onclick="applyCoupon('<%= userData.cartTotalPrice %>', $('#NAMEcode').val())"
-                                                                form="formCoupon">Redeem Now</button>
+                                                        </div>
+                                        </div>
+                                        <%}%>
+                                            <form id="formCoupon">
+                                                <div class="col-sm-4">
+                                                    <div class="form-group">
+                                                        <label for="NAME" class="small text-muted mb-1">Coupon
+                                                            Code</label>
+                                                        <input type="text" form="formCoupon"
+                                                            class="form-control form-control-sm" name="code"
+                                                            id="NAMEcode" name="code" aria-describedby="helpId">
+
+                                                    </div>
+
+                                                    <button
+                                                        style="background-color: aquamarine; color: black; border-radius: 5px;"
+                                                        onclick="applyCoupon('<%= userData.cartTotalPrice %>', $('#NAMEcode').val())"
+                                                        form="formCoupon">Redeem Now</button>
+
+                                                </div>
+                                                <div class="col-sm-4">
+                                                    <div class="form-group">
+
+                                                    </div>
+
+                                                </div>
+                                            </form>
+
+                                            <input type="hidden" name="code" id="code" value=''>
+
+
+                                            <label for="NAME" class="small text-muted mb-1">Payment
+                                                Method</label><br><br>
+                                            <div class="form-group">
+                                                <input type="radio" name="test" value="COD"> Cash on
+                                                delivery<br><br>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <input type="radio" name="test" value="UPI"> Online Payment<br><br>
+                                            </div>
+                                            <div class="form-group">
+                                                <input type="radio" name="test" value="wallet"> Use Wallet <br><br>
+                                            </div>
+                                            <% if(typeof message !=='undefined' ){ %>
+                                                <h5 style="color: rgb(224, 86, 86);">
+                                                    <%= message %>
+                                                </h5>
+                                                <% } %>
+                                                    <div class="row mb-md-5">
+                                                        <div class="col">
+                                                            <button type="submit"
+                                                                class="btn  btn-lg btn-block ">PURCHASE
+                                                                NOW</button>
 
                                                         </div>
-                                                        <div class="col-sm-4">
-                                                            <div class="form-group">
-
-                                                            </div>
-
-                                                        </div>
-                                                    </form>
-
-                                                    <input type="hidden" name="code" id="code" value=''>
-
-
-                                                    <label for="NAME" class="small text-muted mb-1">Payment
-                                                        Method</label><br><br>
-                                                    <div class="form-group">
-                                                        <input type="radio" name="test" value="COD">  Cash on
-                                                        delivery<br><br>
                                                     </div>
-                                                 
-                                                    <div class="form-group">
-                                                        <input type="radio" name="test" value="UPI">  Online Payment<br><br>
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <input type="radio" name="test" value="wallet">  Use Wallet <br><br>
-                                                    </div>
-                                                    <% if(typeof message !=='undefined' ){ %>
-                                                        <h5 style="color: rgb(224, 86, 86);">
-                                                            <%= message %>
-                                                        </h5>
-                                                        <% } %>
-                                                            <div class="row mb-md-5">
-                                                                <div class="col">
-                                                                    <button type="submit"
-                                                                        class="btn  btn-lg btn-block ">PURCHASE
-                                                                        NOW</button>
-
-                                                                </div>
-                                                            </div>
-                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </form>
                 </div>
+                </form>
             </div>
         </div>
-<%}%>
-
-
-<% if(typeof productData!=='undefined'){%>
-    <div class="form-group">
-        <label for="NAME" class="small text-muted mb-1">full Name</label>
-        <input type="text" class="form-control form-control-sm" id="NAME"
-            aria-describedby="helpId"
-            value="<%= userdetails.firstname %> <%= userdetails.lastname %>">
-    </div>
-    <input type="hidden" name="userId" value="<%= userdetails._id %>">
-    <!-- <div class="form-group">
-<label for="NAME" class="small text-muted mb-1">Phone Number</label>
-<input type="text" class="form-control form-control-sm" name="NAME" id="NAME" aria-describedby="helpId" placeholder="BBBootstrap Team">
-</div> -->
-    <div id="myDiv">
-        <label>Address</label>
-        <select  name="address"
-            style="height: 50px; border-radius: 5px; border-color: rgb(202, 201, 201); color: rgb(140, 135, 135);"
-          >
-
-<option selected>Select Address</option>
-            <% userdetails.address.forEach((element)=>{ %>
-                <option
-                    value="<%=element.houseName %>,<%=element.street %>,<%=element.district %> <%=element.state %>,<%=element.country %> <%=element.pincode %>">
-                    <%=element.houseName %>,<%=element.street %>,
-                            <%=element.district %>,<%=element.state %>,
-                                    <%=element.country %>,
-                                        <%=element.pincode %>,phone:,<%=element.phone%>
-                </option>
-                <% }) %>
-        </select>
-    </div>
-    <div class="form-group">
-        <!-- <button class="mt-2"
-            style="color: rgb(195, 199, 199); border-radius: 5px;"><a
-                style="color: black;" href="/addAddressCheckout">Add
-                Address</a></button> -->
-        <!-- Button trigger modal -->
-        <button type="button" class="btn btn-primary mt-2" data-toggle="modal"
-            data-target="#exampleModalCenter">
-            Add Address
-        </button>
-    </div>
-    <div class="row no-gutters">
-        <div class="col-sm-4 pr-sm-2">
-            <div class="form-group">
-                <label for="NAME" class="small text-muted mb-1">Phone
-                    Number</label>
-                <input type="text" class="form-control form-control-sm"
-                    name="phone" id="NAME" aria-describedby="helpId"
-                    value="<%= userdetails.phone %>">
-            </div>
         </div>
+        <%}%>
 
-    </div>
 
-</div>
-</div>
-</div>
-<div class="col-md-5">
-<div class="card border-0 ">
-<!-- <div class="card-header card-2">
-<p class="card-text text-muted mt-md-4  mb-2 space">YOUR ORDER <span class=" small text-muted ml-2 cursor-pointer"></span> </p>
-<hr class="my-2">
-</div> -->
+            <% if(typeof productData!=='undefined' ){%>
+                <div class="form-group">
+                    <label for="NAME" class="small text-muted mb-1">full Name</label>
+                    <input type="text" class="form-control form-control-sm" id="NAME" aria-describedby="helpId"
+                        value="<%= userdetails.firstname %> <%= userdetails.lastname %>">
+                </div>
+                <input type="hidden" name="userId" value="<%= userdetails._id %>">
+                <div id="myDiv">
+                    <label>Address</label>
+                    <select name="address"
+                        style="height: 50px; border-radius: 5px; border-color: rgb(202, 201, 201); color: rgb(140, 135, 135);">
 
-<div class="card-body pt-0">
-    <% productData.forEach((element)=>{ %>
-        <div class="row  justify-content-between">
-            <div class="col-auto col-md-7">
-                <div class="media flex-column flex-sm-row">
-                    <img style="width:50px" class=" img-fluid"
-                        src="/product_images/<%=element.image[2] %>"
-                        width="62" height="62">
-                    <input type="hidden" name="proId"
-                        value="<%= element._id %>">
-                        <input type="hidden" name="singlePrice"
-                        value="<%= element.price %>">
-                    <div class="media-body  my-auto">
-                        <div class="row ">
-                            <div class="col-auto">
-                                <p class="mb-0"><b>
-                                        <%=element.name %>
-                                    </b></p><small class="text-muted">
+                        <option selected>Select Address</option>
+                        <% userdetails.address.forEach((element)=>{ %>
+                            <option
+                                value="<%=element.houseName %>,<%=element.street %>,<%=element.district %> <%=element.state %>,<%=element.country %> <%=element.pincode %>">
+                                <%=element.houseName %>,<%=element.street %>,
+                                        <%=element.district %>,<%=element.state %>,
+                                                <%=element.country %>,
+                                                    <%=element.pincode %>,phone:,<%=element.phone%>
+                            </option>
+                            <% }) %>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <button type="button" class="btn btn-primary mt-2" data-toggle="modal"
+                        data-target="#exampleModalCenter">
+                        Add Address
+                    </button>
+                </div>
+                <div class="row no-gutters">
+                    <div class="col-sm-4 pr-sm-2">
+                        <div class="form-group">
+                            <label for="NAME" class="small text-muted mb-1">Phone
+                                Number</label>
+                            <input type="text" class="form-control form-control-sm" name="phone" id="NAME"
+                                aria-describedby="helpId" value="<%= userdetails.phone %>">
+                        </div>
+                    </div>
 
-                                </small>
+                </div>
+
+                </div>
+                </div>
+                </div>
+                <div class="col-md-5">
+                    <div class="card border-0 ">
+                        <div class="card-body pt-0">
+                            <% productData.forEach((element)=>{ %>
+                                <div class="row  justify-content-between">
+                                    <div class="col-auto col-md-7">
+                                        <div class="media flex-column flex-sm-row">
+                                            <img style="width:50px" class=" img-fluid"
+                                                src="/product_images/<%=element.image[2] %>" width="62" height="62">
+                                            <input type="hidden" name="proId" value="<%= element._id %>">
+                                            <input type="hidden" name="singlePrice" value="<%= element.price %>">
+                                            <div class="media-body  my-auto">
+                                                <div class="row ">
+                                                    <div class="col-auto">
+                                                        <p class="mb-0"><b>
+                                                                <%=element.name %>
+                                                            </b></p><small class="text-muted">
+
+                                                        </small>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class=" pl-0 flex-sm-col col-auto  my-auto">
+                                        <p class="boxed-1">
+                                            1
+                                        </p>
+                                        <input type="hidden" name="proQ" value="1">
+                                    </div>
+                                    <div class=" pl-0 flex-sm-col col-auto  my-auto ">
+                                        <p><b>RS.<%=element.price %></b></p>
+                                        <input type="hidden" name="qntyPrice" value="<%=element.price %>">
+                                    </div>
+                                </div>
+                                <hr class="my-2">
+                                <% }) %>
+
+                                    <div class="row ">
+                                        <div class="col">
+                                            <div class="row justify-content-between">
+                                                <div class="col-4">
+                                                    <p class="mb-1"><b>Subtotal</b></p>
+                                                </div>
+                                                <div class="flex-sm-col col-auto">
+                                                    <p class="mb-1"><b>
+                                                            <% productData.forEach((element)=>{ %>
+                                                                <%= element.price %>
+                                                                    <input type="hidden" name="total"
+                                                                        value=" <%= element.price %>">
+                                                                    <%})%>
+                                                        </b></p>
+                                                </div>
+                                            </div>
+                                            <div class="row justify-content-between">
+                                                <div class="col">
+                                                    <p class="mb-1"><b>Discount</b></p>
+                                                </div>
+                                                <div class="flex-sm-col col-auto">
+                                                    <p id="discount" class="mb-1"><b>0</b></p>
+                                                </div>
+                                                <input id="discount1" name="discount1" type="hidden" value="">
+                                            </div>
+                                            <div class="row justify-content-between">
+                                                <div class="col-4">
+                                                    <p><b>Total</b></p>
+                                                </div>
+                                                <div class="flex-sm-col col-auto">
+                                                    <% productData.forEach((element)=>{ %>
+                                                        <p id="total" class="mb-1"><b>RS. <%= element.price %>
+
+                                                            </b></p>
+                                                        <input id="total1" name="total1" type="hidden"
+                                                            value="<%= element.price %>">
+                                                        <%})%>
+                                                </div>
+                                            </div>
+                                            <hr class="my-0">
+                                        </div>
+                                    </div>
+
+                                    <form id="formCoupon">
+                                        <div class="col-sm-4">
+                                            <div class="form-group">
+                                                <label for="NAME" class="small text-muted mb-1">Coupon
+                                                    Code</label>
+                                                <input type="text" form="formCoupon"
+                                                    class="form-control form-control-sm" name="code" id="NAMEcode"
+                                                    name="code" aria-describedby="helpId">
+
+                                            </div>
+                                            <% productData.forEach((element)=>{ %>
+                                                <button
+                                                    style="background-color: aquamarine; color: black; border-radius: 5px;"
+                                                    onclick="applyCoupon(' <%= element.price %>', $('#NAMEcode').val())"
+                                                    form="formCoupon">Redeem Now</button>
+                                                <%})%>
+                                        </div>
+                                        <div class="col-sm-4">
+                                            <div class="form-group">
+
+                                            </div>
+
+                                        </div>
+                                    </form>
+
+                                    <input type="hidden" name="code" id="code" value=''>
+
+
+                                    <label for="NAME" class="small text-muted mb-1">Payment
+                                        Method</label><br><br>
+                                    <div class="form-group">
+                                        <input type="radio" name="test" value="COD"> Cash on
+                                        delivery<br><br>
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="radio" name="test" value="UPI"> Online Payment<br><br>
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="radio" name="test" value="wallet"> Use Wallet <br><br>
+                                    </div>
+                                    <% if(typeof message !=='undefined' ){ %>
+                                        <h5 style="color: rgb(224, 86, 86);">
+                                            <%= message %>
+                                        </h5>
+                                        <% } %>
+                                            <div class="row mb-md-5">
+                                                <div class="col">
+                                                    <button type="submit" class="btn  btn-lg btn-block ">PURCHASE
+                                                        NOW</button>
+
+                                                </div>
+                                            </div>
+                        </div>
+                    </div>
+                </div>
+                </div>
+                </div>
+                </form>
+                </div>
+                </div>
+                </div>
+                <%}%>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                    <section>
+                        <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog"
+                            aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLongTitle">Add Address</h5>
+                                        <div id="alertpasswordUser1" class="alert alert-danger" role="alert"
+                                            style="display: none;">
+
+                                        </div>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <form id="myForm">
+                                            <div class="row">
+                                                <div class="col-md-12 mb-4">
+
+                                                    <div class="form-outline">
+                                                        <label class="form-label">House Name</label>
+                                                        <input type="text" name="hname"
+                                                            class="form-control form-control-lg" />
+
+                                                    </div>
+
+                                                </div>
+
+                                                <div class="col-md-6 mb-4">
+
+                                                    <div class="form-outline">
+                                                        <label class="form-label">Street</label>
+                                                        <input type="text" name="street"
+                                                            class="form-control form-control-lg" />
+
+                                                    </div>
+
+                                                </div>
+                                                <div class="col-md-6 mb-4">
+
+                                                    <div class="form-outline">
+                                                        <label class="form-label">District</label>
+                                                        <input type="text" name="district"
+                                                            class="form-control form-control-lg" />
+
+                                                    </div>
+
+                                                </div>
+                                            </div>
+
+                                            <div class="row">
+                                                <div class="col-md-6 mb-4 d-flex align-items-center">
+
+                                                    <div class="form-outline datepicker w-100">
+                                                        <label class="form-label">State</label>
+                                                        <input type="text" name="state"
+                                                            class="form-control form-control-lg" id="birthdayDate" />
+
+                                                    </div>
+
+                                                </div>
+
+                                                <div class="col-md-6 mb-4 pb-2">
+
+                                                    <div class="form-outline">
+                                                        <label class="form-label">Country</label>
+                                                        <input type="text" name="country"
+                                                            class="form-control form-control-lg" />
+
+                                                    </div>
+
+                                                </div>
+                                            </div>
+
+
+                                            <div class="row">
+                                                <div class="col-md-6 mb-4 pb-2">
+
+                                                    <div class="form-outline">
+                                                        <label class="form-label">pincode</label>
+                                                        <input type="Number" id="emailAddress" name="pincode"
+                                                            class="form-control form-control-lg" />
+
+                                                    </div>
+
+                                                </div>
+                                                <div class="col-md-6 mb-4 pb-2">
+
+                                                    <div class="form-outline">
+                                                        <label class="form-label">Phone Number</label>
+                                                        <input type="Number" name="number"
+                                                            class="form-control form-control-lg" />
+
+                                                    </div>
+
+                                                </div>
+                                            </div>
+
+
+
+                                            <div class="mt-4 pt-2">
+                                                <button style="background-color: #000; color: aliceblue;"
+                                                    type="submit">Submit</button>
+                                            </div>
+
+                                        </form>
+                                    </div>
+                                    <div class="modal-footer">
+
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                </div>
-            </div>
-            <div class=" pl-0 flex-sm-col col-auto  my-auto">
-                <p class="boxed-1">
-                    1
-                </p>
-                <input type="hidden" name="proQ"
-                    value="1">
-            </div>
-            <div class=" pl-0 flex-sm-col col-auto  my-auto ">
-                <p><b>RS.<%=element.price %></b></p>
-                <input type="hidden" name="qntyPrice"
-                    value="<%=element.price %>">
-            </div>
-        </div>
-        <hr class="my-2">
-        <% }) %>
-
-            <div class="row ">
-                <div class="col">
-                    <div class="row justify-content-between">
-                        <div class="col-4">
-                            <p class="mb-1"><b>Subtotal</b></p>
-                        </div>
-                        <div class="flex-sm-col col-auto">
-                            <p class="mb-1"><b>
-                                <% productData.forEach((element)=>{ %>
-                                    <%= element.price %>
-                                        <input type="hidden" name="total"
-                                            value=" <%= element.price %>">
-                                            <%})%>
-                                </b></p>
-                        </div>
-                    </div>
-                    <div class="row justify-content-between">
-                        <div class="col">
-                            <p class="mb-1"><b>Discount</b></p>
-                        </div>
-                        <div class="flex-sm-col col-auto">
-                            <p id="discount" class="mb-1"><b>0</b></p>
-                        </div>
-                        <input id="discount1" name="discount1" type="hidden"
-                            value="">
-                    </div>
-                    <div class="row justify-content-between">
-                        <div class="col-4">
-                            <p><b>Total</b></p>
-                        </div>
-                        <div class="flex-sm-col col-auto"> <% productData.forEach((element)=>{ %>
-                            <p id="total" class="mb-1"><b>RS. <%= element.price %>
-
-                                </b></p>
-                            <input id="total1" name="total1" type="hidden"
-                                value="<%= element.price %>">
-                                <%})%>
-                        </div>
-                    </div>
-                    <hr class="my-0">
-                </div>
-            </div>
-            <!-- <div class="row mb-5 mt-4 ">
-<div classrs
-="col-md-7 col-lg-6 mx-auto"><button type="button" class="btn btn-block btn-outline-primary btn-lg">ADD GIFT CODE</button></div>
-</div> -->
-            <form id="formCoupon">
-                <div class="col-sm-4">
-                    <div class="form-group">
-                        <label for="NAME" class="small text-muted mb-1">Coupon
-                            Code</label>
-                        <input type="text" form="formCoupon"
-                            class="form-control form-control-sm" name="code"
-                            id="NAMEcode" name="code" aria-describedby="helpId">
-
-                    </div>
-                    <% productData.forEach((element)=>{ %>
-                    <button
-                        style="background-color: aquamarine; color: black; border-radius: 5px;"
-                        onclick="applyCoupon(' <%= element.price %>', $('#NAMEcode').val())"
-                        form="formCoupon">Redeem Now</button>
-<%})%>
-                </div>
-                <div class="col-sm-4">
-                    <div class="form-group">
-
-                    </div>
-
-                </div>
-            </form>
-
-            <input type="hidden" name="code" id="code" value=''>
-
-
-            <label for="NAME" class="small text-muted mb-1">Payment
-                Method</label><br><br>
-            <div class="form-group">
-                <input type="radio" name="test" value="COD">  Cash on
-                delivery<br><br>
-            </div>
-            <div class="form-group">
-                <input type="radio" name="test" value="UPI">  Online Payment<br><br>
-            </div>
-            <div class="form-group">
-                <input type="radio" name="test" value="wallet">  Use Wallet <br><br>
-            </div>
-            <% if(typeof message !=='undefined' ){ %>
-                <h5 style="color: rgb(224, 86, 86);">
-                    <%= message %>
-                </h5>
-                <% } %>
-                    <div class="row mb-md-5">
-                        <div class="col">
-                            <button type="submit"
-                                class="btn  btn-lg btn-block ">PURCHASE
-                                NOW</button>
-
-                        </div>
-                    </div>
-</div>
-</div>
-</div>
-</div>
-</div>
-</form>
-</div>
-</div>
-</div>
-<%}%>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        <section>
-            <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog"
-                aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLongTitle">Add Address</h5>
-                            <div id="alertpasswordUser1" class="alert alert-danger" role="alert" style="display: none;">
-
-                            </div>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        <div class="modal-body">
-                            <form id="myForm">
-                                <div class="row">
-                                    <div class="col-md-12 mb-4">
-
-                                        <div class="form-outline">
-                                            <label class="form-label">House Name</label>
-                                            <input type="text" name="hname" class="form-control form-control-lg" />
-
-                                        </div>
-
-                                    </div>
-
-                                    <div class="col-md-6 mb-4">
-
-                                        <div class="form-outline">
-                                            <label class="form-label">Street</label>
-                                            <input type="text" name="street" class="form-control form-control-lg" />
-
-                                        </div>
-
-                                    </div>
-                                    <div class="col-md-6 mb-4">
-
-                                        <div class="form-outline">
-                                            <label class="form-label">District</label>
-                                            <input type="text" name="district" class="form-control form-control-lg" />
-
-                                        </div>
-
-                                    </div>
-                                </div>
-
-                                <div class="row">
-                                    <div class="col-md-6 mb-4 d-flex align-items-center">
-
-                                        <div class="form-outline datepicker w-100">
-                                            <label class="form-label">State</label>
-                                            <input type="text" name="state" class="form-control form-control-lg"
-                                                id="birthdayDate" />
-
-                                        </div>
-
-                                    </div>
-
-                                    <div class="col-md-6 mb-4 pb-2">
-
-                                        <div class="form-outline">
-                                            <label class="form-label">Country</label>
-                                            <input type="text" name="country" class="form-control form-control-lg" />
-
-                                        </div>
-
-                                    </div>
-                                </div>
-
-
-                                <div class="row">
-                                    <div class="col-md-6 mb-4 pb-2">
-
-                                        <div class="form-outline">
-                                            <label class="form-label">pincode</label>
-                                            <input type="Number" id="emailAddress" name="pincode"
-                                                class="form-control form-control-lg" />
-
-                                        </div>
-
-                                    </div>
-                                    <div class="col-md-6 mb-4 pb-2">
-
-                                        <div class="form-outline">
-                                            <label class="form-label">Phone Number</label>
-                                            <input type="Number" name="number" class="form-control form-control-lg" />
-
-                                        </div>
-
-                                    </div>
-                                </div>
-
-
-
-                                <div class="mt-4 pt-2">
-                                    <button style="background-color: #000; color: aliceblue;"
-                                        type="submit">Submit</button>
-                                </div>
-
-                            </form>
-                        </div>
-                        <div class="modal-footer">
-
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <script>
-
-
-            function applyCoupon(total, code) {
-
-                $.ajax({
-
-                    url: '/applyCoupon',
-                    data: {
-                        total: total,
-                        code: code
-                    },
-                    method: "post",
-                    success: (response) => {
-                        if (response.datefailed) {
-                            Swal.fire({
-                                icon: 'error',
-                                title: 'Oops...',
-                                text: 'Coupon Expired.',
-                            })
-                        } else if (response.amountnokay) {
-                            Swal.fire({
-                                icon: 'error',
-                                title: 'Oops...',
-                                text: 'To access this coupon buy something more.',
-
-                            })
-                        } else if (response.amountokay) {
-                            document.getElementById('code').value = response.code
-                            document.getElementById('discount').innerHTML = response.discountValue
-                            document.getElementById('discount1').value = response.discountValue
-                            document.getElementById('total').innerHTML = response.value
-                            document.getElementById('total1').value = response.value
-                            Swal.fire(
-                                'Good job!',
-                                'Coupon granted!',
-                                'success'
-                            )
-                         
-                        } else if (response.used) {
-                            Swal.fire({
-                                icon: 'error',
-                                title: 'Oops...',
-                                text: 'Already Used.',
-                            })
-                        } else if (response.invalid) {
-                            Swal.fire({
-                                icon: 'error',
-                                title: 'Oops...',
-                                text: 'Invalid Coupon.',
+                    </section>
+
+                    <script>
+
+
+                        function applyCoupon(total, code) {
+
+                            $.ajax({
+
+                                url: '/applyCoupon',
+                                data: {
+                                    total: total,
+                                    code: code
+                                },
+                                method: "post",
+                                success: (response) => {
+                                    if (response.datefailed) {
+                                        Swal.fire({
+                                            icon: 'error',
+                                            title: 'Oops...',
+                                            text: 'Coupon Expired.',
+                                        })
+                                    } else if (response.amountnokay) {
+                                        Swal.fire({
+                                            icon: 'error',
+                                            title: 'Oops...',
+                                            text: 'To access this coupon buy something more.',
+
+                                        })
+                                    } else if (response.amountokay) {
+                                        document.getElementById('code').value = response.code
+                                        document.getElementById('discount').innerHTML = response.discountValue
+                                        document.getElementById('discount1').value = response.discountValue
+                                        document.getElementById('total').innerHTML = response.value
+                                        document.getElementById('total1').value = response.value
+                                        Swal.fire(
+                                            'Good job!',
+                                            'Coupon granted!',
+                                            'success'
+                                        )
+
+                                    } else if (response.used) {
+                                        Swal.fire({
+                                            icon: 'error',
+                                            title: 'Oops...',
+                                            text: 'Already Used.',
+                                        })
+                                    } else if (response.invalid) {
+                                        Swal.fire({
+                                            icon: 'error',
+                                            title: 'Oops...',
+                                            text: 'Invalid Coupon.',
+                                        })
+                                    }
+
+                                }
                             })
                         }
 
-                    }
-                })
-            }
+                        const form = document.querySelector('#myForm');
+                        $('#myForm').submit(function (e) {
+                            e.preventDefault();
+                            var formData = $(this).serialize();
+                            const inputs = document.querySelectorAll('#myForm input')
+                            let inputFieldNull = false
+                            for (let i = 0; i < inputs.length; i++) {
+                                if (inputs[i].value.trim() == "") {
+                                    inputFieldNull = true
+                                    $('#alertpasswordUser1').attr({ style: "display: block" }).html("All fields Required")
+                                    setTimeout(() => {
+                                        $('#alertpasswordUser1').hide()
+                                    }, 3000)
+                                }
+                            } if (!inputFieldNull) {
+                                $.ajax({
+                                    url: '/checkoutAddAddress', // replace with the URL of your server-side script
+                                    type: 'POST', // use POST method
+                                    data: formData,
+                                    success: (response) => {
+                                        // handle the response from the server
+                                        console.log(response);
+                                        $('#exampleModalCenter').on('hidden.bs.modal', function () {
+                                            $(this).find('form').trigger('reset');
+                                        });
+                                        $('#exampleModalCenter').modal('hide');
+                                        $('#myDiv').load('/checkout #myDiv')
+                                    },
 
-            const form=document.querySelector('#myForm');
-    $('#myForm').submit(function (e) {
-      e.preventDefault();
-      var formData = $(this).serialize();
-      const inputs = document.querySelectorAll('#myForm input')
-      let inputFieldNull = false
-      for (let i = 0; i < inputs.length; i++) {
-        if (inputs[i].value.trim() == "") {
-          inputFieldNull = true
-          $('#alertpasswordUser1').attr({ style: "display: block" }).html("All fields Required")
-          setTimeout(() => {
-            $('#alertpasswordUser1').hide()
-          }, 3000)
-        } 
-      }if (!inputFieldNull) {
-                $.ajax({
-                    url: '/checkoutAddAddress', // replace with the URL of your server-side script
-                    type: 'POST', // use POST method
-                    data: formData,
-                    success: (response) => {
-                        // handle the response from the server
-                        console.log(response);
-                        $('#exampleModalCenter').on('hidden.bs.modal', function () {
-                            $(this).find('form').trigger('reset');
+                                });
+                            }
                         });
-                        $('#exampleModalCenter').modal('hide');
-                        $('#myDiv').load('/checkout #myDiv')
-                    },
 
-                });
-           } });
-        
 
-            //main form submit for success
-            $('#mainForm').submit(function (e) {
-                e.preventDefault();
-                var formData = $(this).serialize();
-                $.ajax({
-                    url: '/checkout', // replace with the URL of your server-side script
-                    type: 'POST', // use POST method
-                    data: formData,
-                    success: (response) => {
-                        // handle the response from the server
-                        console.log("yes")
-                        console.log(response);
-                        if (response.status) {
-                            location.href = '/success'
-                        } else if (response.radio) {
-                            Swal.fire({
-                                icon: 'error',
-                                title: 'Oops...',
-                                text: 'Select Payment Method.',
-                            })
-                        
-                        } else if (response.insufficiant) {
-                            Swal.fire({
-                                icon: 'error',
-                                title: 'Oops...',
-                                text: 'Insufficiant Wallet Amount.',
-                            })
-                        
+                        //main form submit for success
+                        $('#mainForm').submit(function (e) {
+                            e.preventDefault();
+                            var formData = $(this).serialize();
+                            $.ajax({
+                                url: '/checkout', // replace with the URL of your server-side script
+                                type: 'POST', // use POST method
+                                data: formData,
+                                success: (response) => {
+                                    // handle the response from the server
+                                    console.log("yes")
+                                    console.log(response);
+                                    if (response.status) {
+                                        location.href = '/success'
+                                    } else if (response.radio) {
+                                        Swal.fire({
+                                            icon: 'error',
+                                            title: 'Oops...',
+                                            text: 'Select Payment Method.',
+                                        })
+
+                                    } else if (response.insufficiant) {
+                                        Swal.fire({
+                                            icon: 'error',
+                                            title: 'Oops...',
+                                            text: 'Insufficiant Wallet Amount.',
+                                        })
+
+                                    }
+                                    else if (response.address) {
+                                        Swal.fire({
+                                            icon: 'error',
+                                            title: 'Oops...',
+                                            text: 'Select Address Or Add Address.',
+                                        })
+                                    }
+                                    else if (response.viewRazorpay) {
+                                        razorpayPayment(response.order)
+
+                                    }
+                                },
+
+                            });
+                        });
+                        function razorpayPayment(order) {
+                            var options = {
+                                "key": "rzp_test_oyzsQbMBs7ToCQ", // Enter the Key ID generated from the Dashboard
+                                "amount": order.amount, // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
+                                "currency": "INR",
+                                "name": "LISTEn", //your business name
+                                "description": "Test Transaction",
+                                "image": "https://example.com/your_logo",
+                                "order_id": order.id, //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
+                                "handler": function (response) {
+                                    verifyPayment(response, order)
+                                },
+                                "prefill": {
+                                    "name": "Sharath kumar A", //your customer's name
+                                    "email": "sharathkannanakz@gmail.com",
+                                    "contact": "9000090000"
+                                },
+                                "notes": {
+                                    "address": "Razorpay Corporate Office"
+                                },
+                                "theme": {
+                                    "color": "#3399cc"
+                                },
+                                "modal": {
+                                    escape: false,
+                                    onDismiss: () => {
+                                        Swal.fire({
+                                            icon: 'error',
+                                            title: 'Oops...',
+                                            text: 'Payment failed.',
+                                        })
+
+                                    }
+                                }
+                            };
+                            var rzp1 = new Razorpay(options);
+                            rzp1.open();
+
                         }
-                        else if (response.address) {
-                            Swal.fire({
-                                icon: 'error',
-                                title: 'Oops...',
-                                text: 'Select Address Or Add Address.',
+
+                        function verifyPayment(payment, order) {
+                            $.ajax({
+                                url: '/verify-payment',
+                                data: {
+                                    payment,
+                                    order
+                                },
+                                method: "post",
+                                success: (response) => {
+                                    // handle the response from the server
+                                    console.log("yes")
+                                    console.log(response);
+                                    if (response.status) {
+                                        location.href = '/success'
+                                    }
+                                }
                             })
-                        }
-                         else if (response.viewRazorpay) {
-                            razorpayPayment(response.order)
 
                         }
-                    },
 
-                });
-            });
-            function razorpayPayment(order) {
-                var options = {
-                    "key": "rzp_test_oyzsQbMBs7ToCQ", // Enter the Key ID generated from the Dashboard
-                    "amount":order.amount, // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
-                    "currency": "INR",
-                    "name": "LISTEn", //your business name
-                    "description": "Test Transaction",
-                    "image": "https://example.com/your_logo",
-                    "order_id": order.id, //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
-                    "handler": function (response) {
-                        // alert(response.razorpay_payment_id);
-                        // alert(response.razorpay_order_id);
-                        // alert(response.razorpay_signature)
-
-                        verifyPayment(response,order)
-                    },
-                    "prefill": {
-                        "name": "Sharath kumar A", //your customer's name
-                        "email": "sharathkannanakz@gmail.com",
-                        "contact": "9000090000"
-                    },
-                    "notes": {
-                        "address": "Razorpay Corporate Office"
-                    },
-                    "theme": {
-                        "color": "#3399cc"
-                    },
-                    "modal":{
-                        escape:false,
-                        onDismiss:()=>{
-                            Swal.fire({
-                                icon: 'error',
-                                title: 'Oops...',
-                                text: 'Payment failed.',
-                            })
-                          
-                        }
-                    }
-                };
-                var rzp1 = new Razorpay(options);
-                rzp1.open();
-
-            }
-
-            function verifyPayment(payment, order) {
-                $.ajax({
-                    url:'/verify-payment',
-                    data: {
-                        payment,
-                        order
-                    },
-                    method: "post",
-                    success: (response) => {
-                        // handle the response from the server
-                        console.log("yes")
-                        console.log(response);
-                        if (response.status) {
-                            location.href = '/success'
-                        } 
-                    }})
-
-            }
-
-        </script>
+                    </script>
 
 
 
 
 
-        <%- include("../layouts/user/footer.ejs") %>
+                    <%- include("../layouts/user/footer.ejs") %>

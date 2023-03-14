@@ -81,8 +81,6 @@
                     View Order</a>
                    
                   </button>
-                  <!-- <button class="btn btn-primary btn-sm" type="button"><span id="<%=element._id %>"  ><%= element.status%></span></button> -->
-                 
                   <% if (element.status=="delivered"){%>
                     <% let checkDate=Date.now()%>
                     <% if(checkDate<=element.returnDate){%>

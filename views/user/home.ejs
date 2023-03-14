@@ -24,7 +24,7 @@
                         <ul>
                             <li><a href="/allproducts">All Products</a></li>
                                     <% categoryData.forEach((element)=> { %>
-                            <li><a href="/products/<%= element._id %>">
+                            <li><a href="/category/<%= element._id %>">
                                     <%= element.categoryName %></a></li>
                                         <% }); %>
                         </ul>
@@ -88,7 +88,7 @@
                             <%=element.name %>
                         </h1>
                         <div class="main-border-button">
-                            <a href="/products/<%=element.url %>">
+                            <a href="/category/<%=element.url %>">
                                 <%=element.name %>
                             </a>
                         </div>
@@ -197,7 +197,6 @@
          
       <script>
           function addToCart(proId) {
-              console.log(proId);
               $.ajax({
                   url: '/addcart/' + proId, // replace with the URL of your server-side script
                   type: 'get', // use get method

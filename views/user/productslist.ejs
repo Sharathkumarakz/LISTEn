@@ -1,5 +1,5 @@
 <%- include("../layouts/user/header.ejs") %>
-<%- include("../layouts/user/headers.ejs") %>
+  <%- include("../layouts/user/headers.ejs") %>
     <!-- ***** Products Area Starts ***** -->
     <section style="background-color: #ffffff;" id="address">
       <div class="container">
@@ -12,138 +12,145 @@
             </nav>
           </div>
         </div>
-        </div>
-        </section>
+      </div>
+    </section>
     <section class="section" id="products">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-12">
-                    <div class="section-heading">
-                        <% categoryData.forEach((element)=> { %>
-                            <h2>
-                                <%= element.categoryName %>
-                            </h2>
-                            <span>
-                                <%= element.description %>
-                            </span>
-                            <% }) %>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="container">
-            <div class="row">
-                <% products.forEach((element)=> { %>
-                <div class="col-lg-4">
-                    <div class="item">
-
-                        <div class="thumb">
-
-                            <div class="hover-content">
-                                <ul>
-                                            
-                                    <li><a style="width:53px; height:53px; border: 1px; " class="ml-3" href="/singleproduct/<%= element._id %>"><i class="fa fa-eye"></i></a></li>
-                                            
-                                    <li><button style="width:55px; height:55px; border-color: aliceblue; " class="ml-4" onclick="addtoWishlist('<%= element._id %>')"><i class="fa fa-star"></i></button><li>
-                       
-                                    <li><button style="width:55px; height:55px;  border-color: aliceblue;"  onclick="addToCart('<%= element._id %>')"><i class="fa fa-shopping-cart"></i></button><li>
-                            </ul>
-                            </div>
-                            <img src="/product_images/<%= element.image[3] %>" alt="">
-                        </div>
-                        <div class="down-content">
-                            <h4>
-                                <%= element.name %>
-                            </h4>
-                            <span>RS.  <%= element.price%></span>
-                            <ul class="stars">
-                                <li><i class="fa fa-star"></i></li>
-                                <li><i class="fa fa-star"></i></li>
-                                <li><i class="fa fa-star"></i></li>
-                                <li><i class="fa fa-star"></i></li>
-                                <li><i class="fa fa-star"></i></li>
-                            </ul>
-                        </div>
-
-                    </div>
-                </div>
-
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-12">
+            <div class="section-heading">
+              <% categoryData.forEach((element)=> { %>
+                <h2>
+                  <%= element.categoryName %>
+                </h2>
+                <span>
+                  <%= element.description %>
+                </span>
                 <% }) %>
             </div>
+          </div>
         </div>
+      </div>
+      <div class="container">
+        <div class="row">
+          <% products.forEach((element)=> { %>
+            <div class="col-lg-4">
+              <div class="item">
+
+                <div class="thumb">
+
+                  <div class="hover-content">
+                    <ul>
+
+                      <li><a style="width:53px; height:53px; border: 1px; " class="ml-3"
+                          href="/singleproduct/<%= element._id %>"><i class="fa fa-eye"></i></a></li>
+
+                      <li><button style="width:55px; height:55px; border-color: aliceblue; " class="ml-4"
+                          onclick="addtoWishlist('<%= element._id %>')"><i class="fa fa-star"></i></button>
+                      <li>
+
+                      <li><button style="width:55px; height:55px;  border-color: aliceblue;"
+                          onclick="addToCart('<%= element._id %>')"><i class="fa fa-shopping-cart"></i></button>
+                      <li>
+                    </ul>
+                  </div>
+                  <img src="/product_images/<%= element.image[3] %>" alt="">
+                </div>
+                <div class="down-content">
+                  <h4>
+                    <%= element.name %>
+                  </h4>
+                  <span>RS. <%= element.price%></span>
+                  <ul class="stars">
+                    <li><i class="fa fa-star"></i></li>
+                    <li><i class="fa fa-star"></i></li>
+                    <li><i class="fa fa-star"></i></li>
+                    <li><i class="fa fa-star"></i></li>
+                    <li><i class="fa fa-star"></i></li>
+                  </ul>
+                </div>
+
+              </div>
+            </div>
+
+            <% }) %>
+        </div>
+      </div>
 
     </section>
     <script>
-     function addToCart(proId) {
-      console.log(proId);
-      $.ajax({
-        url: '/addcart/' + proId, // replace with the URL of your server-side script
-        type: 'get', // use POST method
+      function addToCart(proId) {
+        console.log(proId);
+        $.ajax({
+          url: '/addcart/' + proId, // replace with the URL of your server-side script
+          type: 'get', // use POST method
 
-        success: (response) => {
-          console.log(response);
-          if (response.done) {
-            Swal.fire({
-              position: 'top-end',
-              icon: 'success',
-              title: 'Added to Cart',
-              showConfirmButton: false,
-              timer: 1500
-            })
-          } else if (response.exist) {
-            Swal.fire({
-              position: 'top-end',
-              
-              title: 'Already in Cart',
-              showConfirmButton: false,
-              timer: 1500
-            })
-          }else if(response.stock){
-                        Swal.fire({
-                            position: 'top-end',
-                            title: 'Out of Stock',
-                            showConfirmButton: false,
-                            timer: 1500
-                        })
-                    } else {
-            location.href = '/login'
+          success: (response) => {
+            console.log(response);
+            if (response.done) {
+              Swal.fire({
+                position: 'top-end',
+                icon: 'success',
+                title: 'Added to Cart',
+                showConfirmButton: false,
+                timer: 1500
+              })
+            } else if (response.exist) {
+              Swal.fire({
+                position: 'top-end',
+
+                title: 'Already in Cart',
+                showConfirmButton: false,
+                timer: 1500
+              })
+            } else if (response.stock) {
+              Swal.fire({
+                position: 'top-end',
+                title: 'Out of Stock',
+                showConfirmButton: false,
+                timer: 1500
+              })
+            } else {
+              location.href = '/login'
+            }
+
           }
+        })
+      }
+      function addtoWishlist(proId) {
+        console.log(proId);
+        $.ajax({
+          url: '/addtoWishlist/' + proId, // replace with the URL of your server-side script
+          type: 'get', // use POST method
 
-        }
-      })
-    }
-    function addtoWishlist(proId){
-          console.log(proId);
-          $.ajax({
-                url: '/addtoWishlist/'+proId, // replace with the URL of your server-side script
-                type: 'get', // use POST method
-                
-                success: (response) => {
-                  console.log(response);
-                  if(response.done){
-                    Swal.fire({
-              position: 'top-end',
-              icon: 'success',
-              title: 'Added to Whishlist',
-              showConfirmButton: false,
-              timer: 1500
-            })
-                  }else if(response.exist){
-                    Swal.fire({
-              position: 'top-end',
-             
-              title: 'Already in Wishlist',
-              showConfirmButton: false,
-              timer: 1500
-            })
-                  }else{
-                      location.href = '/login'
-                  }
-      
-        }})}
-          
-      
-      
-         </script>
+          success: (response) => {
+            console.log(response);
+            if (response.done) {
+              Swal.fire({
+                position: 'top-end',
+                icon: 'success',
+                title: 'Added to Whishlist',
+                showConfirmButton: false,
+                timer: 1500
+              })
+            } else if (response.exist) {
+              Swal.fire({
+                position: 'top-end',
+
+                title: 'Already in Wishlist',
+                showConfirmButton: false,
+                timer: 1500
+              })
+            } else {
+              location.href = '/login'
+            }
+
+          }
+        })
+      }
+
+
+
+    </script>
     <!-- ***** Footer Start ***** -->
     <%- include("../layouts/user/footer.ejs") %>

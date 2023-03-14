@@ -27,7 +27,12 @@ const { findOne } = require('../model/category_data');
 const viewCheckout = async (req, res, next) => {
   try {
     if (req.session.user) {
-      
+      let date=Date.now()
+      const coupondetails = await Coupon.find({
+        expirationDate: { $gte: date },
+        userUsed: { $not: { $eq: req.session.user._id } }
+      }).limit(2)
+        console.log(coupondetails);
         const categorydata = await Category.find({});
         const userData = await User.findOne({ username: req.session.user.username }).populate('cart.product').exec()
         if(userData.cart.length==0){
@@ -61,13 +66,14 @@ const viewCheckout = async (req, res, next) => {
             categorydata: categorydata,
             userdetails: userdetails,
             cartData: cartData,
+            
             message: 'Cart is Empty'
           })
   
         } else {
 
           const userdetails = await User.findOne({ username: req.session.user.username })
-          res.render('checkout', { categorydata: categorydata, userdetails: userdetails, userData: userData })
+          res.render('checkout', { categorydata: categorydata, userdetails: userdetails, userData: userData ,coupondetails:coupondetails})
   
         }}
   
