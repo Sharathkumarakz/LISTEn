@@ -118,5 +118,5 @@ user_route.get('/logout',auth.islogout,userController.userLogout);
 user_route.use(function(req, res) {
   res.render('error')
 });
-
+ 
 module.exports=user_route;

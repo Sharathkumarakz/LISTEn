@@ -71,10 +71,8 @@ const viewCheckout = async (req, res, next) => {
           })
   
         } else {
-
           const userdetails = await User.findOne({ username: req.session.user.username })
           res.render('checkout', { categorydata: categorydata, userdetails: userdetails, userData: userData ,coupondetails:coupondetails})
-  
         }}
   
     } else {
@@ -380,7 +378,7 @@ const viewOrders = async (req, res, next) => {
 
    } catch (error) {
 
-    next(error);
+res.render('error')
 
    }
 
@@ -405,7 +403,7 @@ const DetailOrderView = async (req, res, next) => {
 
   } catch (error) {
 
-    next(error);
+    res.render('error')
 
   }
 

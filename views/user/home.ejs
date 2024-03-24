@@ -21,37 +21,38 @@
                             <li class="scroll-to-section"><a href="/">Home</a></li>
                             <li class="submenu">
                                 <a href="javascript:;">Products</a>
-                        <ul>
-                            <li><a href="/allproducts">All Products</a></li>
+                                <ul>
+                                    <li><a href="/allproducts">All Products</a></li>
                                     <% categoryData.forEach((element)=> { %>
-                            <li><a href="/category/<%= element._id %>">
-                                    <%= element.categoryName %></a></li>
+                                        <li><a href="/category/<%= element._id %>">
+                                                <%= element.categoryName %>
+                                            </a></li>
                                         <% }); %>
-                        </ul>
+                                </ul>
                             </li>
                             <li class="scroll-to-section"><a href="/wishlist">Whishlist</a></li>
-                                    <% if(typeof userdetails!=='undefined' ){ %>
-                            <li class="scroll-to-section"><a href="/cart">Cart</a></li>
-                                    <%} else{ %>
-                            <li class="scroll-to-section"><a href="/login">Cart</a></li>
+                            <% if(typeof userdetails!=='undefined' ){ %>
+                                <li class="scroll-to-section"><a href="/cart">Cart</a></li>
+                                <%} else{ %>
+                                    <li class="scroll-to-section"><a href="/login">Cart</a></li>
                                     <% } %>
-                            <li class="submenu">
-                                    <% if(typeof userdetails!=='undefined' ){ %>
-                                            <a href="/user">
+                                        <li class="submenu">
+                                            <% if(typeof userdetails!=='undefined' ){ %>
+                                                <a href="/user">
                                                     <%= userdetails.username %>
-                                            </a>
+                                                </a>
                                                 <ul>
                                                     <li><a href="/user">profile</a></li>
                                                     <li><a href="/logout">Logout</a></li>
                                                 </ul>
-                                        <%}else{%>
-                                            <a href="javascript:;">USER</a>
-                                                <ul>
-                                                    <li><a href="/login">Login</a></li>
-                                                </ul>
-                                        <%} %>
+                                                <%}else{%>
+                                                    <a href="javascript:;">USER</a>
+                                                    <ul>
+                                                        <li><a href="/login">Login</a></li>
+                                                    </ul>
+                                                    <%} %>
 
-                            </li>
+                                        </li>
                         </ul>
                         <a class='menu-trigger'>
                             <span>Menu</span>
@@ -69,8 +70,8 @@
         <div class="carousel-inner">
             <div class="carousel-item active">
                 <img style="height: 700px;" class="d-block w-100 "
-                src="https://i.pcmag.com/imagery/reviews/02CcTJ1zCNONebhSK5DSC0U-1.fit_scale.size_1028x578.v1617300095.jpg"
-                alt="First slide">
+                    src="https://i.pcmag.com/imagery/reviews/02CcTJ1zCNONebhSK5DSC0U-1.fit_scale.size_1028x578.v1617300095.jpg"
+                    alt="First slide">
                 <div class="carousel-caption  d-md-block">
                     <h1>WE ARE LISTEn</h1>
                     <div class="main-border-button">
@@ -82,7 +83,7 @@
             <%banners.forEach((element)=> { %>
                 <div class="carousel-item ">
                     <img style="height: 700px;" class="d-block w-100 " src="/product_images/<%= element.image[0]%>"
-                    alt="First slide">
+                        alt="First slide">
                     <div class="carousel-caption  d-md-block">
                         <h1>
                             <%=element.name %>
@@ -98,27 +99,27 @@
                     </div>
                 </div>
                 <% }) %>
-            </div>
-            <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
-                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                <span class="sr-only">Previous</span>
-            </a>
-            <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
-                <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                <span class="sr-only">Next</span>
-            </a>
         </div>
+        <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="sr-only">Previous</span>
+        </a>
+        <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="sr-only">Next</span>
+        </a>
+    </div>
 
 
-        <!-- ***** corosel  Area Ends ***** -->
+    <!-- ***** corosel  Area Ends ***** -->
 
 
 
 
-        <!-- ***** Products  Area Starts ***** -->
+    <!-- ***** Products  Area Starts ***** -->
 
-        <% for(let i=0;i<categoryData.length;i++){%>
-            <% found=false %>
+    <% for(let i=0;i<categoryData.length;i++){%>
+        <% found=false %>
             <section class="section" id="men">
                 <div class="container">
                     <div class="row">
@@ -127,182 +128,147 @@
                                 <h2>
                                     <%= categoryData[i].categoryName %>
                                 </h2>
-                                <span> <%=categoryData[i].description%></span>
-                                </div>
+                                <span>
+                                    <%=categoryData[i].description%>
+                                </span>
                             </div>
                         </div>
                     </div>
-                    <div class="container">
-                        <div class="row">
-                            <div class="col-lg-12">
-                                <div class="men-item-carousel">
-                                    <div class="owl-men-item owl-carousel">
-                                        <% for(let j=0;j<productData.length;j++){%>
-                                            <% if(productData[j].category._id.toString()==categoryData[i]._id.toString()){%>
-                                                <% found=true%>
+                </div>
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="men-item-carousel">
+                                <div class="owl-men-item owl-carousel">
+                                    <% for(let j=0;j<productData.length;j++){%>
+                                        <% if(productData[j].category._id.toString()==categoryData[i]._id.toString()){%>
+                                            <% found=true%>
                                                 <div class="item">
                                                     <div class="thumb">
                                                         <div class="hover-content">
                                                             <ul>
                                                                 <li><a style="width:53px; height:53px; border: 1px; "
-                                                                    class="ml-3"
-                                                                    href="/singleproduct/<%= productData[j]._id %>"><i
-                                                                    class="fa fa-eye"></i></a></li>
-                                                                    <li>
-                                                                        <button
+                                                                        class="ml-3"
+                                                                        href="/singleproduct/<%= productData[j]._id %>"><i
+                                                                            class="fa fa-eye"></i></a></li>
+                                                                <li>
+                                                                    <button
                                                                         style="width:55px; height:55px; border-color: aliceblue; "
                                                                         class="ml-4"
                                                                         onclick="addtoWishlist('<%= productData[j]._id %>')"><i
-                                                                        class="fa fa-star"></i></button>
-                                                                        <li>
-                                                                            <li>
-                                                                        <button
-                                                                            style="width:55px; height:55px;  border-color: aliceblue;"
-                                                                            onclick="addToCart('<%= productData[j]._id %>')"><i
+                                                                            class="fa fa-star"></i></button>
+                                                                <li>
+                                                                <li>
+                                                                    <button
+                                                                        style="width:55px; height:55px;  border-color: aliceblue;"
+                                                                        onclick="addToCart('<%= productData[j]._id %>')"><i
                                                                             class="fa fa-shopping-cart"></i></button>
-                                                                            <li>
-                                                                            </ul>
-                                                                        </div>
-                                                                        <img src="/product_images/<%= productData[j].image[2] %>"
-                                                                        alt="">
-                                                                    </div>
-                                                                    <div class="down-content">
-                                                                        <h4>
-                                                                            <%= productData[j].name %>
-                                                                        </h4>
-                                                                        <ul class="stars">
-                                                                            <li><i class="fa fa-star"></i></li>
-                                                                            <li><i class="fa fa-star"></i></li>
-                                                                            <li><i class="fa fa-star"></i></li>
-                                                                            <li><i class="fa fa-star"></i></li>
-                                                                            <li><i class="fa fa-star"></i></li>
-                                                                        </ul>
-                                                                    </div>
-                                                                </div>
-                                                                <% } %>
-                                                                <% } %>
-                                                            </div>
+                                                                <li>
+                                                            </ul>
                                                         </div>
+                                                        <img src="/product_images/<%= productData[j].image[2] %>"
+                                                            alt="">
+                                                    </div>
+                                                    <div class="down-content">
+                                                        <h4>
+                                                            <%= productData[j].name %>
+                                                        </h4>
+                                                        <ul class="stars">
+                                                            <li><i class="fa fa-star"></i></li>
+                                                            <li><i class="fa fa-star"></i></li>
+                                                            <li><i class="fa fa-star"></i></li>
+                                                            <li><i class="fa fa-star"></i></li>
+                                                            <li><i class="fa fa-star"></i></li>
+                                                        </ul>
                                                     </div>
                                                 </div>
-                                            </div>
-                                        </section>
-                                        <% if (found){ %>
-                                            <% continue %>
-                                            <% }%>
-                                            <% } %>
-                                            
-              <!-- ***** Scripts ***** -->      
-              
-         
-      <script>
-          function addToCart(proId) {
-              $.ajax({
-                  url: '/addcart/' + proId, // replace with the URL of your server-side script
-                  type: 'get', // use get method
-                  success: (response) => {
-                    console.log(response);
-                    if (response.done) {
-                        Swal.fire({
-                            position: 'top-end',
-                            icon: 'success',
-                            title: 'Added to Cart',
-                            showConfirmButton: false,
-                            timer: 1500
-                        })
-                    } else if (response.exist) {
-                        Swal.fire({
-                            position: 'top-end',
-                            title: 'Already in Cart',
-                            showConfirmButton: false,
-                            timer: 1500
-                        })
-                    }else if(response.stock){
-                        Swal.fire({
-                            position: 'top-end',
-                            title: 'Out of Stock',
-                            showConfirmButton: false,
-                            timer: 1500
-                        })
-                    } else {
-                        location.href = '/login'
-                    }
-                }
-            })
-        }
-                
+                                                <% } %>
+                                                    <% } %>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <% if (found){ %>
+                <% continue %>
+                    <% }%>
+                        <% } %>
 
-        function addtoWishlist(proId) {
-            console.log(proId);
-            $.ajax({
-                url: '/addtoWishlist/' + proId, // replace with the URL of your server-side script
-                type: 'get', // use get method
-                success: (response) => {
-                    console.log(response);
-                    if (response.done) {
-                        Swal.fire({
-                            position: 'top-end',
-                            icon: 'success',
-                            title: 'Added to Whishlist',
-                            showConfirmButton: false,
-                            timer: 1500
-                        })
-                    } else if (response.exist) {
-                        Swal.fire({
-                            position: 'top-end',
-                            title: 'Already in Wishlist',
-                            showConfirmButton: false,
-                            timer: 1500
-                        })
-                    } else {
-                        location.href = '/login'
-                    }
-                }
-            })
-        }
-        </script>
-
-  <!-- ***** Script Ends ***** -->
+                            <!-- ***** Scripts ***** -->
 
 
-  <!-- ***** Footer Start ***** -->
+                            <script>
+                                function addToCart(proId) {
+                                    $.ajax({
+                                        url: '/addcart/' + proId, // replace with the URL of your server-side script
+                                        type: 'get', // use get method
+                                        success: (response) => {
+                                            console.log(response);
+                                            if (response.done) {
+                                                Swal.fire({
+                                                    position: 'top-end',
+                                                    icon: 'success',
+                                                    title: 'Added to Cart',
+                                                    showConfirmButton: false,
+                                                    timer: 1500
+                                                })
+                                            } else if (response.exist) {
+                                                Swal.fire({
+                                                    position: 'top-end',
+                                                    title: 'Already in Cart',
+                                                    showConfirmButton: false,
+                                                    timer: 1500
+                                                })
+                                            } else if (response.stock) {
+                                                Swal.fire({
+                                                    position: 'top-end',
+                                                    title: 'Out of Stock',
+                                                    showConfirmButton: false,
+                                                    timer: 1500
+                                                })
+                                            } else {
+                                                location.href = '/login'
+                                            }
+                                        }
+                                    })
+                                }
 
 
-<%- include("../layouts/user/footer.ejs") %>
+                                function addtoWishlist(proId) {
+                                    console.log(proId);
+                                    $.ajax({
+                                        url: '/addtoWishlist/' + proId, // replace with the URL of your server-side script
+                                        type: 'get', // use get method
+                                        success: (response) => {
+                                            console.log(response);
+                                            if (response.done) {
+                                                Swal.fire({
+                                                    position: 'top-end',
+                                                    icon: 'success',
+                                                    title: 'Added to Whishlist',
+                                                    showConfirmButton: false,
+                                                    timer: 1500
+                                                })
+                                            } else if (response.exist) {
+                                                Swal.fire({
+                                                    position: 'top-end',
+                                                    title: 'Already in Wishlist',
+                                                    showConfirmButton: false,
+                                                    timer: 1500
+                                                })
+                                            } else {
+                                                location.href = '/login'
+                                            }
+                                        }
+                                    })
+                                }
+                            </script>
+
+                            <!-- ***** Script Ends ***** -->
 
 
-
-               
-
+                            <!-- ***** Footer Start ***** -->
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+                            <%- include("../layouts/user/footer.ejs") %>
